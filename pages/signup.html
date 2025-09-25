@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Meta tags for proper rendering -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NextStep - Create Account</title>
+    
+    <!-- Stylesheet Links -->
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../styles/auth.css">
+</head>
+<body>
+    <!-- Header Section with Navigation -->
+    <header class="header">
+        <nav class="nav">
+            <a href="../index.html" class="logo">NextStep</a>
+        </nav>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="container">
+        <section class="auth-container">
+            <!-- Sign Up Form -->
+            <section class="auth-form">
+                <h2 class="section-title">Create Account</h2>
+                <form onsubmit="handleSignUp(event)" id="signup-form">
+                    <input type="text" class="input-field" id="fullName" placeholder="Full Name" required>
+                    
+                    <input type="email" class="input-field" id="email" placeholder="Email" required>
+                    
+                    <section class="password-field">
+                        <input type="password" 
+                               class="input-field" 
+                               id="password"
+                               placeholder="Password" 
+                               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" 
+                               required>
+                        <section class="password-requirements" id="password-requirements">
+                            <h4>Password must contain:</h4>
+                            <ul>
+                                <li id="length-req">At least 8 characters</li>
+                                <li id="uppercase-req">One uppercase letter</li>
+                                <li id="lowercase-req">One lowercase letter</li>
+                                <li id="number-req">One number</li>
+                            </ul>
+                        </section>
+                    </section>
+                    
+                    <section class="password-field">
+                        <input type="password" 
+                               class="input-field" 
+                               id="confirmPassword"
+                               placeholder="Confirm Password" 
+                               required>
+                        <section class="error-message" id="confirm-error"></section>
+                    </section>
+                    
+                    <section class="button-container">
+                        <button type="submit" class="cta-button" id="submit-btn">Create Account</button>
+                    </section>
+                </form>
+                <section class="divider"></section>
+                <p class="auth-link">Already have an account? <a href="signin.html">Sign In</a></p>
+            </section>
+        </section>
+    </main>
+
+    <!-- JavaScript for Form Validation -->
+    <script src="../scripts/auth.js"></script>
+</body>
+</html>

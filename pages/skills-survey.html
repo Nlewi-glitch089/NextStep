@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"> <!-- Defines character encoding -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Makes site responsive -->
+    <title>NextStep - Skills Assessment</title>
+    <link rel="stylesheet" href="../style.css"> <!-- Main stylesheet -->
+    <link rel="stylesheet" href="../styles/survey.css"> <!-- Styles specific to survey -->
+</head>
+<body>
+    <!-- Header with navigation -->
+    <header class="header">
+        <nav class="nav">
+            <a href="../index.html" class="logo">NextStep</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <!-- ======================== -->
+        <!-- Skills Assessment Section -->
+        <!-- ======================== -->
+        <section class="survey-section">
+            <h1 class="section-title">Skills Assessment</h1>
+
+            <!-- Progress bar -->
+            <aside class="progress-bar">
+                <div class="progress-fill" style="width: 0%"></div>
+            </aside>
+
+            <!-- Survey form -->
+            <form id="skills-survey">
+                <!-- Question block -->
+                <article class="survey-question active">
+                    <h3>What is your current proficiency level in programming?</h3>
+                    <section class="options-grid">
+                        <button type="button" class="option-btn" onclick="selectOption(this)">Beginner</button>
+                        <button type="button" class="option-btn" onclick="selectOption(this)">Intermediate</button>
+                        <button type="button" class="option-btn" onclick="selectOption(this)">Advanced</button>
+                    </section>
+                </article>
+                <!-- More questions will be added dynamically -->
+            </form>
+
+            <!-- Navigation for survey -->
+            <nav class="survey-navigation">
+                <button onclick="previousQuestion()" class="nav-btn" id="prev-btn" style="display: none;">Previous</button>
+                <button onclick="nextQuestion()" class="nav-btn" id="next-btn">Next</button>
+            </nav>
+        </section>
+    </main>
+
+    <!-- JavaScript for survey logic -->
+    <script src="../scripts/survey.js"></script>
+</body>
+</html>

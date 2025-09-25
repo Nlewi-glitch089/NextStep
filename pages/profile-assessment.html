@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NextStep - Profile Assessment</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../styles/profile-assessment.css">
+</head>
+<body>
+    <!-- Reuse existing header structure -->
+    <header class="header">
+        <nav class="nav">
+            <a href="../index.html" class="logo">NextStep</a>
+            <ul class="nav-links">
+                <li><a href="../index.html" class="nav-link">Home</a></li>
+                <li><a href="#" class="nav-link active">Profile Assessment</a></li>
+                <li><button class="theme-toggle" onclick="toggleTheme()">🌙 Light Mode</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="profile-assessment">
+        <div class="container">
+            <section class="assessment-form">
+                <h1 class="section-title">Create Your Professional Profile</h1>
+                <p class="hero-subtitle">Ready to showcase your skills and projects?</p>
+                
+                <!-- New prominent action button -->
+                <button class="cta-button assessment-start" onclick="startAssessment()">
+                    Begin Profile Creation
+                </button>
+
+                <!-- Hide project builder initially -->
+                <div class="project-builder" style="display: none;">
+                    <h2>Add a New Project</h2>
+                    <div class="project-form">
+                        <input type="text" class="input-field" placeholder="Project Title">
+                        <textarea class="input-field" placeholder="Project Description"></textarea>
+                        <div class="skills-selector">
+                            <button class="skill-tag" onclick="toggleSkill(this)">React</button>
+                            <button class="skill-tag" onclick="toggleSkill(this)">Node.js</button>
+                            <button class="skill-tag" onclick="toggleSkill(this)">Python</button>
+                            <button class="skill-tag" onclick="toggleSkill(this)">CSS</button>
+                            <button class="skill-tag" onclick="toggleSkill(this)">HTML</button>
+                            <button class="skill-tag" onclick="toggleSkill(this)">UI/UX Design</button>
+                            <button class="skill-tag" onclick="toggleSkill(this)">Project Management</button>
+                            <button class="skill-tag" onclick="toggleSkill(this)">Data Analysis</button>
+                        </div>
+                        <button class="cta-button" onclick="saveProject()">Add Project</button>
+                    </div>
+                </div>
+
+                <!-- Hide projects showcase initially -->
+                <div class="projects-showcase" style="display: none;">
+                    <h2>Your Projects</h2>
+                    <div class="projects-grid">
+                        <!-- Projects will be added here dynamically -->
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="../scripts/profile-assessment.js"></script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"> <!-- Defines character encoding -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Makes site responsive -->
+    <title>NextStep - Sign In</title>
+    <link rel="stylesheet" href="../style.css"> <!-- Main stylesheet -->
+    <link rel="stylesheet" href="../styles/auth.css"> <!-- Styles specific to authentication pages -->
+</head>
+<body>
+    <!-- Header with navigation -->
+    <header class="header">
+        <nav class="nav">
+            <a href="../index.html" class="logo">NextStep</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- ======================== -->
+        <!-- Sign In Section -->
+        <!-- ======================== -->
+        <section class="auth-section">
+            <form id="signin-form" onsubmit="return validateForm(event)">
+                <h2 class="section-title">Welcome Back</h2>
+
+                <!-- Email input -->
+                <input type="email" class="input-field" placeholder="Email" required>
+
+                <!-- Password input with requirements -->
+                <fieldset class="password-group">
+                    <input type="password" 
+                           class="input-field" 
+                           placeholder="Password" 
+                           pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" 
+                           required>
+                    <span class="error-message"></span> <!-- Placeholder for validation errors -->
+
+                    <!-- Password requirement hints -->
+                    <aside class="password-requirements">
+                        <h3>Password must contain:</h3>
+                        <ul>
+                            <li>At least 8 characters</li>
+                            <li>One uppercase letter</li>
+                            <li>One lowercase letter</li>
+                            <li>One number</li>
+                        </ul>
+                    </aside>
+                </fieldset>
+
+                <!-- Sign in button -->
+                <button type="submit" class="cta-button">Sign In</button>
+
+                <!-- Redirect to Sign Up -->
+                <footer class="form-footer">
+                    <p>Don't have an account? <a href="signup.html">Create Account</a></p>
+                </footer>
+            </form>
+        </section>
+
+        <!-- ======================== -->
+        <!-- Sign Up Section -->
+        <!-- ======================== -->
+        <section class="auth-section">
+            <form id="signup-form" onsubmit="return validateForm(event)">
+                <h2 class="section-title">Create Account</h2>
+
+                <!-- Full name input -->
+                <input type="text" class="input-field" placeholder="Full Name" required>
+
+                <!-- Email input -->
+                <input type="email" class="input-field" placeholder="Email" required>
+
+                <!-- Password input with requirements -->
+                <fieldset class="password-group">
+                    <input type="password" 
+                           class="input-field" 
+                           id="signup-password"
+                           placeholder="Password" 
+                           pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" 
+                           title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+                           required>
+                    <span class="error-message"></span>
+                    <aside class="password-requirements">
+                        <h3>Password must contain:</h3>
+                        <ul>
+                            <li>At least 8 characters</li>
+                            <li>One uppercase letter</li>
+                            <li>One lowercase letter</li>
+                            <li>One number</li>
+                        </ul>
+                    </aside>
+                </fieldset>
+
+                <!-- Confirm password input -->
+                <fieldset class="password-group">
+                    <input type="password" 
+                           class="input-field" 
+                           id="confirm-password"
+                           placeholder="Confirm Password" 
+                           required>
+                    <span class="error-message"></span>
+                </fieldset>
+
+                <!-- Create Account button -->
+                <button type="submit" class="cta-button">Create Account</button>
+
+                <!-- Redirect to Sign In -->
+                <footer class="form-footer">
+                    <p>Already have an account? 
+                       <a href="#" onclick="toggleForms()">Sign In</a>
+                    </p>
+                </footer>
+            </form>
+        </section>
+    </main>
+
+    <!-- JavaScript for form validation and logic -->
+    <script src="../scripts/auth.js"></script>
+</body>
+</html>

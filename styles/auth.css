@@ -1,0 +1,168 @@
+/*
+    AUTHENTICATION STYLES
+    Styling for sign-in and sign-up pages
+    
+    SECTIONS:
+    1. Container Layouts
+    2. Form Elements
+    3. Input Fields
+    4. Buttons
+    5. Error Messages
+    6. Responsive Adjustments
+*/
+
+/* 1. Container Layouts */
+.auth-section {
+    max-width: 500px;  /* Reduced from 800px */
+    margin: 4rem auto;
+    padding: 2.5rem;
+    background: var(--card-bg);
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(255, 0, 128, 0.2);
+}
+
+#signin-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.auth-section form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.password-group {
+    margin: 1rem 0;
+    padding: 0;
+    border: none;
+    position: relative;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.auth-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+/* 2. Form Elements */
+/* Form input field styling */
+.input-field {
+    background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary));
+    color: white;
+    width: 80%;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    margin: 1rem auto;
+    display: block;
+    transition: all 0.3s ease;
+    letter-spacing: 1px;
+}
+
+/* Input placeholder styling */
+.input-field::placeholder {
+    color: white;
+    opacity: 0.9;
+}
+
+/* Input hover and focus effects */
+.input-field:hover,
+.input-field:focus {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(255, 0, 128, 0.4);
+    outline: none;
+}
+
+.auth-form p {
+    text-align: center;
+    color: var(--text-secondary);
+}
+
+.auth-form a {
+    color: var(--accent-primary);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.auth-form a:hover {
+    text-shadow: 0 0 8px var(--accent-primary);
+}
+
+.section-title {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.form-footer {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 2px solid var(--accent-secondary);
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+.cta-button {
+    width: 50%;  /* Match input field width */
+    margin: 1.5rem auto;  /* Center the button */
+    display: block;
+}
+
+/* 3. Error Handling */
+/* Additional styles for form validation */
+.input-field:invalid {
+    border-color: #ff4444;
+}
+
+.input-field:valid {
+    border-color: #4CAF50;
+}
+
+/* Success message styling */
+.success-message {
+    color: #4CAF50;
+    text-align: center;
+    margin-top: 1rem;
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.password-field {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+/* Error message styling */
+.error-message {
+    color: #ff4444;
+    font-size: 0.9rem;
+    text-align: center;
+    margin-top: 0.5rem;
+}
+
+/* Password requirements display */
+.password-requirements {
+    background: var(--card-bg);
+    padding: 1rem;
+    border-radius: 8px;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    border: 1px solid var(--accent-secondary);
+}
+
+/* 6. Responsive Adjustments */
+/* Add any necessary media queries or responsive styles here */
