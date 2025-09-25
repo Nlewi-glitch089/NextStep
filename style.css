@@ -1,0 +1,473 @@
+/*
+    NEXTSTEP WEBSITE STYLES
+    This file contains all the visual styling for the website
+    
+    STRUCTURE:
+    1. CSS Variables (color themes)
+    2. Global/Base Styles 
+    3. Header & Navigation
+    4. Hero Section
+    5. Features Section
+    6. Interactive Demo
+    7. Statistics Section
+    8. How It Works Section
+    9. Footer
+    10. Animations & Effects
+    11. Responsive Design (mobile-friendly)
+*/
+
+/* ===================================
+   1. CSS VARIABLES - THEME COLORS
+   Colors that can be easily changed throughout the site
+   =================================== */
+
+/* Default Dark Theme Colors */
+:root {
+    --bg-primary: #000000;        /* Main background (black) */
+    --bg-secondary: #1a1a1a;      /* Secondary background (dark gray) */
+    --text-primary: #ffffff;       /* Main text color (white) */
+    --text-secondary: #cccccc;     /* Secondary text (light gray) */
+    --accent-primary: #f50ca0;     /* Bright pink for highlights */
+    --accent-secondary: #c8a2c8;   /* Lavender for secondary highlights */
+    --card-bg: #2a2a2a;          /* Background for cards */
+    --card-hover: #3a3a3a;        /* Card color when hovering */
+}
+
+/* Light Theme Colors - activated when user clicks theme toggle */
+[data-theme="light"] {
+    --bg-primary: #e6f3ff;        /* Light blue background */
+    --bg-secondary: #ffffff;       /* Pure white */
+    --text-primary: #000000;       /* Black text */
+    --text-secondary: #333333;     /* Dark gray text */
+    --accent-primary: #f50ca0;     /* Keep the same pink */
+    --accent-secondary: #c8a2c8;   /* Keep the same lavender */
+    --card-bg: #ffffff;           /* White cards */
+    --card-hover: ##a0abd8;        /* Light blue on hover */
+}
+
+/* ===================================
+   2. GLOBAL/BASE STYLES
+   Basic styling that applies to the entire website
+   =================================== */
+
+/* Remove default margins and padding, set consistent box sizing */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Main body styling */
+body {
+    font-family: 'Arial', sans-serif;     /* Clean, readable font */
+    background-color: var(--bg-primary);  /* Uses theme color */
+    color: var(--text-primary);           /* Uses theme text color */
+    line-height: 1.6;                     /* Comfortable line spacing */
+    transition: all 0.3s ease;            /* Smooth theme switching */
+}
+
+/* ===================================
+   3. HEADER & NAVIGATION STYLES
+   Top navigation bar with logo and menu links
+   =================================== */
+
+.header {
+    background-color: var(--bg-secondary);
+    padding: 1rem 2rem;                           /* Space around content */
+    box-shadow: 0 2px 10px rgba(255, 0, 128, 0.2); /* Pink glow effect */
+    position: sticky;                              /* Stays at top when scrolling */
+    top: 0;
+    z-index: 1000;                                /* Appears above other content */
+}
+
+/* Navigation container */
+.nav {
+    display: flex;                    /* Arrange items horizontally */
+    justify-content: space-between;   /* Logo on left, menu on right */
+    align-items: center;              /* Center items vertically */
+    max-width: 1200px;               /* Maximum width for large screens */
+    margin: 0 auto;                  /* Center the navigation */
+}
+
+/* Logo styling */
+.logo {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--accent-primary);           /* Pink color */
+    text-shadow: 0 0 10px var(--accent-primary); /* Glowing effect */
+}
+
+/* Navigation menu list */
+.nav-links {
+    display: flex;      /* Arrange links horizontally */
+    list-style: none;   /* Remove bullet points */
+    gap: 2rem;         /* Space between menu items */
+    align-items: center;
+}
+
+/* Individual navigation links */
+.nav-link {
+    color: var(--text-primary);
+    text-decoration: none;          /* Remove underline */
+    padding: 0.5rem 1rem;          /* Space around text */
+    border-radius: 5px;             /* Rounded corners */
+    transition: all 0.3s ease;     /* Smooth hover effect */
+}
+
+/* Link hover effect */
+.nav-link:hover {
+    color: var(--accent-primary);   /* Turn pink on hover */
+    background-color: var(--card-hover); /* Background highlight */
+}
+
+/* Theme toggle button */
+.theme-toggle {
+    background: var(--accent-primary);   /* Pink background */
+    color: white;
+    border: none;                       /* Remove default border */
+    padding: 0.5rem 1rem;
+    border-radius: 25px;                /* Very rounded corners */
+    cursor: pointer;                    /* Show hand cursor */
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.05);                           /* Slightly bigger on hover */
+    box-shadow: 0 0 15px var(--accent-primary);     /* Glowing effect */
+}
+
+/* ===================================
+   4. HERO SECTION STYLES
+   Main banner area with title and call-to-action
+   =================================== */
+
+.hero {
+    text-align: center;
+    padding: 4rem 2rem;
+    /* Gradient background from primary to secondary color */
+    background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+}
+
+/* Main title */
+.hero-title {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    color: var(--accent-primary);              /* Pink color */
+    text-shadow: 0 0 20px var(--accent-primary); /* Strong glow */
+}
+
+/* Subtitle text */
+.hero-subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    color: var(--text-secondary);    /* Lighter text color */
+}
+
+/* Main call-to-action button */
+.cta-button {
+    /* Gradient background from pink to lavender */
+    background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary));
+    color: white;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 50px;            /* Very rounded */
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;      /* ALL CAPS TEXT */
+    letter-spacing: 1px;           /* Space between letters */
+}
+
+.cta-button:hover {
+    transform: translateY(-3px);                    /* Move up slightly */
+    box-shadow: 0 10px 25px rgba(255, 0, 128, 0.4); /* Drop shadow */
+}
+
+/* ===================================
+   5. MAIN CONTENT CONTAINER
+   Centers and constrains content width
+   =================================== */
+
+.container {
+    max-width: 1200px;    /* Maximum width for readability */
+    margin: 0 auto;       /* Center the container */
+    padding: 0 2rem;      /* Side padding */
+}
+
+/* ===================================
+   6. FEATURES SECTION STYLES
+   Shows the main features in cards
+   =================================== */
+
+.features {
+    padding: 4rem 0;     /* Top and bottom spacing */
+}
+
+/* Section titles (used throughout the site) */
+.section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    color: var(--accent-primary);   /* Pink color */
+}
+
+/* Grid layout for feature cards */
+.features-grid {
+    display: grid;
+    /* Create columns that are at least 300px wide, fit as many as possible */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;              /* Space between cards */
+    margin-bottom: 4rem;
+}
+
+/* Individual feature cards */
+.feature-card {
+    background: var(--card-bg);         /* Card background color */
+    padding: 2rem;                      /* Space inside card */
+    border-radius: 15px;                /* Rounded corners */
+    border: 2px solid transparent;       /* Invisible border (for hover effect) */
+    transition: all 0.3s ease;         /* Smooth animations */
+    cursor: pointer;                    /* Show it's clickable */
+}
+
+/* Feature card hover effects */
+.feature-card:hover {
+    background: var(--card-hover);           /* Lighter background */
+    border-color: var(--accent-primary);    /* Pink border appears */
+    transform: translateY(-5px);            /* Move card up */
+    box-shadow: 0 10px 30px rgba(255, 0, 128, 0.2); /* Drop shadow */
+}
+
+/* Feature card icons */
+.feature-icon {
+    font-size: 3rem;                 /* Large emoji icons */
+    color: var(--accent-primary);    /* Pink color */
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+/* Feature card titles */
+.feature-title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+    text-align: center;
+}
+
+/* Feature card descriptions */
+.feature-description {
+    color: var(--text-secondary);   /* Lighter text */
+    text-align: center;
+    line-height: 1.6;              /* Comfortable reading */
+}
+/* ===================================
+   7. INTERACTIVE DEMO SECTION
+   Allows users to try sample features
+   =================================== */
+
+.interactive-demo {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 15px;
+    margin: 2rem 0;
+    text-align: center;
+}
+
+/* Demo buttons */
+.demo-button {
+    background: var(--accent-secondary);   /* Lavender background */
+    color: var(--text-primary);
+    padding: 1rem 1.5rem;
+    border: none;
+    border-radius: 10px;
+    margin: 0.5rem;                       /* Space between buttons */
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.demo-button:hover {
+    background: var(--accent-primary);    /* Turn pink on hover */
+    transform: translateY(-2px);          /* Lift up slightly */
+}
+
+/* Demo results display area */
+.demo-result {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: var(--bg-secondary);
+    border-radius: 10px;
+    border-left: 4px solid var(--accent-primary);  /* Pink left border */
+}
+
+/* ===================================
+   8. STATISTICS SECTION
+   Shows important numbers with animations
+   =================================== */
+
+.stats {
+    background: var(--bg-secondary);
+    padding: 3rem 0;
+    margin: 4rem 0;
+    border-radius: 20px;
+}
+
+/* Grid layout for statistics */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    text-align: center;
+}
+
+/* Large numbers in statistics */
+.stat-number {
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--accent-primary);    /* Pink numbers */
+    margin-bottom: 0.5rem;
+}
+
+/* Labels under the numbers */
+.stat-label {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+}
+
+/* ===================================
+   9. HOW IT WORKS SECTION
+   Step-by-step process explanation
+   =================================== */
+
+.how-it-works {
+    padding: 4rem 0;
+}
+
+/* Container for step cards */
+.steps-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+/* Individual step cards */
+.step-card {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.step-card:hover {
+    transform: scale(1.02);           /* Slightly bigger on hover */
+    background: var(--card-hover);
+}
+
+/* Numbered circles for steps */
+.step-number {
+    background: var(--accent-primary);   /* Pink circle */
+    color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;               /* Perfect circle */
+    display: flex;
+    align-items: center;              /* Center number vertically */
+    justify-content: center;          /* Center number horizontally */
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0 auto 1rem auto;         /* Center the circle */
+}
+
+/* ===================================
+   10. FOOTER STYLES
+   Bottom section with links and copyright
+   =================================== */
+
+.footer {
+    background: var(--bg-secondary);
+    padding: 3rem 2rem 1rem;
+    text-align: center;
+    margin-top: 4rem;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Footer navigation links */
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;               /* Wrap to new line if needed */
+}
+
+.footer-link {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+    color: var(--accent-primary);   /* Turn pink on hover */
+}
+
+/* ===================================
+   11. ANIMATIONS & LOADING EFFECTS
+   Special effects and animations
+   =================================== */
+
+/* Loading spinner animation */
+.loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid var(--text-secondary);
+    border-radius: 50%;
+    border-top-color: var(--accent-primary);  /* Pink top border */
+    animation: spin 1s ease-in-out infinite;  /* Continuous spinning */
+}
+
+/* Spinning animation keyframe */
+@keyframes spin {
+    to { transform: rotate(360deg); }  /* Full rotation */
+}
+
+/* ===================================
+   12. RESPONSIVE DESIGN
+   Makes the site work well on mobile devices
+   =================================== */
+
+/* Styles for tablets and smaller screens */
+@media (max-width: 768px) {
+    
+    /* Stack navigation vertically on mobile */
+    .nav {
+        flex-direction: column;    /* Stack items vertically */
+        gap: 1rem;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    /* Smaller text on mobile */
+    .hero-title {
+        font-size: 2.5rem;        /* Smaller than desktop */
+    }
+
+    .hero-subtitle {
+        font-size: 1.2rem;
+    }
+
+    /* Single column layout for features on mobile */
+    .features-grid {
+        grid-template-columns: 1fr;  /* Only one column */
+    }
+}

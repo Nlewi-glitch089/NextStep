@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NextStep - Bridge the Gap to Your Career</title>
+    <!-- Link to external CSS file for styling -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 
+        HEADER SECTION
+        Contains the navigation bar with logo, menu links, and theme toggle button
+    -->
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">NextStep</div>
+            <ul class="nav-links">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#features" class="nav-link">Features</a></li>
+                <li><a href="pages/profile-assessment.html" class="nav-link">Profile Assessment</a></li>
+                <li><a href="#how-it-works" class="nav-link">How It Works</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+                <!-- Button to switch between dark and light themes -->
+                <li><button class="theme-toggle" onclick="toggleTheme()">🌙 Light Mode</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- 
+        HERO SECTION
+        The main banner area with the site title, tagline, and call-to-action button
+    -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h1 class="hero-title">NextStep</h1>
+            <p class="hero-subtitle">Progress is less about perfection and more about momentum. Because the next step matters most.</p>
+            <!-- Button that scrolls to the features section when clicked -->
+            <button class="cta-button" onclick="scrollToFeatures()">Get Started</button>
+        </div>
+    </section>
+
+    <!-- 
+        FEATURES SECTION
+        Shows the main features of the platform in a grid layout
+        Each card is clickable and shows more details
+    -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title">Core Features</h2>
+            <div class="features-grid">
+                
+                <!-- Career Guidance Feature Card -->
+                <div class="feature-card" onclick="showFeatureDetails('career')">
+                    <div class="feature-icon">🎯</div>
+                    <h3 class="feature-title">Personalized Career Guidance</h3>
+                    <p class="feature-description">AI-powered recommendations that adapt to current job market trends and your unique skills profile.</p>
+                </div>
+
+                <!-- Resume Builder Feature Card -->
+                <div class="feature-card" onclick="showFeatureDetails('resume')">
+                    <div class="feature-icon">📄</div>
+                    <h3 class="feature-title">Smart Resume Builder</h3>
+                    <p class="feature-description">Create professional resumes tailored to specific industries with real-time optimization suggestions.</p>
+                </div>
+
+                <!-- Interview Practice Feature Card -->
+                <div class="feature-card" onclick="showFeatureDetails('interview')">
+                    <div class="feature-icon">🎤</div>
+                    <h3 class="feature-title">Interview Practice</h3>
+                    <p class="feature-description">Practice with AI-powered mock interviews and get instant feedback on your performance.</p>
+                </div>
+
+                <!-- Market Insights Feature Card -->
+                <div class="feature-card" onclick="showFeatureDetails('insights')">
+                    <div class="feature-icon">📊</div>
+                    <h3 class="feature-title">Real-Time Market Insights</h3>
+                    <p class="feature-description">Stay updated with the latest job market trends and in-demand skills in your field.</p>
+                </div>
+
+                <!-- Skill Analysis Feature Card -->
+                <div class="feature-card" onclick="showFeatureDetails('skills')">
+                    <div class="feature-icon">📈</div>
+                    <h3 class="feature-title">Skill Gap Analysis</h3>
+                    <p class="feature-description">Identify missing skills and get personalized learning paths to bridge the gap.</p>
+                </div>
+
+                <!-- Networking Feature Card -->
+                <div class="feature-card" onclick="showFeatureDetails('network')">
+                    <div class="feature-icon">🤝</div>
+                    <h3 class="feature-title">Professional Networking</h3>
+                    <p class="feature-description">Connect with industry professionals and find mentorship opportunities.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 
+        INTERACTIVE DEMO SECTION
+        Allows users to try out sample features with simulated responses
+    -->
+    <section class="interactive-demo">
+        <div class="container">
+            <h2 class="section-title">Try Our Demo Features</h2>
+            <!-- Demo buttons that trigger sample functionality -->
+            <button class="demo-button" onclick="simulateCareerAnalysis()">Analyze My Career Path</button>
+            <button class="demo-button" onclick="simulateSkillCheck()">Check Skill Gaps</button>
+            <button class="demo-button" onclick="simulateJobMatch()">Find Job Matches</button>
+            <!-- Hidden area that shows demo results -->
+            <div id="demo-result" class="demo-result" style="display: none;">
+                <p id="demo-text"></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 
+        STATISTICS SECTION
+        Displays important numbers about the platform's success
+        Numbers animate when the section comes into view
+    -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number" id="students-helped">0</div>
+                    <div class="stat-label">Students Helped</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="job-placements">0</div>
+                    <div class="stat-label">Job Placements</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="partner-companies">0</div>
+                    <div class="stat-label">Partner Companies</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="success-rate">0</div>
+                    <div class="stat-label">Success Rate</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 
+        HOW IT WORKS SECTION
+        Explains the step-by-step process of using the platform
+    -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <h2 class="section-title">How NextStep Works</h2>
+            <div class="steps-container">
+                
+                <!-- Step 1: Profile Assessment -->
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3 class="feature-title">Profile Assessment</h3>
+                    <p class="feature-description">Complete our comprehensive skills and interests assessment to create your personalized profile.</p>
+                </div>
+                
+                <!-- Step 2: Market Analysis -->
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3 class="feature-title">Market Analysis</h3>
+                    <p class="feature-description">Our AI analyzes current job market trends and matches them with your profile and career goals.</p>
+                </div>
+                
+                <!-- Step 3: Action Plan -->
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3 class="feature-title">Personalized Action Plan</h3>
+                    <p class="feature-description">Receive a customized roadmap with specific steps to achieve your career objectives.</p>
+                </div>
+                
+                <!-- Step 4: Progress Tracking -->
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h3 class="feature-title">Track Progress</h3>
+                    <p class="feature-description">Monitor your development and adjust your path based on real-time feedback and market changes.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 
+        FOOTER SECTION
+        Contains links to other pages and copyright information
+    -->
+    <footer class="footer" id="contact">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#" class="footer-link">About</a>
+                <a href="#" class="footer-link">Privacy Policy</a>
+                <a href="#" class="footer-link">Terms of Service</a>
+                <a href="#" class="footer-link">Support</a>
+                <a href="#" class="footer-link">Careers</a>
+            </div>
+            <p>&copy; 2025 NextStep. All rights reserved. Bridging the gap to your future.</p>
+        </div>
+    </footer>
+
+    <!-- Link to external JavaScript file for functionality -->
+    <script src="script.js"></script>
+</body>
+</html>
