@@ -6,13 +6,43 @@
 // Redirects to the home page on successful sign-in
 function handleSignIn(event) {
     event.preventDefault();
-    window.location.href = '../index.html';
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    if (email && password) {
+        // Update path to ensure proper navigation
+        window.location.href = '../../index.html';
+    }
+    return false;
 }
 
 // Redirects to the home page on successful sign-up
 function handleSignUp(event) {
     event.preventDefault();
-    window.location.href = '../index.html';
+    try {
+        const password = document.getElementById('password');
+        const confirmPassword = document.getElementById('confirmPassword');
+        const errorMessage = document.getElementById('confirm-error');
+
+        errorMessage.textContent = '';
+
+        if (!validatePassword(password.value)) {
+            errorMessage.textContent = 'Password does not meet requirements';
+            return false;
+        }
+
+        if (password.value !== confirmPassword.value) {
+            errorMessage.textContent = 'Passwords do not match';
+            return false;
+        }
+
+        // Update path to ensure proper navigation
+        window.location.href = '../../index.html';
+        return false;
+    } catch (error) {
+        console.error('Sign up error:', error);
+        return false;
+    }
 }
 
 /*
