@@ -1,0 +1,19 @@
+%% Challenge 2: Task Filtering Pipeline
+flowchart LR
+    A[Raw Tasks Array] --> B{Filter Type}
+    
+    B -->|Status| C[Check task.status === filterValue]
+    B -->|Priority| D[Check task.priority === filterValue]
+    B -->|Overdue| E[Check task.dueDate < currentDate]
+    B -->|Assignee| F[Check task.assignee === filterValue]
+    B -->|Tag| G[Check task.tags.includes filterValue]
+    
+    C --> H[Filtered Results]
+    D --> H
+    E --> H
+    F --> H
+    G --> H
+    
+    H --> I[Return New Array]
+    
+    I --> J[React Component Rendering]

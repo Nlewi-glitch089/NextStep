@@ -1,0 +1,37 @@
+%% Challenge 1: User Data Structure Classes
+classDiagram
+    class UserInput {
+        +string name
+        +string email
+        +number age
+        +object preferences
+    }
+    
+    class Preferences {
+        +string theme
+        +boolean notifications
+    }
+    
+    class UserManager {
+        +Array users
+        +number currentId
+        +addUser(userData) User
+        +updateUser(id, updates) User
+        +getUserById(id) User
+        +getAllUsers() Array
+        +getUsersByPreference(key, value) Array
+    }
+    
+    class User {
+        +number id
+        +string name
+        +string email
+        +number age
+        +Preferences preferences
+        +Date createdAt
+        +Date updatedAt
+    }
+    
+    UserInput --> Preferences : contains
+    UserManager --> User : manages
+    User --> Preferences : has

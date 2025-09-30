@@ -1,0 +1,56 @@
+%% Challenge 3: React Integration Architecture
+classDiagram
+    class ShoppingApp {
+        +ShoppingCart cart
+        +ProductCatalog catalog
+        +handleAddToCart() void
+        +handleRemoveFromCart() void
+        +handleQuantityChange() void
+        +handleCheckout() void
+        +render() JSX
+    }
+    
+    class ProductGrid {
+        +Array products
+        +Function onAddToCart
+        +String selectedCategory
+        +render() JSX
+    }
+    
+    class ProductCard {
+        +Object product
+        +Function onAddToCart
+        +Boolean isInCart
+        +render() JSX
+    }
+    
+    class CartSummary {
+        +Array cartItems
+        +Number subtotal
+        +Number discounts
+        +Number total
+        +Function onQuantityChange
+        +Function onRemoveItem
+        +Function onCheckout
+        +render() JSX
+    }
+    
+    class CartItem {
+        +Object item
+        +Function onQuantityChange
+        +Function onRemove
+        +render() JSX
+    }
+    
+    class EventSystem {
+        +Object listeners
+        +addEventListener(type, callback) void
+        +removeEventListener(type, callback) void
+        +triggerEvent(type, data) void
+    }
+    
+    ShoppingApp --> ProductGrid : manages
+    ShoppingApp --> CartSummary : manages
+    ShoppingApp --> EventSystem : uses
+    ProductGrid --> ProductCard : renders multiple
+    CartSummary --> CartItem : renders multiple

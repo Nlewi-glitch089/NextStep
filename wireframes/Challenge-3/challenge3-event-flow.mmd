@@ -1,0 +1,28 @@
+%% Challenge 3: Event-Driven Architecture Flow
+sequenceDiagram
+    participant UI as User Interface
+    participant SC as ShoppingCart
+    participant ES as Event System
+    participant PC as ProductCatalog
+    participant CC as Cart Calculator
+    participant RC as React Components
+    
+    UI->>PC: findProductById(productId)
+    PC-->>UI: product object
+    UI->>SC: addItem(product, quantity)
+    SC->>CC: validateItem(product, quantity)
+    CC-->>SC: validation result
+    alt valid item
+        SC->>SC: updateCartItems()
+        SC->>ES: triggerEvent('itemAdded', item, cart)
+        ES->>RC: notify all listeners
+        RC->>UI: update cart display
+        UI->>SC: calculateTotal()
+        SC->>CC: calculate discounts and totals
+        CC-->>SC: final totals
+        SC-->>UI: total amounts
+        UI->>RC: update totals display
+    else invalid item
+        SC-->>UI: error message
+        UI->>RC: show error
+    end

@@ -1,0 +1,46 @@
+%% Challenge 2: React Component Integration
+classDiagram
+    class TaskList {
+        +Array tasks
+        +Function onTaskToggle
+        +Function onTaskDelete
+        +String filterBy
+        +String sortBy
+        +render() JSX
+    }
+    
+    class TaskItem {
+        +Object task
+        +Function onToggle
+        +Function onDelete
+        +render() JSX
+    }
+    
+    class TaskStats {
+        +Object statistics
+        +Number totalTasks
+        +Number completedTasks
+        +Number completionRate
+        +render() JSX
+    }
+    
+    class TaskFilter {
+        +String currentFilter
+        +Function onFilterChange
+        +Array availableFilters
+        +render() JSX
+    }
+    
+    class TaskProcessor {
+        +Array tasks
+        +filterByStatus(status) Array
+        +filterByPriority(priority) Array
+        +getStatistics() Object
+        +sortByDueDate() Array
+        +createTaskFilter(predicate) Function
+    }
+    
+    TaskList --> TaskItem : renders multiple
+    TaskList --> TaskStats : uses statistics
+    TaskList --> TaskFilter : applies filtering
+    TaskList --> TaskProcessor : processes data
