@@ -1,0 +1,24 @@
+%% Challenge 1: Internal Data Processing Sequence
+sequenceDiagram
+    participant UI as User Interface
+    participant UM as UserManager
+    participant VA as Validator
+    participant ST as Storage
+    participant RC as React Component
+    
+    UI->>UM: addUser(userData)
+    UM->>VA: validateInput(userData)
+    VA-->>UM: validation result
+    alt validation passes
+        UM->>ST: generateID()
+        ST-->>UM: unique ID
+        UM->>ST: storeUser(userObject)
+        ST-->>UM: stored user
+        UM-->>UI: new user object
+        UI->>RC: render user data
+        RC-->>UI: updated UI
+    else validation fails
+        UM-->>UI: error message
+        UI->>RC: show error
+        RC-->>UI: error display
+    end

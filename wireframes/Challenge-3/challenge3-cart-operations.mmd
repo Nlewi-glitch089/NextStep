@@ -1,0 +1,36 @@
+%% Challenge 3: Shopping Cart Operations Flow
+flowchart TD
+    A[Cart Operation Request] --> B{Operation Type}
+    
+    B -->|Add Item| C[addItem Flow]
+    B -->|Remove Item| D[removeItem Flow]
+    B -->|Update Quantity| E[updateQuantity Flow]
+    B -->|Clear Cart| F[clearCart Flow]
+    B -->|Checkout| G[checkout Flow]
+    
+    C --> C1[Validate Product In Stock]
+    C1 --> C2{Item Already in Cart?}
+    C2 -->|Yes| C3[Update Existing Quantity]
+    C2 -->|No| C4[Add New Cart Item]
+    C3 --> C5[Trigger itemAdded Event]
+    C4 --> C5
+    
+    D --> D1[Find Item in Cart]
+    D1 --> D2{Item Found?}
+    D2 -->|Yes| D3[Remove from Cart Array]
+    D2 -->|No| D4[No Action Needed]
+    D3 --> D5[Trigger itemRemoved Event]
+    
+    E --> E1[Find Item in Cart]
+    E1 --> E2{New Quantity > 0?}
+    E2 -->|Yes| E3[Update Item Quantity]
+    E2 -->|No| E4[Remove Item from Cart]
+    E3 --> E5[Trigger quantityChanged Event]
+    E4 --> E5
+    
+    F --> F1[Clear Items Array]
+    F1 --> F2[Trigger cartCleared Event]
+    
+    G --> G1[Calculate Final Total]
+    G1 --> G2[Trigger checkout Event]
+    G2 --> G3[Clear Cart After Success]
