@@ -10,7 +10,9 @@ export default function Profile({ onNavigate }) {
     experience: 'Entry Level'
   });
 
+  const [originalProfile, setOriginalProfile] = useState({...userProfile});
   const [isEditing, setIsEditing] = useState(false);
+  const [newSkill, setNewSkill] = useState('');
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -22,13 +24,38 @@ export default function Profile({ onNavigate }) {
 
   const handleSave = () => {
     setIsEditing(false);
+    setOriginalProfile({...userProfile});
     // Here you would typically save to backend
     alert('Profile updated successfully!');
   };
 
   const handleCancel = () => {
     setIsEditing(false);
-    // Reset to original values if needed
+    setUserProfile({...originalProfile});
+    setNewSkill('');
+  };
+
+  const handleAddSkill = () => {
+    if (newSkill.trim() && !userProfile.skills.includes(newSkill.trim())) {
+      setUserProfile(prev => ({
+        ...prev,
+        skills: [...prev.skills, newSkill.trim()]
+      }));
+      setNewSkill('');
+    }
+  };
+
+  const handleRemoveSkill = (skillToRemove) => {
+    setUserProfile(prev => ({
+      ...prev,
+      skills: prev.skills.filter(skill => skill !== skillToRemove)
+    }));
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleAddSkill();
+    }
   };
 
   const handleBackToHome = () => {
@@ -37,8 +64,26 @@ export default function Profile({ onNavigate }) {
     }
   };
 
+  const handleLogout = () => {
+    if (onNavigate) {
+      onNavigate('home');
+    }
+  };
+
   return (
     <main className="home-main dark">
+      {/* Add simple navigation */}
+      <nav className="navbar">
+        <h1 className="nav-logo" onClick={handleBackToHome}>
+          NextStep
+        </h1>
+        <section className="nav-auth-buttons">
+          <button className="sign-in-button" onClick={handleBackToHome}>
+            Back to Home
+          </button>
+        </section>
+      </nav>
+
       <div className="page-container">
         <div className="page-header">
           <h1 className="page-title">My Profile</h1>
@@ -65,10 +110,10 @@ export default function Profile({ onNavigate }) {
                   </button>
                 ) : (
                   <div className="edit-actions">
-                    <button className="cta-button" onClick={handleSave}>
+                    <button className="btn-primary" onClick={handleSave}>
                       Save Changes
                     </button>
-                    <button className="demo-button" onClick={handleCancel}>
+                    <button className="btn-secondary" onClick={handleCancel}>
                       Cancel
                     </button>
                   </div>
@@ -88,6 +133,7 @@ export default function Profile({ onNavigate }) {
                         name="fullName"
                         value={userProfile.fullName}
                         onChange={handleInputChange}
+                        placeholder="Enter your full name"
                       />
                     ) : (
                       <p>{userProfile.fullName}</p>
@@ -101,6 +147,7 @@ export default function Profile({ onNavigate }) {
                         name="email"
                         value={userProfile.email}
                         onChange={handleInputChange}
+                        placeholder="Enter your email"
                       />
                     ) : (
                       <p>{userProfile.email}</p>
@@ -120,6 +167,7 @@ export default function Profile({ onNavigate }) {
                         name="currentRole"
                         value={userProfile.currentRole}
                         onChange={handleInputChange}
+                        placeholder="e.g., Computer Science Student"
                       />
                     ) : (
                       <p>{userProfile.currentRole}</p>
@@ -133,6 +181,7 @@ export default function Profile({ onNavigate }) {
                         name="careerGoal"
                         value={userProfile.careerGoal}
                         onChange={handleInputChange}
+                        placeholder="e.g., Software Engineer"
                       />
                     ) : (
                       <p>{userProfile.careerGoal}</p>
@@ -147,11 +196,40 @@ export default function Profile({ onNavigate }) {
                   <label>Skills</label>
                   <div className="skills-list">
                     {userProfile.skills.map((skill, index) => (
-                      <span key={index} className="skill-tag">{skill}</span>
+                      <span key={index} className="skill-tag">
+                        {skill}
+                        {isEditing && (
+                          <button 
+                            className="skill-remove"
+                            onClick={() => handleRemoveSkill(skill)}
+                            title="Remove skill"
+                          >
+                            ×
+                          </button>
+                        )}
+                      </span>
                     ))}
                   </div>
                   {isEditing && (
-                    <button className="demo-button">Add Skill</button>
+                    <div className="add-skill-section">
+                      <div className="add-skill-input">
+                        <input
+                          type="text"
+                          value={newSkill}
+                          onChange={(e) => setNewSkill(e.target.value)}
+                          onKeyPress={handleKeyPress}
+                          placeholder="Add a new skill"
+                          className="skill-input"
+                        />
+                        <button 
+                          className="btn-secondary"
+                          onClick={handleAddSkill}
+                          disabled={!newSkill.trim()}
+                        >
+                          Add Skill
+                        </button>
+                      </div>
+                    </div>
                   )}
                 </div>
                 <div className="form-group">

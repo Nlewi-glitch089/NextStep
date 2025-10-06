@@ -1,7 +1,7 @@
 // HomePage.jsx
 import React, { useState } from 'react';
 
-export default function HomePage({ onNavigate }) {
+export default function HomePage({ onLogout, onNavigate }) {
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [activeSection, setActiveSection] = useState('home');
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -21,8 +21,15 @@ export default function HomePage({ onNavigate }) {
   };
 
   const handleSignIn = () => {
-    // For now, just show alert since we're already in the app
-    alert('You are already signed in!');
+    if (onNavigate) {
+      onNavigate('profile');
+    }
+  };
+
+  const handleLogout = () => {
+    if (onLogout) {
+      onLogout();
+    }
   };
 
   const handleThemeToggle = () => {
@@ -54,18 +61,6 @@ export default function HomePage({ onNavigate }) {
   const handleContactClick = () => {
     if (onNavigate) {
       onNavigate('contact');
-    }
-  };
-
-  const handleAboutClick = () => {
-    // Scroll to the About section instead of navigating to a different page
-    scrollToSection('about');
-  };
-
-  const handleAboutPageClick = () => {
-    // Navigate to the separate About page
-    if (onNavigate) {
-      onNavigate('about');
     }
   };
 
@@ -106,7 +101,10 @@ export default function HomePage({ onNavigate }) {
 
         <section className="nav-auth-buttons">
           <button className="sign-in-button" onClick={handleSignIn}>
-            Sign In
+            My Profile
+          </button>
+          <button className="sign-in-button" onClick={handleLogout}>
+            Sign Out
           </button>
           <button 
             className="theme-toggle-button" 
@@ -334,11 +332,11 @@ export default function HomePage({ onNavigate }) {
                       </div>
                     </article>
                     <article className="job-card">
-                      <header className="job-header">
-                        <h5>Frontend Developer Intern</h5>
-                        <span className="match-badge">85% Match</span>
+                      <header className="job-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '10px' }}>
+                        <h5 style={{ margin: '0', flex: '1', paddingRight: '15px' }}>Frontend Developer Intern</h5>
+                        <span className="match-badge" style={{ flexShrink: '0' }}>85% Match</span>
                       </header>
-                      <p className="company">Tech Solutions • Austin, TX</p>
+                      <p className="company">Tech Solutions • Philadelphia, PA</p>
                       <p className="salary">$20/hour</p>
                       <div className="job-tags">
                         <span className="tag">Internship</span>

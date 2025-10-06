@@ -11,9 +11,14 @@ export function useProjects() {
 }
 
 export function ProjectProvider({ children }) {
+  // In production, this would be fetched from backend based on user ID
+  const [currentUserId] = useState('user-demo-123'); // Demo user ID
+  
+  // Sample data - in production, fetch from API based on currentUserId
   const [projects, setProjects] = useState([
     {
       id: 1,
+      userId: 'user-demo-123', // Associate projects with specific users
       title: "Lemon-Aid App",
       description: "A teen-focused app that encourages stepping out of comfort zones, building friendships, and accessing peer support. Features include guided challenges, mentorship options, and gamified progress tracking.",
       tech: "Figma (UI/UX), Frontend TBD, Research + Prototyping",
@@ -21,6 +26,7 @@ export function ProjectProvider({ children }) {
     },
     {
       id: 2,
+      userId: 'user-demo-123',
       title: "DataDrift",
       description: "A fun package tracker project themed around tech aesthetics. Lets users track shipping progress with a unique, interactive interface.",
       tech: "Python",
@@ -28,9 +34,13 @@ export function ProjectProvider({ children }) {
     }
   ]);
 
+  // Filter projects for current user
+  const userProjects = projects.filter(project => project.userId === currentUserId);
+
   const addProject = (projectData) => {
     const newProject = {
       id: Date.now(),
+      userId: currentUserId, // Associate with current user
       ...projectData
     };
     setProjects(prev => [...prev, newProject]);
@@ -39,20 +49,25 @@ export function ProjectProvider({ children }) {
   const updateProject = (id, updatedData) => {
     setProjects(prev => 
       prev.map(project => 
-        project.id === id ? { ...project, ...updatedData } : project
+        (project.id === id && project.userId === currentUserId) 
+          ? { ...project, ...updatedData } 
+          : project
       )
     );
   };
 
   const deleteProject = (id) => {
-    setProjects(prev => prev.filter(project => project.id !== id));
+    setProjects(prev => 
+      prev.filter(project => !(project.id === id && project.userId === currentUserId))
+    );
   };
 
   const value = {
-    projects,
+    projects: userProjects, // Only return current user's projects
     addProject,
     updateProject,
-    deleteProject
+    deleteProject,
+    currentUserId
   };
 
   return (

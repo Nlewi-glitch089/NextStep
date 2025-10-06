@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import Welcome from "./Components/Welcome.jsx";
 import Home from "./Components/Home.jsx";
-import About from "./Components/About.jsx";
 import Services from "./Components/Services.jsx";
-import WhyUs from "./Components/WhyUs.jsx";
 import Contact from "./Components/Contact.jsx";
 import Profile from "./Components/Profile.jsx";
 import ProjectsPage from "./Components/ProjectsPage.jsx";
@@ -68,6 +66,24 @@ function App() {
     setIsAuthenticated(true);
   };
 
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    setCurrentPage('home');
+    setActiveTab('signin');
+    // Clear any stored auth data
+    setSignupData({
+      fullName: '',
+      email: '',
+      password: '',
+      confirmPassword: ''
+    });
+    setSigninData({
+      email: '',
+      password: ''
+    });
+    setPasswordError('');
+  };
+
   const navigateToPage = (pageName) => {
     setCurrentPage(pageName);
   };
@@ -78,12 +94,8 @@ function App() {
       <ProjectProvider>
         {(() => {
           switch (currentPage) {
-            case 'about':
-              return <About onNavigate={navigateToPage} />;
             case 'services':
               return <Services onNavigate={navigateToPage} />;
-            case 'why-us':
-              return <WhyUs onNavigate={navigateToPage} />;
             case 'contact':
               return <Contact onNavigate={navigateToPage} />;
             case 'profile':
@@ -91,13 +103,14 @@ function App() {
             case 'projects':
               return <ProjectsPage onNavigate={navigateToPage} />;
             default:
-              return <Home onNavigate={navigateToPage} />;
+              return <Home onNavigate={navigateToPage} onLogout={handleLogout} />;
           }
         })()}
       </ProjectProvider>
     );
   }
 
+  // Show auth forms
   return (
     <div className="auth-main">
       <div className="auth-container">

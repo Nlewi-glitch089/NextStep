@@ -1631,3 +1631,292 @@ fieldset.form-group {
   background: #ff0080 !important;
   color: #fff !important;
 }
+
+/* Statistics - Force proper styling with higher specificity */
+.home-main .goals-section .stats-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) !important;
+  gap: 2rem !important;
+  margin-top: 2rem !important;
+}
+
+.home-main .goals-section .stat-card {
+  text-align: center !important;
+  background: #2a2a2a !important;
+  padding: 2rem !important;
+  border-radius: 15px !important;
+  border: 1px solid rgba(255, 0, 128, 0.1) !important;
+  transition: all 0.3s ease !important;
+}
+
+.home-main .goals-section .stat-card:hover {
+  transform: translateY(-3px);
+  border-color: #ff0080;
+  box-shadow: 0 8px 20px rgba(255, 0, 128, 0.2);
+}
+
+.home-main .goals-section .stat-number {
+  font-size: 2.5rem !important;
+  font-weight: bold !important;
+  color: #ff0080 !important;
+  margin-bottom: 0.5rem !important;
+  display: block !important;
+}
+
+.home-main .goals-section .stat-label {
+  color: #ccc !important;
+  font-size: 1.1rem !important;
+  margin: 0 !important;
+}
+
+/* Light Mode Statistics in Goals Section */
+.home-main.light .goals-section .stat-card {
+  background: rgba(255, 255, 255, 0.8) !important;
+  border: 1px solid rgba(255, 0, 128, 0.2) !important;
+  color: #333 !important;
+}
+
+.home-main.light .goals-section .stat-label {
+  color: #555 !important;
+}
+
+/* Enhanced Profile Styles */
+.skill-tag {
+  background: rgba(255, 0, 128, 0.2);
+  color: #ff0080;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  border: 1px solid rgba(255, 0, 128, 0.3);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+}
+
+.skill-remove {
+  background: transparent;
+  border: none;
+  color: #ff0080;
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 0;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.skill-remove:hover {
+  background: rgba(255, 0, 128, 0.1);
+  color: #ff0080;
+}
+
+.add-skill-section {
+  margin-top: 1rem;
+}
+
+.add-skill-input {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.skill-input {
+  flex: 1;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 8px;
+  background: #1a1a1a;
+  color: #fff;
+  font-size: 0.9rem;
+  outline: none;
+}
+
+.skill-input:focus {
+  border: 1px solid #ff0080;
+}
+
+.edit-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Profile Page Styles - Complete Override */
+.profile-content {
+  max-width: 1000px !important;
+  margin: 0 auto !important;
+  padding: 0 2rem !important;
+}
+
+.profile-card {
+  background: #2a2a2a !important;
+  border-radius: 15px !important;
+  padding: 2rem !important;
+  border: 1px solid rgba(255, 0, 128, 0.1) !important;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3) !important;
+}
+
+.profile-header {
+  display: grid !important;
+  grid-template-columns: auto 1fr auto !important;
+  gap: 2rem !important;
+  align-items: center !important;
+  margin-bottom: 3rem !important;
+  padding-bottom: 2rem !important;
+  border-bottom: 1px solid #444 !important;
+}
+
+.profile-avatar {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.avatar-placeholder {
+  width: 80px !important;
+  height: 80px !important;
+  border-radius: 50% !important;
+  background: linear-gradient(45deg, #ff0080, #b954b9) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 2rem !important;
+  font-weight: bold !important;
+  color: white !important;
+}
+
+.profile-info h2 {
+  color: #ff0080 !important;
+  margin-bottom: 0.5rem !important;
+  font-size: 1.8rem !important;
+}
+
+.profile-info p {
+  color: #ccc !important;
+  margin-bottom: 0.25rem !important;
+  font-size: 1.1rem !important;
+}
+
+.career-goal {
+  color: #b954b9 !important;
+  font-weight: bold !important;
+}
+
+.profile-actions {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 1rem !important;
+}
+
+.profile-details {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2rem !important;
+}
+
+.profile-section h3 {
+  color: #ff0080 !important;
+  margin-bottom: 1rem !important;
+  font-size: 1.3rem !important;
+}
+
+.form-grid {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 1.5rem !important;
+}
+
+.form-group {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.5rem !important;
+}
+
+.form-group label {
+  color: #ccc !important;
+  font-weight: 500 !important;
+  font-size: 0.9rem !important;
+}
+
+.form-group p {
+  color: #fff !important;
+  background: #1a1a1a !important;
+  padding: 0.9rem !important;
+  border-radius: 8px !important;
+  border: 1px solid rgba(255, 0, 128, 0.1) !important;
+  font-size: 1rem !important;
+}
+
+.form-group input,
+.form-group select {
+  padding: 0.9rem !important;
+  border: none !important;
+  border-radius: 8px !important;
+  background: #1a1a1a !important;
+  color: #fff !important;
+  font-size: 1rem !important;
+  outline: none !important;
+  border: 1px solid rgba(255, 0, 128, 0.1) !important;
+}
+
+.skills-section {
+  margin-bottom: 1.5rem !important;
+}
+
+.skills-list {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 0.5rem !important;
+  margin: 1rem 0 !important;
+}
+
+/* Light Mode Profile Styles */
+.home-main.light .profile-card {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border: 1px solid rgba(255, 0, 128, 0.2) !important;
+}
+
+.home-main.light .profile-header {
+  border-bottom: 1px solid #ddd !important;
+}
+
+.home-main.light .profile-info p,
+.home-main.light .form-group label {
+  color: #555 !important;
+}
+
+.home-main.light .form-group p {
+  color: #333 !important;
+  background: rgba(255, 255, 255, 0.8) !important;
+  border: 1px solid rgba(255, 0, 128, 0.2) !important;
+}
+
+.home-main.light .form-group input,
+.home-main.light .form-group select {
+  background: rgba(255, 255, 255, 0.9) !important;
+  color: #333 !important;
+  border: 1px solid rgba(255, 0, 128, 0.2) !important;
+}
+
+/* Responsive Profile */
+@media (max-width: 768px) {
+  .profile-header {
+    grid-template-columns: 1fr !important;
+    text-align: center !important;
+    gap: 1rem !important;
+  }
+  
+  .form-grid {
+    grid-template-columns: 1fr !important;
+  }
+  
+  .profile-actions {
+    flex-direction: row !important;
+  }
+}
