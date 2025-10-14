@@ -1,0 +1,75 @@
+/* Profile Page Styles */
+
+.profile-content {
+  max-width: 1000px !important;
+  margin: 0 auto !important;
+  padding: 0 2rem !important;
+}
+
+.profile-card {
+  background: #2a2a2a !important;
+  border-radius: 15px !important;
+  padding: 2rem !important;
+  border: 1px solid rgba(255, 0, 128, 0.1) !important;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3) !important;
+}
+
+.profile-header {
+  display: grid !important;
+  grid-template-columns: auto 1fr auto !important;
+  gap: 2rem !important;
+  align-items: center !important;
+  margin-bottom: 3rem !important;
+  padding-bottom: 2rem !important;
+  border-bottom: 1px solid #444 !important;
+}
+
+.profile-avatar {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.avatar-placeholder {
+  width: 80px !important;
+  height: 80px !important;
+  border-radius: 50% !important;
+  background: linear-gradient(45deg, #ff0080, #b954b9) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 2rem !important;
+  font-weight: bold !important;
+  color: white !important;
+}
+
+/* Skills Management */
+.skill-tag {
+  background: rgba(255, 0, 128, 0.2);
+  color: #ff0080;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  border: 1px solid rgba(255, 0, 128, 0.3);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+}
+
+.skill-remove {
+  background: transparent;
+  border: none;
+  color: #ff0080;
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 0;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}

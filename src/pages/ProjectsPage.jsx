@@ -1,6 +1,7 @@
+// ProjectsPage.jsx
 import React, { useState } from 'react';
-import ProjectList from './ProjectList.jsx';
-import ProjectForm from './ProjectForm.jsx';
+import ProjectList from '../Components/ProjectList.jsx';
+import ProjectForm from '../Components/ProjectForm.jsx';
 import '../styles/pages/projects.css';
 
 export default function ProjectsPage({ onNavigate }) {

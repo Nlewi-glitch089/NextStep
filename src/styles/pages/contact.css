@@ -1,0 +1,175 @@
+/* Contact Page Styles */
+
+.contact-content {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 2rem !important;
+  margin-bottom: 2rem !important;
+  max-width: 1200px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding: 0 2rem !important;
+}
+
+.contact-info {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 1.5rem !important;
+}
+
+.contact-section {
+  background: #2a2a2a !important;
+  padding: 1.5rem !important;
+  border-radius: 12px !important;
+  border: none !important;
+  transition: all 0.3s ease !important;
+  box-shadow: none !important;
+}
+
+.contact-section:hover {
+  transform: translateY(-2px);
+}
+
+.contact-section h3 {
+  color: #ff0080 !important;
+  margin-bottom: 0.8rem !important;
+  font-size: 1.2rem !important;
+}
+
+.contact-section p {
+  color: #ccc !important;
+  margin-bottom: 0.4rem !important;
+  font-size: 0.95rem !important;
+  line-height: 1.4 !important;
+}
+
+.contact-form-container {
+  background: #2a2a2a !important;
+  padding: 2rem !important;
+  border-radius: 12px !important;
+  border: none !important;
+  transition: all 0.3s ease !important;
+  box-shadow: none !important;
+}
+
+.contact-form-container h3 {
+  color: #ff0080 !important;
+  margin-bottom: 1.5rem !important;
+  font-size: 1.3rem !important;
+  text-align: center !important;
+}
+
+.contact-form {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 1.2rem !important;
+}
+
+.contact-form .form-group {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.6rem !important;
+  margin-bottom: 0.5rem !important;
+  border: none !important;
+  outline: none !important;
+}
+
+.contact-form .form-group label {
+  color: #ff0080 !important;
+  font-weight: 600 !important;
+  font-size: 1rem !important;
+  margin-bottom: 0.5rem !important;
+  padding-left: 0.3rem !important;
+  border: none !important;
+  outline: none !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  position: relative !important;
+}
+
+.contact-form .form-group label::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0.3rem;
+  width: 20px;
+  height: 2px;
+  background: linear-gradient(45deg, #ff0080, #b954b9);
+  border-radius: 1px;
+}
+
+.contact-form .form-group input,
+.contact-form .form-group select,
+.contact-form .form-group textarea {
+  padding: 0.8rem !important;
+  border: none !important;
+  border-radius: 8px !important;
+  background: #1a1a1a !important;
+  color: #fff !important;
+  font-size: 0.95rem !important;
+  outline: none !important;
+  font-family: inherit !important;
+  transition: all 0.3s ease !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  box-shadow: none !important;
+  margin-top: 0 !important;
+}
+
+.contact-form .form-group input:focus,
+.contact-form .form-group select:focus,
+.contact-form .form-group textarea:focus {
+  outline: none !important;
+  border: none !important;
+  box-shadow: 0 0 0 2px rgba(255, 0, 128, 0.3) !important;
+}
+
+.contact-form .form-group textarea {
+  resize: vertical !important;
+  min-height: 100px !important;
+}
+
+.contact-form .cta-button {
+  align-self: center !important;
+  margin-top: 1rem !important;
+}
+
+/* Light Mode Contact Styles */
+.home-main.light .contact-section,
+.home-main.light .contact-form-container {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border: none !important;
+  color: #333 !important;
+  box-shadow: none !important;
+}
+
+.home-main.light .contact-section p,
+.home-main.light .contact-form .form-group label {
+  color: #555 !important;
+}
+
+.home-main.light .contact-form .form-group input,
+.home-main.light .contact-form .form-group select,
+.home-main.light .contact-form .form-group textarea {
+  background: rgba(255, 255, 255, 0.9) !important;
+  color: #333 !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.home-main.light .contact-form .form-group input:focus,
+.home-main.light .contact-form .form-group select:focus,
+.home-main.light .contact-form .form-group textarea:focus {
+  border: none !important;
+  outline: none !important;
+  box-shadow: 0 0 0 2px rgba(255, 0, 128, 0.3) !important;
+}
+
+/* Responsive Contact */
+@media (max-width: 768px) {
+  .contact-content {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+    padding: 0 1rem !important;
+  }
+}

@@ -1,7 +1,8 @@
+// ProfilePage.jsx
 import React, { useState } from 'react';
 import '../styles/pages/profile.css';
 
-export default function Profile({ onNavigate }) {
+export default function ProfilePage({ onNavigate }) {
   const [userProfile, setUserProfile] = useState({
     fullName: 'John Doe',
     email: 'john.doe@email.com',
@@ -26,7 +27,6 @@ export default function Profile({ onNavigate }) {
   const handleSave = () => {
     setIsEditing(false);
     setOriginalProfile({...userProfile});
-    // Here you would typically save to backend
     alert('Profile updated successfully!');
   };
 
@@ -65,15 +65,8 @@ export default function Profile({ onNavigate }) {
     }
   };
 
-  const handleLogout = () => {
-    if (onNavigate) {
-      onNavigate('home');
-    }
-  };
-
   return (
     <main className="home-main dark">
-      {/* Add simple navigation */}
       <nav className="navbar">
         <h1 className="nav-logo" onClick={handleBackToHome}>
           NextStep
@@ -241,36 +234,25 @@ export default function Profile({ onNavigate }) {
                       value={userProfile.experience}
                       onChange={handleInputChange}
                     >
-                      {/* Entry Level Options */}
                       <option value="Entry Level">Entry Level (0 years)</option>
                       <option value="Entry Level - Recent Graduate">Recent Graduate (0-6 months)</option>
                       <option value="Entry Level - Intern">Intern</option>
-                      
-                      {/* Experience by Years */}
                       <option value="1 year">1 year experience</option>
                       <option value="2 years">2 years experience</option>
                       <option value="3 years">3 years experience</option>
                       <option value="4 years">4 years experience</option>
                       <option value="5 years">5 years experience</option>
-                      
-                      {/* Mid-Level Roles */}
                       <option value="Mid-Level (3-5 years)">Mid-Level (3-5 years)</option>
                       <option value="Junior Professional (1-3 years)">Junior Professional (1-3 years)</option>
                       <option value="Associate (2-4 years)">Associate (2-4 years)</option>
-                      
-                      {/* Senior Level Options */}
                       <option value="Senior Level (5-8 years)">Senior Level (5-8 years)</option>
                       <option value="Senior Professional (6-10 years)">Senior Professional (6-10 years)</option>
                       <option value="Lead (7-12 years)">Lead (7-12 years)</option>
-                      
-                      {/* Advanced Levels */}
                       <option value="Principal (8-15 years)">Principal (8-15 years)</option>
                       <option value="Manager (5-10 years)">Manager (5-10 years)</option>
                       <option value="Senior Manager (8-15 years)">Senior Manager (8-15 years)</option>
                       <option value="Director (10-20 years)">Director (10-20 years)</option>
                       <option value="VP/Executive (15+ years)">VP/Executive (15+ years)</option>
-                      
-                      {/* Specialized Roles */}
                       <option value="Consultant">Consultant</option>
                       <option value="Freelancer">Freelancer</option>
                       <option value="Contractor">Contractor</option>

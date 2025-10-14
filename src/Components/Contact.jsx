@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import '../styles/pages/contact.css';
 
 export default function Contact({ onNavigate }) {
   const [formData, setFormData] = useState({
@@ -8,17 +9,18 @@ export default function Contact({ onNavigate }) {
     message: ''
   });
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission here
-    alert('Thank you for your message! We will get back to you soon.');
+    // Handle form submission
+    alert('Thank you for your message! We\'ll get back to you soon.');
     setFormData({ name: '', email: '', subject: '', message: '' });
   };
 
@@ -32,101 +34,98 @@ export default function Contact({ onNavigate }) {
     <main className="home-main dark">
       <div className="page-container">
         <div className="page-header">
-          <h1 className="page-title">Contact NextStep</h1>
-          <p className="page-subtitle">Get in Touch - We're Here to Help</p>
+          <h1 className="page-title">Contact Us</h1>
+          <p className="page-subtitle">Get in touch with our team</p>
         </div>
 
-        <section className="contact-content">
-          <aside className="contact-info">
-            <article className="contact-section">
-              <h3>📧 Email Us</h3>
-              <p>info@nextstep.com</p>
-              <p>For general inquiries and support</p>
-            </article>
+        <div className="page-content">
+          <div className="contact-section">
+            <div className="contact-info">
+              <h3>Let's Connect</h3>
+              <p>
+                Have questions about NextStep? Want to learn more about our services? 
+                We'd love to hear from you!
+              </p>
+              
+              <div className="contact-details">
+                <div className="contact-item">
+                  <span className="contact-icon">📧</span>
+                  <p>support@nextstep.com</p>
+                </div>
+                <div className="contact-item">
+                  <span className="contact-icon">📱</span>
+                  <p>+1 (555) 123-4567</p>
+                </div>
+                <div className="contact-item">
+                  <span className="contact-icon">📍</span>
+                  <p>Philadelphia, PA</p>
+                </div>
+              </div>
+            </div>
 
-            <article className="contact-section">
-              <h3>📞 Call Us</h3>
-              <p>(555) 123-4567</p>
-              <p>Monday - Friday, 9:00 AM - 6:00 PM EST</p>
-            </article>
-
-            <article className="contact-section">
-              <h3>📍 Visit Us</h3>
-              <p>123 Career Street<br />Future City, FC 12345</p>
-              <p>Office hours by appointment</p>
-            </article>
-
-            <article className="contact-section">
-              <h3>💬 Live Chat</h3>
-              <p>Available on our website</p>
-              <p>Instant support during business hours</p>
-            </article>
-          </aside>
-
-          <section className="contact-form-container">
-            <h3>Send Us a Message</h3>
             <form className="contact-form" onSubmit={handleSubmit}>
-              <fieldset className="form-group">
-                <label htmlFor="name">Full Name *</label>
+              <div className="form-group">
+                <label htmlFor="name">Full Name</label>
                 <input
                   type="text"
                   id="name"
                   name="name"
                   value={formData.name}
-                  onChange={handleChange}
+                  onChange={handleInputChange}
                   required
+                  placeholder="Enter your full name"
                 />
-              </fieldset>
+              </div>
 
-              <fieldset className="form-group">
-                <label htmlFor="email">Email Address *</label>
+              <div className="form-group">
+                <label htmlFor="email">Email Address</label>
                 <input
                   type="email"
                   id="email"
                   name="email"
                   value={formData.email}
-                  onChange={handleChange}
+                  onChange={handleInputChange}
                   required
+                  placeholder="Enter your email"
                 />
-              </fieldset>
+              </div>
 
-              <fieldset className="form-group">
-                <label htmlFor="subject">Subject *</label>
+              <div className="form-group">
+                <label htmlFor="subject">Subject</label>
                 <select
                   id="subject"
                   name="subject"
                   value={formData.subject}
-                  onChange={handleChange}
+                  onChange={handleInputChange}
                   required
                 >
                   <option value="">Select a subject</option>
                   <option value="general">General Inquiry</option>
                   <option value="support">Technical Support</option>
-                  <option value="partnership">Partnership Opportunities</option>
+                  <option value="partnership">Partnership Opportunity</option>
                   <option value="feedback">Feedback</option>
-                  <option value="careers">Career Opportunities</option>
                 </select>
-              </fieldset>
+              </div>
 
-              <fieldset className="form-group">
-                <label htmlFor="message">Message *</label>
+              <div className="form-group">
+                <label htmlFor="message">Message</label>
                 <textarea
                   id="message"
                   name="message"
-                  rows="5"
                   value={formData.message}
-                  onChange={handleChange}
-                  placeholder="How can we help you?"
+                  onChange={handleInputChange}
                   required
+                  placeholder="Tell us how we can help you..."
+                  rows="5"
                 ></textarea>
-              </fieldset>
+              </div>
 
               <button type="submit" className="cta-button">
                 Send Message
               </button>
             </form>
-          </section>
-        </section>
+          </div>
+        </div>
 
         <div className="page-actions">
           <button className="cta-button" onClick={handleBackToHome}>

@@ -1,10 +1,8 @@
 // HomePage.jsx
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import '../styles/pages/home.css';
 
 export default function HomePage({ onLogout, onNavigate }) {
-  const navigate = useNavigate();
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [activeSection, setActiveSection] = useState('home');
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -24,7 +22,9 @@ export default function HomePage({ onLogout, onNavigate }) {
   };
 
   const handleSignIn = () => {
-    navigate('/profile');
+    if (onNavigate) {
+      onNavigate('profile');
+    }
   };
 
   const handleLogout = () => {
@@ -48,15 +48,21 @@ export default function HomePage({ onLogout, onNavigate }) {
   };
 
   const handleProjectsClick = () => {
-    navigate('/projects');
+    if (onNavigate) {
+      onNavigate('projects');
+    }
   };
 
   const handleServicesClick = () => {
-    navigate('/services');
+    if (onNavigate) {
+      onNavigate('services');
+    }
   };
 
   const handleContactClick = () => {
-    navigate('/contact');
+    if (onNavigate) {
+      onNavigate('contact');
+    }
   };
 
   return (

@@ -1,0 +1,100 @@
+/* Services Page Styles */
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+.service-card {
+  background: #2a2a2a;
+  border-radius: 15px;
+  padding: 2rem;
+  border: 1px solid rgba(255, 0, 128, 0.1);
+  transition: all 0.3s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+  border-color: #ff0080;
+  box-shadow: 0 10px 30px rgba(255, 0, 128, 0.2);
+}
+
+.service-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  display: block;
+}
+
+.service-title {
+  color: #ff0080;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.service-description {
+  color: #ccc;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.service-features {
+  list-style: none;
+  padding: 0;
+}
+
+.service-features li {
+  color: #ccc;
+  margin-bottom: 0.5rem;
+  padding-left: 1rem;
+  position: relative;
+}
+
+.service-features li::before {
+  content: "✓";
+  color: #ff0080;
+  position: absolute;
+  left: 0;
+  font-weight: bold;
+}
+
+.services-cta {
+  text-align: center;
+  background: rgba(255, 0, 128, 0.05);
+  padding: 3rem;
+  border-radius: 15px;
+}
+
+.services-cta h2 {
+  color: #ff0080;
+  margin-bottom: 1rem;
+}
+
+.services-cta p {
+  color: #ccc;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+}
+
+/* Light Mode Services */
+.home-main.light .service-card {
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 0, 128, 0.2);
+  color: #333;
+}
+
+.home-main.light .service-description,
+.home-main.light .service-features li {
+  color: #555;
+}
+
+.home-main.light .services-cta {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.home-main.light .services-cta p {
+  color: #555;
+}
