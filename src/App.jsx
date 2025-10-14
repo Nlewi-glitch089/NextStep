@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
 
 // Import your existing components
 import Home from "./Components/Home";
@@ -18,9 +18,8 @@ import "./App.css";
 
 // Wrapper component to handle navigation
 function AppContent() {
-  const [isAuthenticated, setIsAuthenticated] = useState(true); // Set to true to skip auth for now
+  const [isAuthenticated, setIsAuthenticated] = useState(false); // Start with false to show welcome
   const navigate = useNavigate();
-  const location = useLocation();
 
   const handleLogin = () => {
     setIsAuthenticated(true);
@@ -33,7 +32,11 @@ function AppContent() {
   };
 
   const handleNavigate = (page) => {
-    navigate(`/${page}`);
+    if (page === 'home') {
+      navigate('/home');
+    } else {
+      navigate(`/${page}`);
+    }
   };
 
   return (
@@ -50,23 +53,41 @@ function AppContent() {
       />
       <Route 
         path="/home" 
-        element={<Home onLogout={handleLogout} onNavigate={handleNavigate} />} 
+        element={
+          isAuthenticated ? (
+            <Home onLogout={handleLogout} onNavigate={handleNavigate} />
+          ) : (
+            <Welcome onLogin={handleLogin} />
+          )
+        } 
       />
       <Route 
         path="/profile" 
-        element={<Profile onNavigate={handleNavigate} />} 
+        element={
+          isAuthenticated ? (
+            <Profile onNavigate={handleNavigate} />
+          ) : (
+            <Welcome onLogin={handleLogin} />
+          )
+        }
       />
       <Route 
         path="/projects" 
-        element={<ProjectsPage onNavigate={handleNavigate} />} 
+        element={
+          isAuthenticated ? (
+            <ProjectsPage onNavigate={handleNavigate} />
+          ) : (
+            <Welcome onLogin={handleLogin} />
+          )
+        }
+      />
+      <Route 
+        path="/services" 
+        element={<Services />} 
       />
       <Route 
         path="/about" 
         element={<About onNavigate={handleNavigate} />} 
-      />
-      <Route 
-        path="/services" 
-        element={<Services onNavigate={handleNavigate} />} 
       />
       <Route 
         path="/contact" 
@@ -74,7 +95,7 @@ function AppContent() {
       />
       <Route 
         path="/why-us" 
-        element={<WhyUs onNavigate={handleNavigate} />} 
+        element={<WhyUs />} 
       />
     </Routes>
   );
