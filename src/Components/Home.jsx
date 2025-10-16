@@ -8,7 +8,6 @@ export default function HomePage({ onLogout, onNavigate }) {
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [activeSection, setActiveSection] = useState('home');
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const [activeDemo, setActiveDemo] = useState(null);
 
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
@@ -231,19 +230,6 @@ export default function HomePage({ onLogout, onNavigate }) {
             </p>
           </section>
         </article>
-
-        {/* Demo Features */}
-        <section className="demo-section">
-          <h3 className="demo-title">Try Our Demo Features</h3>
-          <article className="demo-buttons">
-            <button className="demo-button" onClick={() => setActiveDemo('career')}>
-              Analyze My Career Path
-            </button>
-            <button className="demo-button" onClick={() => setActiveDemo('skills')}>
-              Check Skill Gaps
-            </button>
-          </article>
-        </section>
       </section>
 
       {/* Projects Section */}

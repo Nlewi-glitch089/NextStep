@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import SkillFormPage from './SkillFormPage.jsx';
-import '../styles/components/Auth.css';
+import '../styles/components/auth.css';
 
 export default function Welcome({ onLogin }) {
   const [activeTab, setActiveTab] = useState(0); // 0 for Sign In, 1 for Sign Up
