@@ -24,14 +24,7 @@ export function ProjectProvider({ children }) {
       tech: "Figma (UI/UX), Frontend TBD, Research + Prototyping",
       link: "https://www.figma.com/proto/SCW3VXsYHKKSe8pNWJ0OYw/Lemon-Aid-Wireframe?node-id=6-3&starting-point-node-id=6%3A3"
     },
-    {
-      id: 2,
-      userId: 'user-demo-123',
-      title: "DataDrift",
-      description: "A fun package tracker project themed around tech aesthetics. Lets users track shipping progress with a unique, interactive interface.",
-      tech: "Python",
-      link: "https://platform.techsmart.codes/code/18750704/"
-    }
+  
   ]);
 
   // Filter projects for current user
