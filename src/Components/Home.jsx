@@ -92,6 +92,15 @@ export default function HomePage({ onLogout, onNavigate }) {
           >
             Projects
           </span>
+          <span
+            className="nav-link"
+            onClick={() => {
+              setActiveSection('ai-counselor');
+              onNavigate('ai-counselor');
+            }}
+          >
+            AI Counselor
+          </span>
         </section>
 
         <section className="nav-auth-buttons">
@@ -233,116 +242,7 @@ export default function HomePage({ onLogout, onNavigate }) {
             <button className="demo-button" onClick={() => setActiveDemo('skills')}>
               Check Skill Gaps
             </button>
-            <button className="demo-button" onClick={() => setActiveDemo('jobs')}>
-              Find Job Matches
-            </button>
           </article>
-          
-          {/* Demo Results */}
-          {activeDemo && (
-            <section className="demo-results">
-              <button 
-                className="demo-close"
-                onClick={() => setActiveDemo(null)}
-              >
-                ×
-              </button>
-              
-              {activeDemo === 'career' && (
-                <article className="demo-content">
-                  <h4>Your Career Analysis</h4>
-                  <section className="analysis-grid">
-                    <article className="analysis-card">
-                      <span className="analysis-icon">📊</span>
-                      <h5>Current Level</h5>
-                      <p className="level-badge">Entry-Level Professional</p>
-                      <p>Based on your student status and skills</p>
-                    </article>
-                    <article className="analysis-card">
-                      <span className="analysis-icon">🎯</span>
-                      <h5>Next Step</h5>
-                      <p className="level-badge">Junior Developer</p>
-                      <p>Ready to transition within 3-6 months</p>
-                    </article>
-                    <article className="analysis-card">
-                      <span className="analysis-icon">💰</span>
-                      <h5>Salary Potential</h5>
-                      <p className="level-badge">$45K - $65K</p>
-                      <p>Starting salary range in your area</p>
-                    </article>
-                  </section>
-                </article>
-              )}
-              
-              {activeDemo === 'skills' && (
-                <article className="demo-content">
-                  <h4>Skill Gap Analysis</h4>
-                  <section className="skills-list">
-                    <article className="skill-item">
-                      <header className="skill-header">
-                        <span className="skill-name">JavaScript</span>
-                        <span className="skill-status complete">✓ Strong</span>
-                      </header>
-                      <div className="skill-bar">
-                        <div className="skill-progress" style={{width: '80%'}}></div>
-                      </div>
-                    </article>
-                    <article className="skill-item">
-                      <header className="skill-header">
-                        <span className="skill-name">React</span>
-                        <span className="skill-status learning">📚 Developing</span>
-                      </header>
-                      <div className="skill-bar">
-                        <div className="skill-progress" style={{width: '65%'}}></div>
-                      </div>
-                    </article>
-                    <article className="skill-item">
-                      <header className="skill-header">
-                        <span className="skill-name">Version Control (Git)</span>
-                        <span className="skill-status recommended">⭐ Recommended</span>
-                      </header>
-                      <div className="skill-bar">
-                        <div className="skill-progress" style={{width: '30%'}}></div>
-                      </div>
-                    </article>
-                  </section>
-                </article>
-              )}
-              
-              {activeDemo === 'jobs' && (
-                <article className="demo-content">
-                  <h4>Top Job Matches</h4>
-                  <section className="jobs-list">
-                    <article className="job-card">
-                      <header className="job-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '10px' }}>
-                        <h5 style={{ margin: '0', flex: '1', paddingRight: '15px' }}>Junior Web Developer</h5>
-                        <span className="match-badge" style={{ flexShrink: '0' }}>92% Match</span>
-                      </header>
-                      <p className="company">StartupCo • Remote</p>
-                      <p className="salary">$50K - $65K</p>
-                      <div className="job-tags">
-                        <span className="tag">Remote</span>
-                        <span className="tag">Full-time</span>
-                        <span className="tag">Entry-level</span>
-                      </div>
-                    </article>
-                    <article className="job-card">
-                      <header className="job-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '10px' }}>
-                        <h5 style={{ margin: '0', flex: '1', paddingRight: '15px' }}>Frontend Developer Intern</h5>
-                        <span className="match-badge" style={{ flexShrink: '0' }}>85% Match</span>
-                      </header>
-                      <p className="company">Tech Solutions • Philadelphia, PA</p>
-                      <p className="salary">$20/hour</p>
-                      <div className="job-tags">
-                        <span className="tag">Internship</span>
-                        <span className="tag">On-site</span>
-                      </div>
-                    </article>
-                  </section>
-                </article>
-              )}
-            </section>
-          )}
         </section>
       </section>
 

@@ -1,0 +1,474 @@
+.ai-counselor-main {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto; /* Enable scrolling */
+  background: linear-gradient(135deg, #000000 0%, #1a0a1a 50%, #000000 100%);
+}
+
+.ai-counselor-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  gap: 2rem; /* Better spacing */
+}
+
+/* Header with enhanced effects */
+.ai-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding-top: 1rem;
+}
+
+.ai-header-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.back-btn {
+  padding: 0.75rem;
+  background: rgba(42, 42, 42, 0.8);
+  border: 2px solid rgba(255, 0, 128, 0.3);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #ff0080;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.back-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(138, 43, 226, 0.15), transparent);
+  transition: left 0.5s;
+}
+
+.back-btn:hover::before {
+  left: 100%;
+}
+
+.back-btn:hover {
+  background: rgba(138, 43, 226, 0.1);
+  border-color: rgba(138, 43, 226, 0.6);
+  color: rgba(138, 43, 226, 0.9);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(138, 43, 226, 0.3);
+}
+
+.icon {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.title {
+  font-size: 4rem;
+  font-weight: bold;
+  background: linear-gradient(45deg, #ff0080, #b954b9, #ff0080);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0;
+  animation: gradientShift 3s ease-in-out infinite;
+  position: relative;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+/* Remove the ::before blur effect that was causing color bleeding */
+.title::before {
+  display: none;
+}
+
+/* Hover effects only */
+.title:hover {
+  transform: scale(1.05);
+  text-shadow: 0 0 25px rgba(138, 43, 226, 0.6); /* Soft purple glow */
+  filter: drop-shadow(0 0 15px rgba(138, 43, 226, 0.4)); /* Soft purple drop shadow */
+}
+
+/* Fixed sparkle effect - simple pulsing glow instead of rotation */
+.title::after {
+  content: '✨';
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: none; /* Remove any gradient inheritance */
+  -webkit-background-clip: unset;
+  background-clip: unset;
+  -webkit-text-fill-color: #ffd700; /* Force pure yellow */
+  color: #ffd700; /* Fallback yellow */
+  filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.3));
+  transition: all 0.3s ease;
+  z-index: 1;
+  opacity: 0; /* Hide by default */
+}
+
+/* Simple pulsing glow animation only on hover */
+.title:hover::after {
+  opacity: 1; /* Show only on hover */
+  animation: gentlePulse 2s ease-in-out infinite;
+  filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.8));
+  -webkit-text-fill-color: #ffd700;
+  color: #ffd700;
+}
+
+/* Replace the harsh spinning with gentle pulsing */
+@keyframes gentlePulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.6));
+    transform: scale(1);
+  }
+  50% {
+    filter: drop-shadow(0 0 20px rgba(255, 215, 0, 1));
+    transform: scale(1.05);
+  }
+}
+
+.subtitle {
+  color: #cccccc;
+  font-size: 1.25rem;
+  font-weight: 300;
+  margin: 0;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  opacity: 0.9;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.subtitle:hover {
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5), 0 0 15px rgba(138, 43, 226, 0.4);
+  color: #e0e0e0;
+}
+
+/* Chat section with better height management */
+.chat-section {
+  flex: 1;
+  position: relative;
+  margin-bottom: 1.5rem;
+  background: rgba(42, 42, 42, 0.7);
+  border-radius: 20px;
+  padding: 2rem;
+  border: 1px solid rgba(255, 0, 128, 0.2);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  min-height: 500px; /* Set minimum height */
+  max-height: 70vh; /* Limit maximum height */
+  transition: all 0.3s ease;
+}
+
+.chat-section:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 15px rgba(138, 43, 226, 0.1);
+  border-color: rgba(138, 43, 226, 0.2);
+}
+
+.chat-box {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: rgba(26, 26, 26, 0.5);
+  border-radius: 15px;
+  border: 1px solid rgba(255, 0, 128, 0.1);
+  min-height: 300px; /* Ensure minimum chat area */
+}
+
+/* Enhanced message styling */
+.message {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  animation: slideIn 0.3s ease-out;
+}
+
+.message.user {
+  flex-direction: row-reverse;
+}
+
+.avatar {
+  font-size: 1.5rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, #ff0080, #b954b9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 0 20px rgba(255, 0, 128, 0.5);
+  animation: pulse 2s infinite;
+}
+
+.bubble {
+  padding: 1rem 1.25rem;
+  max-width: 70%;
+  word-wrap: break-word;
+  line-height: 1.5;
+  font-size: 0.95rem;
+  border-radius: 18px;
+  transition: all 0.3s ease;
+}
+
+.bubble.user {
+  background: linear-gradient(45deg, #ff0080, #b954b9);
+  color: white;
+  border-radius: 18px 18px 5px 18px;
+  box-shadow: 0 5px 15px rgba(255, 0, 128, 0.3);
+}
+
+.bubble.ai {
+  background: rgba(42, 42, 42, 0.8);
+  color: #fff;
+  border: 1px solid rgba(255, 0, 128, 0.2);
+  border-radius: 18px 18px 18px 5px;
+  box-shadow: 0 0 10px rgba(255, 0, 128, 0.1);
+}
+
+/* Input section styling */
+.input-section {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  padding-top: 1rem;
+}
+
+.chat-input {
+  flex: 1;
+  padding: 1rem 1.25rem;
+  border: 1px solid rgba(255, 0, 128, 0.3);
+  border-radius: 25px;
+  background: rgba(26, 26, 26, 0.7);
+  color: #fff;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.chat-input:focus {
+  border-color: #ff0080;
+  box-shadow: 0 0 0 2px rgba(255, 0, 128, 0.2);
+  background: rgba(26, 26, 26, 0.9);
+}
+
+.send-btn {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, #ff0080, #b954b9);
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 5px 15px rgba(255, 0, 128, 0.4);
+}
+
+.send-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(255, 0, 128, 0.6);
+}
+
+/* Suggestions section */
+.suggestions {
+  background: rgba(42, 42, 42, 0.5);
+  border-radius: 15px;
+  padding: 1.5rem;
+  border: 1px solid rgba(255, 0, 128, 0.1);
+  backdrop-filter: blur(10px);
+  max-height: 40vh; /* Limit suggestions height */
+  overflow-y: auto;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.suggestions:hover {
+  border-color: rgba(138, 43, 226, 0.15);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+}
+
+.suggestions-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.suggestions-header h3 {
+  color: #ff0080;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.refresh-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 0, 128, 0.3);
+  color: #ff0080;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.refresh-btn:hover {
+  background: rgba(255, 0, 128, 0.1);
+  border-color: #ff0080;
+}
+
+.suggestion-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+  max-height: 300px; /* Limit grid height */
+  overflow-y: auto;
+}
+
+/* Enhanced animations */
+@keyframes gradientShift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(255, 0, 128, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(255, 0, 128, 0.8);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes typing {
+  0%, 80%, 100% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .ai-counselor-container {
+    padding: 1rem;
+    gap: 1rem;
+  }
+  
+  .title {
+    font-size: 2.5rem;
+  }
+  
+  .chat-section {
+    padding: 1rem;
+    max-height: 60vh;
+  }
+  
+  .suggestion-grid {
+    grid-template-columns: 1fr;
+    max-height: 200px;
+  }
+}
+
+/* Enhanced scrollbar */
+.custom-scrollbar::-webkit-scrollbar,
+.suggestions::-webkit-scrollbar,
+.suggestion-grid::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track,
+.suggestions::-webkit-scrollbar-track,
+.suggestion-grid::-webkit-scrollbar-track {
+  background: rgba(42, 42, 42, 0.3);
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb,
+.suggestions::-webkit-scrollbar-thumb,
+.suggestion-grid::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #ff0080, #b954b9);
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(255, 0, 128, 0.5);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover,
+.suggestions::-webkit-scrollbar-thumb:hover,
+.suggestion-grid::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(45deg, #b954b9, #ff0080);
+}
+
+/* Enhanced suggestion cards - hover effects only */
+.suggestion-card {
+  background: rgba(26, 26, 26, 0.6);
+  border: 1px solid rgba(255, 0, 128, 0.2);
+  border-radius: 10px;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #ccc;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  position: relative;
+  overflow: hidden;
+}
+
+.suggestion-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(138, 43, 226, 0.08), transparent);
+  transition: left 0.5s;
+}
+
+.suggestion-card:hover::before {
+  left: 100%;
+}
+
+.suggestion-card:hover {
+  border-color: rgba(138, 43, 226, 0.5);
+  background: rgba(26, 26, 26, 0.8);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(138, 43, 226, 0.15);
+  color: #fff;
+}

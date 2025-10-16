@@ -44,28 +44,3 @@ export default function Project({ id, title, description, tech, link, onEdit }){
     );
 };
 
-// Alternatively we could spell it out 
-
-// export default function Project({ title, description, tech, link }){
-   
-//     return (
-   
-//         <div className="project-card">
-//             <h3 className="project-title">{title}</h3>
-//             <p className="project-description">{description}</p>
-//             <p className="project-tech">
-//                 <strong>Technologies:</strong> {tech}
-//             </p>
-//             {link && (
-//                 <a 
-//                     href={link} 
-//                     target="_blank" 
-//                     rel="noopener noreferrer" 
-//                     className="project-link"
-//                 >
-//                     View Project
-//                 </a>
-//             )}
-//         </div>
-//     );
-// };

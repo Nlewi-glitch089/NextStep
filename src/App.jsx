@@ -8,8 +8,8 @@ import ProjectsPage from "./Components/ProjectsPage";
 import About from "./Components/About";
 import Services from "./Components/Services";
 import Contact from "./Components/Contact";
-import WhyUs from "./Components/WhyUs";
 import Welcome from "./Components/Welcome";
+import EosCounselor from "./Components/EosCounselor";
 
 // Import your context provider
 import { ProjectProvider } from "./context/ProjectContext";
@@ -94,8 +94,14 @@ function AppContent() {
         element={<Contact onNavigate={handleNavigate} />} 
       />
       <Route 
-        path="/why-us" 
-        element={<WhyUs />} 
+        path="/ai-counselor" 
+        element={
+          isAuthenticated ? (
+            <EosCounselor onNavigate={handleNavigate} />
+          ) : (
+            <Welcome onLogin={handleLogin} />
+          )
+        }
       />
     </Routes>
   );
