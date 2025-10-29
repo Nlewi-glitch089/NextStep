@@ -18,12 +18,28 @@ export default function SkillFormPage({ onComplete, onBack }) {
   });
 
   const steps = [
-    'Basic Information',
+    'About You',
     'Career Interests', 
     'Skills & Experience',
     'Work Preferences',
     'Learning & Development',
     'Review & Submit'
+  ];
+
+  // Updated to be more student-focused
+  const educationLevelOptions = [
+    'High School Senior', 'Recent High School Graduate', 'Gap Year Student',
+    'Community College Student', 'University Student (1st Year)', 
+    'University Student (2nd Year)', 'University Student (3rd Year)',
+    'University Student (4th Year)', 'Graduate Student', 'Trade School Student',
+    'Online Learning Student', 'Self-Taught Learner'
+  ];
+
+  const experienceOptions = [
+    'No Work Experience', 'Part-time Job Experience', 'Summer Job Experience',
+    'Internship Experience', 'Volunteer Experience', 'Personal Projects',
+    'School Projects', 'Freelance/Gig Work', 'Family Business Experience',
+    'Less than 1 year', '1-2 years'
   ];
 
   // Multiple choice options
@@ -81,12 +97,6 @@ export default function SkillFormPage({ onComplete, onBack }) {
     'Time Management', 'Critical Thinking', 'Adaptability', 'Creativity',
     'Public Speaking', 'Project Management', 'Conflict Resolution',
     'Emotional Intelligence', 'Negotiation', 'Customer Service'
-  ];
-
-  const experienceOptions = [
-    'No Experience', 'Less than 1 year', '1-2 years', '2-3 years',
-    '3-5 years', '5-8 years', '8+ years', 'Student/Learning',
-    'Career Changer', 'Recent Bootcamp Graduate'
   ];
 
   const handleMultipleChoice = (field, value) => {
@@ -148,35 +158,42 @@ export default function SkillFormPage({ onComplete, onBack }) {
 
   const renderStepContent = () => {
     switch (currentStep) {
-      case 0: // Basic Information
+      case 0: // About You - More student-focused
         return (
           <div className="step-content">
             <h3>Tell us about yourself</h3>
+            <p>Help us understand where you are in your educational journey and what you're hoping to achieve.</p>
             
             <div className="form-group">
-              <label>Current Role</label>
-              <input
-                type="text"
-                name="currentRole"
-                value={formData.currentRole}
-                onChange={handleInputChange}
-                placeholder="e.g., Computer Science Student, Junior Developer"
-              />
+              <label>What best describes your current situation?</label>
+              <div className="choice-grid">
+                {educationLevelOptions.map(option => (
+                  <button
+                    key={option}
+                    type="button"
+                    className={`choice-button ${formData.currentRole === option ? 'selected' : ''}`}
+                    onClick={() => handleSingleChoice('currentRole', option)}
+                  >
+                    {option}
+                  </button>
+                ))}
+              </div>
             </div>
 
             <div className="form-group">
-              <label>Career Goal</label>
+              <label>What career field interests you most? (You can change this later)</label>
               <input
                 type="text"
                 name="careerGoal"
                 value={formData.careerGoal}
                 onChange={handleInputChange}
-                placeholder="e.g., Software Engineer, Data Scientist"
+                placeholder="e.g., Software Development, Healthcare, Education, Business..."
               />
+              <small>Don't worry if you're not sure yet - this helps us give you better recommendations!</small>
             </div>
 
             <div className="form-group">
-              <label>Experience Level</label>
+              <label>What's your experience level?</label>
               <div className="choice-grid">
                 {experienceOptions.map(option => (
                   <button
@@ -345,16 +362,16 @@ export default function SkillFormPage({ onComplete, onBack }) {
           </div>
         );
 
-      case 5: // Review & Submit
+      case 5: // Review & Submit - Update to reflect new data
         return (
           <div className="step-content">
             <h3>Review Your Responses</h3>
             
             <div className="review-section">
               <div className="review-group">
-                <h4>Basic Information</h4>
-                <p><strong>Current Role:</strong> {formData.currentRole || 'Not specified'}</p>
-                <p><strong>Career Goal:</strong> {formData.careerGoal || 'Not specified'}</p>
+                <h4>About You</h4>
+                <p><strong>Current Situation:</strong> {formData.currentRole || 'Not specified'}</p>
+                <p><strong>Career Interest:</strong> {formData.careerGoal || 'Exploring options'}</p>
                 <p><strong>Experience:</strong> {formData.experience || 'Not specified'}</p>
               </div>
 
@@ -368,7 +385,7 @@ export default function SkillFormPage({ onComplete, onBack }) {
               </div>
 
               <div className="review-group">
-                <h4>Technical Skills ({formData.skills.length})</h4>
+                <h4>Skills & Technologies ({formData.skills.length})</h4>
                 <div className="review-tags">
                   {formData.skills.map(skill => (
                     <span key={skill} className="review-tag">{skill}</span>
@@ -386,7 +403,7 @@ export default function SkillFormPage({ onComplete, onBack }) {
               </div>
 
               <div className="review-group">
-                <h4>Learning Styles ({formData.learningStyle.length})</h4>
+                <h4>Learning Preferences ({formData.learningStyle.length})</h4>
                 <div className="review-tags">
                   {formData.learningStyle.map(style => (
                     <span key={style} className="review-tag">{style}</span>

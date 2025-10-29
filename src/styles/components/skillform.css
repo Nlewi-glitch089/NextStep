@@ -169,6 +169,25 @@
   color: #6c757d !important;
 }
 
+/* Form Group Helper Text */
+.skill-form-main .form-group small {
+  display: block;
+  color: #a0a9ba;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  font-style: italic;
+  text-align: center;
+}
+
+/* Step Content Description */
+.skill-form-main .step-content p {
+  color: #b0c4de;
+  font-size: 1rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
 /* Choice Grid */
 .skill-form-main .choice-grid {
   display: grid !important;
@@ -178,46 +197,22 @@
   padding: 0 !important;
 }
 
+/* Choice Buttons - Better sizing for education options */
 .skill-form-main .choice-button {
-  background: rgba(255, 255, 255, 0.15) !important;
-  border: 2px solid rgba(255, 255, 255, 0.3) !important;
-  border-radius: 8px !important;
-  padding: 1rem 1.25rem !important;
-  color: #ffffff !important;
-  font-size: 0.95rem !important;
-  font-weight: 500 !important;
-  text-align: center !important;
-  cursor: pointer !important;
-  transition: all 0.3s ease !important;
-  min-height: 60px !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  word-wrap: break-word !important;
-  hyphens: auto !important;
-  line-height: 1.3 !important;
-}
-
-.skill-form-main .choice-button:hover {
-  background: rgba(255, 0, 128, 0.3) !important;
-  border-color: rgba(255, 0, 128, 0.7) !important;
-  transform: translateY(-2px) !important;
-  box-shadow: 0 4px 12px rgba(255, 0, 128, 0.4) !important;
-}
-
-.skill-form-main .choice-button.selected {
-  background: linear-gradient(45deg, #ff0080, #b954b9) !important;
-  border-color: #ff0080 !important;
-  color: #ffffff !important;
-  font-weight: 600 !important;
-  transform: translateY(-2px) !important;
-  box-shadow: 0 6px 20px rgba(255, 0, 128, 0.4) !important;
-}
-
-.skill-form-main .choice-button.selected:hover {
-  background: linear-gradient(45deg, #b954b9, #9b59b6) !important;
-  transform: translateY(-3px) !important;
-  box-shadow: 0 8px 25px rgba(255, 0, 128, 0.5) !important;
+  padding: 1rem 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+  text-align: center;
+  line-height: 1.3;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Form Navigation - Simplified layout */
