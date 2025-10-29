@@ -107,6 +107,32 @@
   outline: none;
 }
 
+/* Auth Form Headers with gradient effect */
+.auth-form-header h2.hero-title {
+  font-size: 2.5rem !important;
+  font-weight: 800 !important;
+  background: linear-gradient(45deg, #ff0080, #b954b9, #9b59b6) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  text-shadow: 0 0 25px rgba(255, 0, 128, 0.4) !important;
+  margin-bottom: 1rem !important;
+  text-align: center !important;
+}
+
+/* Ensure responsive sizing */
+@media (max-width: 768px) {
+  .auth-form-header h2.hero-title {
+    font-size: 2rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-form-header h2.hero-title {
+    font-size: 1.75rem !important;
+  }
+}
+
 /* Enhanced Welcome Page Styles */
 .welcome-page {
   background: linear-gradient(135deg, #000000 0%, #1a0a1a 50%, #000000 100%);

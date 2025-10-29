@@ -216,7 +216,7 @@ export default function Welcome({ onLogin }) {
                   <div className="auth-form-wrapper">
                     <form className="auth-form" onSubmit={handleSigninSubmit}>
                       <div className="auth-form-header">
-                        <h2>{isReturningUser ? "Welcome Back!" : "Welcome Back"}</h2>
+                        <h2 className="hero-title">{isReturningUser ? "Welcome Back!" : "Welcome Back"}</h2>
                         <p>{isReturningUser ? "Continue your career journey" : "Sign in to continue your career journey"}</p>
                       </div>
                       
@@ -256,7 +256,7 @@ export default function Welcome({ onLogin }) {
                   <div className="auth-form-wrapper">
                     <form className="auth-form" onSubmit={handleSignupSubmit}>
                       <div className="auth-form-header">
-                        <h2>Create Account</h2>
+                        <h2 className="hero-title">Create Account</h2>
                         <p>Let's Get Started</p>
                       </div>
                       
