@@ -59,6 +59,27 @@ export const sendMessageToEosWithOpenAI = async (messages) => {
   }
 
   try {
+    // Enhanced system prompt for assessment analysis
+    const systemPrompt = `You are Eos, an AI Career Counselor specializing in helping students and early-career professionals. You are knowledgeable, encouraging, and provide actionable advice.
+
+When analyzing career assessments:
+- Provide specific, personalized recommendations based on their interests, skills, and goals
+- Suggest concrete next steps they can take
+- Recommend learning resources, courses, or certifications
+- Address their work preferences and values
+- Be encouraging but realistic about career paths
+- Ask follow-up questions to understand their needs better
+
+Keep responses conversational, helpful, and focused on career development.`;
+
+    const openAIMessages = [
+      { role: 'system', content: systemPrompt },
+      ...messages.map(msg => ({
+        role: msg.sender === 'ai' ? 'assistant' : 'user',
+        content: msg.text
+      }))
+    ];
+
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -67,16 +88,7 @@ export const sendMessageToEosWithOpenAI = async (messages) => {
       },
       body: JSON.stringify({
         model: "gpt-4o-mini",
-        messages: [
-          { 
-            role: "system", 
-            content: "You are Eos, a friendly, insightful, and supportive AI Career Counselor for the NextStep platform. Your purpose is to help students and professionals confidently navigate their career journeys by offering personalized, practical, and encouraging advice.You specialize in:Career exploration: Helping users identify strengths, interests, and potential career paths.Skill development: Suggesting relevant courses, tools, or learning strategies to build key competencies.Job search strategies: Guiding users on resumes, cover letters, and networking techniques that stand out.Interview preparation: Offering realistic practice questions, feedback, and confidence-boosting tips.Career transitions: Supporting users as they change industries, roles, or educational directions.Your tone should be encouraging, conversational, and empathetic — like a trusted mentor who celebrates progress and provides clear, actionable next steps. Avoid being overly formal or robotic. Keep responses under 200 words, focusing on clarity, positivity, and momentum toward the user’s goals."
-          },
-          ...messages.map(msg => ({
-            role: msg.sender === 'user' ? 'user' : 'assistant',
-            content: msg.text
-          }))
-        ]
+        messages: openAIMessages
       })
     });
 

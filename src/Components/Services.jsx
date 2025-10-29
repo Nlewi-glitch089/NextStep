@@ -1,76 +1,71 @@
+// ServicesPage.jsx
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import '../styles/pages/services.css';
+import '../styles/components/services.css';
 
-export default function Services() {
-  const navigate = useNavigate();
+export default function Services({ onNavigate }) {
   const handleBackToHome = () => {
-    navigate('/home');
+    if (onNavigate) {
+      onNavigate('home');
+    }
   };
 
   return (
     <main className="home-main dark">
-      <section className="page-container">
-        <header className="page-header">
-          <h1 className="page-title">Our Services</h1>
-          <p className="page-subtitle">Comprehensive Career Guidance Solutions</p>
-        </header>
-
-        <section className="page-content">
-          <section className="features-grid">
-            {[
-              {
-                icon: '🎯',
-                title: 'Career Path Analysis',
-                description:
-                  'Personalized career recommendations based on your skills, interests, and market trends.',
-              },
-              {
-                icon: '📄',
-                title: 'Resume Builder',
-                description:
-                  'Professional resume templates optimized for your target industry and role.',
-              },
-              {
-                icon: '🎤',
-                title: 'Interview Preparation',
-                description:
-                  'Mock interviews and practice sessions to boost your confidence and performance.',
-              },
-              {
-                icon: '💼',
-                title: 'Job Matching',
-                description:
-                  'AI-powered job recommendations that align with your skills and career goals.',
-              },
-              {
-                icon: '📚',
-                title: 'Skill Development',
-                description:
-                  'Customized learning paths to develop in-demand skills for your chosen career.',
-              },
-              {
-                icon: '🌐',
-                title: 'Industry Networking',
-                description:
-                  'Connect with professionals and mentors in your field of interest.',
-              },
-            ].map((feature, index) => (
-              <article key={index} className="feature-card">
-                <div className="feature-icon">{feature.icon}</div>
-                <h3 className="feature-title">{feature.title}</h3>
-                <p className="feature-description">{feature.description}</p>
-              </article>
-            ))}
-          </section>
+      <nav className="navbar">
+        <h1 className="nav-logo interactive-logo" onClick={handleBackToHome}>
+          NextStep
+          <div className="logo-glow"></div>
+        </h1>
+        <section className="nav-links">
+          {/* Empty nav links section for consistent spacing */}
         </section>
+        <section className="nav-auth-buttons">
+          <button className="cta-button back-home-btn" onClick={handleBackToHome}>
+            ← Back to Home
+          </button>
+        </section>
+      </nav>
 
-        <footer className="page-actions">
+      <div className="page-container">
+        <div className="page-header">
+          <h1 className="page-title hero-title">Our Services</h1>
+          <p className="page-subtitle">Comprehensive career guidance solutions designed to help you succeed</p>
+        </div>
+
+        <div className="services-content">
+          <div className="services-grid">
+            <div className="service-card">
+              <div className="service-icon">🎯</div>
+              <h3>Career Assessment</h3>
+              <p>Discover your strengths, interests, and career preferences through our comprehensive assessment tool.</p>
+            </div>
+
+            <div className="service-card">
+              <div className="service-icon">🤖</div>
+              <h3>AI Career Counselor</h3>
+              <p>Get personalized career advice and guidance from Eos, our AI-powered career counselor available 24/7.</p>
+            </div>
+
+            <div className="service-card">
+              <div className="service-icon">📊</div>
+              <h3>Portfolio Management</h3>
+              <p>Create and manage your professional portfolio to showcase your skills and projects to potential employers.</p>
+            </div>
+
+            <div className="service-card">
+              <div className="service-icon">🎓</div>
+              <h3>Learning Resources</h3>
+              <p>Access curated learning materials and resources to develop your skills and advance your career.</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="page-actions">
           <button className="cta-button" onClick={handleBackToHome}>
             Back to Home
           </button>
-        </footer>
-      </section>
+        </div>
+      </div>
     </main>
   );
 }

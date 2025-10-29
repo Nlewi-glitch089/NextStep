@@ -437,6 +437,30 @@
     0 0 50px rgba(255, 0, 128, 0.3);
 }
 
+/* Skill Assessment Wrapper */
+.skill-assessment-wrapper {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 9999 !important;
+  background: linear-gradient(135deg, #1e1b3a 0%, #2d2654 50%, #3a2d6b 100%) !important;
+  overflow-y: auto !important;
+}
+
+/* Override any welcome page styles that might leak through */
+.skill-assessment-wrapper * {
+  background-color: transparent !important;
+}
+
+.skill-assessment-wrapper .skill-form-main {
+  background: linear-gradient(135deg, #1e1b3a 0%, #2d2654 50%, #3a2d6b 100%) !important;
+  position: relative !important;
+  min-height: 100vh !important;
+  width: 100% !important;
+}
+
 /* Responsive Enhancements */
 @media (max-width: 768px) {
   .welcome-hero {

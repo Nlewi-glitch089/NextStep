@@ -1,13 +1,26 @@
-// HomePage.jsx
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+// Home.jsx
+import React, { useState, useEffect } from 'react';
 import '../styles/pages/home.css';
 
-export default function HomePage({ onLogout, onNavigate }) {
-  const navigate = useNavigate();
+export default function Home({ onLogout, onNavigate }) {
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [activeSection, setActiveSection] = useState('home');
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [userProfile, setUserProfile] = useState(null);
+
+  // Load user profile on component mount
+  useEffect(() => {
+    try {
+      const userData = localStorage.getItem("userProfile");
+      if (userData) {
+        const userProfile = JSON.parse(userData);
+        setUserProfile(userProfile);
+      }
+    } catch (error) {
+      console.error('Error loading user profile in Home:', error);
+      // Continue without user profile data
+    }
+  }, []);
 
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
@@ -18,17 +31,40 @@ export default function HomePage({ onLogout, onNavigate }) {
   };
 
   const handleGetStarted = () => {
-    // Navigate to projects section on the same page
-    scrollToSection('projects');
+    try {
+      // Navigate to AI Counselor instead of projects section
+      if (onNavigate) {
+        onNavigate('ai-counselor');
+      }
+    } catch (error) {
+      console.error('Error in handleGetStarted:', error);
+    }
   };
 
-  const handleSignIn = () => {
-    navigate('/profile');
+  const handleProfileClick = () => {
+    try {
+      if (onNavigate) {
+        onNavigate('profile');
+      }
+    } catch (error) {
+      console.error('Error in handleProfileClick:', error);
+    }
   };
 
   const handleLogout = () => {
-    if (onLogout) {
-      onLogout();
+    try {
+      // Only clear authentication status, NOT user profile data
+      localStorage.removeItem("isAuthenticated");
+      
+      // Keep userProfile and surveyAnswers so user can sign back in
+      // localStorage.removeItem("userProfile"); // DON'T remove this
+      // localStorage.removeItem("surveyAnswers"); // DON'T remove this
+      
+      if (onLogout) {
+        onLogout();
+      }
+    } catch (error) {
+      console.error('Error during logout:', error);
     }
   };
 
@@ -46,24 +82,53 @@ export default function HomePage({ onLogout, onNavigate }) {
     }, 50);
   };
 
+  const handleAICounselorClick = () => {
+    try {
+      if (onNavigate) {
+        onNavigate('ai-counselor');
+      }
+    } catch (error) {
+      console.error('Error in handleAICounselorClick:', error);
+    }
+  };
+
   const handleProjectsClick = () => {
-    navigate('/projects');
+    try {
+      if (onNavigate) {
+        onNavigate('projects');
+      }
+    } catch (error) {
+      console.error('Error in handleProjectsClick:', error);
+    }
   };
 
   const handleServicesClick = () => {
-    navigate('/services');
+    try {
+      if (onNavigate) {
+        onNavigate('services');
+      }
+    } catch (error) {
+      console.error('Error in handleServicesClick:', error);
+    }
   };
 
   const handleContactClick = () => {
-    navigate('/contact');
+    try {
+      if (onNavigate) {
+        onNavigate('contact');
+      }
+    } catch (error) {
+      console.error('Error in handleContactClick:', error);
+    }
   };
 
   return (
     <main className={`home-main ${isDarkMode ? 'dark' : 'light'} ${isTransitioning ? 'transitioning' : ''}`}>
       {/* Navigation Bar */}
       <nav className="navbar">
-        <h1 className="nav-logo" onClick={() => scrollToSection('home')}>
+        <h1 className="nav-logo interactive-logo" onClick={() => scrollToSection('home')}>
           NextStep
+          <div className="logo-glow"></div>
         </h1>
         
         <section className="nav-links">
@@ -93,18 +158,15 @@ export default function HomePage({ onLogout, onNavigate }) {
           </span>
           <span
             className="nav-link"
-            onClick={() => {
-              setActiveSection('ai-counselor');
-              onNavigate('ai-counselor');
-            }}
+            onClick={handleAICounselorClick}
           >
             AI Counselor
           </span>
         </section>
 
         <section className="nav-auth-buttons">
-          <button className="sign-in-button" onClick={handleSignIn}>
-            My Profile
+          <button className="sign-in-button" onClick={handleProfileClick}>
+            {userProfile ? `Hi, ${userProfile.fullName?.split(' ')[0] || 'User'} | Profile` : 'My Profile'}
           </button>
           <button className="sign-in-button" onClick={handleLogout}>
             Sign Out
@@ -122,21 +184,19 @@ export default function HomePage({ onLogout, onNavigate }) {
       <section id="home" className="hero-section">
         <h1 className="hero-title">NextStep</h1>
         <p className="hero-subtitle">
-          Bridge the Gap Between Student Skills and Employer Needs
+          Bridge the Gap Between Student Growth and Future Readiness
         </p>
         <button className="cta-button" onClick={handleGetStarted}>
           GET STARTED
         </button>
       </section>
 
-      {/* About NextStep Section */}
+      {/* About NextStep Section - Student-focused content */}
       <section id="about" className="features-section">
-        <h2 className="section-title">About NextStep</h2>
+        <h2 className="section-title hero-title">About NextStep</h2>
         <div className="about-intro">
           <p className="about-description">
-            NextStep is more than just a career platform - we're your partners in bridging the gap between 
-            education and meaningful employment. Our mission is to empower students with the tools, insights, 
-            and confidence they need to succeed in today's competitive job market.
+            NextStep is more than just a career resource, we're your guide for discovering confidence, purpose, and direction as you prepare for life beyond the classroom. Our mission is to help high school seniors turn their skills, experiences, and passions into meaningful opportunities for the future.
           </p>
         </div>
 
@@ -163,15 +223,14 @@ export default function HomePage({ onLogout, onNavigate }) {
             <header className="highlight-icon">🤝</header>
             <h3 className="highlight-title">Our Values</h3>
             <p className="highlight-description">
-              We believe in personalized guidance, real-time market insights, and empowering students 
-              with practical tools for career success.
+              We believe in self-discovery, hands-on learning, and meaningful growth. NextStep empowers students through personalized guidance, real-world insight, and practical tools that make the path forward feel achievable.
             </p>
           </section>
         </article>
 
         {/* Our Goals Statistics */}
         <section className="goals-section">
-          <h3 className="goals-title">Our Vision Someday & Future Goals</h3>
+          <h3 className="goals-title hero-title">Our Vision Someday & Future Goals</h3>
           <article className="stats-grid">
             <section className="stat-card">
               <header className="stat-number">10,000+</header>
@@ -193,32 +252,32 @@ export default function HomePage({ onLogout, onNavigate }) {
         </section>
       </section>
 
-      {/* How It Works Section */}
+      {/* How It Works Section - Student-focused workflow */}
       <section id="how-it-works" className="how-it-works-section">
-        <h2 className="section-title">How NextStep Works</h2>
+        <h2 className="section-title hero-title">How NextStep Works</h2>
         
         <article className="steps-grid">
           <section className="step-card">
             <div className="step-number">1</div>
-            <h3 className="step-title">Profile Assessment</h3>
+            <h3 className="step-title">Self-Discovery Assessment</h3>
             <p className="step-description">
-              Complete our comprehensive skills and interests assessment to create your personalized profile.
+              Start by completing our guided skills and interests assessment to uncover your strengths, passions, and areas for growth.
             </p>
           </section>
 
           <section className="step-card">
             <div className="step-number">2</div>
-            <h3 className="step-title">Market Analysis</h3>
+            <h3 className="step-title">Real-World Insights</h3>
             <p className="step-description">
-              Our AI analyzes current job market trends and matches them with your profile and career goals.
+              Our platform connects your results with current opportunities, emerging industries, and skill trends — giving you a clear picture of where you can grow next.
             </p>
           </section>
 
           <section className="step-card">
             <div className="step-number">3</div>
-            <h3 className="step-title">Personalized Action Plan</h3>
+            <h3 className="step-title">Personalized Growth Plan</h3>
             <p className="step-description">
-              Receive a customized roadmap with specific steps to achieve your career objectives.
+              Receive a customized roadmap with actionable steps designed to help you strengthen your abilities, explore new pathways, and build future-ready confidence.
             </p>
           </section>
 
@@ -226,18 +285,18 @@ export default function HomePage({ onLogout, onNavigate }) {
             <div className="step-number">4</div>
             <h3 className="step-title">Track Progress</h3>
             <p className="step-description">
-              Monitor your development and adjust your path based on real-time feedback and market changes.
+              Monitor your journey over time with feedback, milestones, and updated goals that grow with you.
             </p>
           </section>
         </article>
       </section>
 
-      {/* Projects Section */}
+      {/* Projects Section - Update text to reflect new flow */}
       <section id="projects" className="features-section">
-        <h2 className="section-title">Ready to Showcase Your Work?</h2>
+        <h2 className="section-title hero-title">Ready to Build Your Portfolio?</h2>
         <section className="project-cta-section">
           <p className="project-cta-description">
-            Create and manage your project portfolio. Add your completed projects, 
+            After chatting with Eos, create and manage your project portfolio. Add your completed projects, 
             track your progress, and showcase your skills to potential employers.
           </p>
           <button className="cta-button" onClick={handleProjectsClick}>

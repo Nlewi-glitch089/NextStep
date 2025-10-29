@@ -7,313 +7,542 @@
 }
 
 .profile-card {
-  background: #2a2a2a !important;
-  border-radius: 15px !important;
-  padding: 2rem !important;
-  border: 1px solid rgba(255, 0, 128, 0.1) !important;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3) !important;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  backdrop-filter: blur(10px);
 }
 
 .profile-header {
-  display: grid !important;
-  grid-template-columns: auto 1fr auto !important;
-  gap: 2rem !important;
-  align-items: center !important;
-  margin-bottom: 3rem !important;
-  padding-bottom: 2rem !important;
-  border-bottom: 1px solid #444 !important;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .profile-avatar {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
+  flex-shrink: 0;
 }
 
 .avatar-placeholder {
-  width: 80px !important;
-  height: 80px !important;
-  border-radius: 50% !important;
-  background: linear-gradient(45deg, #ff0080, #b954b9) !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  font-size: 2rem !important;
-  font-weight: bold !important;
-  color: white !important;
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #9b59b6, #8e44ad);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.profile-info {
+  flex: 1;
 }
 
 .profile-info h2 {
-  color: #ff0080 !important;
-  margin-bottom: 0.5rem !important;
-  font-size: 1.8rem !important;
+  color: #ffffff;
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
 }
 
 .profile-info p {
-  color: #ccc !important;
-  margin-bottom: 0.25rem !important;
-  font-size: 1.1rem !important;
+  color: #a0a9ba;
+  font-size: 1rem;
+  margin: 0.25rem 0;
 }
 
 .career-goal {
-  color: #b954b9 !important;
-  font-weight: bold !important;
+  color: #ff0080 !important;
+  font-weight: 500;
 }
 
 .profile-actions {
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 1rem !important;
+  flex-shrink: 0;
 }
 
+.edit-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+/* Profile Details and Sections */
 .profile-details {
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 2rem !important;
+  margin-top: 2rem;
+}
+
+.profile-section {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .profile-section h3 {
-  color: #ff0080 !important;
-  margin-bottom: 1rem !important;
-  font-size: 1.3rem !important;
+  color: #ffffff;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid rgba(255, 0, 128, 0.3);
+  padding-bottom: 0.5rem;
 }
 
-.form-grid {
-  display: grid !important;
-  grid-template-columns: 1fr 1fr !important;
-  gap: 1.5rem !important;
-}
-
+/* Form Group Styling */
 .form-group {
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 0.5rem !important;
+  margin-bottom: 1.25rem;
 }
 
 .form-group label {
-  color: #ccc !important;
-  font-weight: 500 !important;
-  font-size: 0.9rem !important;
+  display: block;
+  color: #b0c4de;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .form-group p {
-  color: #fff !important;
-  background: #1a1a1a !important;
-  padding: 0.9rem !important;
-  border-radius: 8px !important;
-  border: 1px solid rgba(255, 0, 128, 0.1) !important;
-  font-size: 1rem !important;
+  color: #ffffff;
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 0;
+  padding: 0.75rem 0;
+  min-height: 1.5rem;
 }
 
 .form-group input,
 .form-group select {
-  padding: 0.9rem !important;
-  border: none !important;
-  border-radius: 8px !important;
-  background: #1a1a1a !important;
-  color: #fff !important;
-  font-size: 1rem !important;
-  outline: none !important;
-  border: 1px solid rgba(255, 0, 128, 0.1) !important;
-}
-
-.form-group select:focus {
-  border-color: #ff0080 !important;
-  box-shadow: 0 0 0 2px rgba(255, 0, 128, 0.1) !important;
-}
-
-.skills-section {
-  margin-bottom: 2.5rem !important;
-  padding-bottom: 1.5rem !important;
-  border-bottom: 1px solid rgba(255, 0, 128, 0.1) !important;
-}
-
-.skills-list {
-  display: flex !important;
-  flex-wrap: wrap !important;
-  gap: 0.5rem !important;
-  margin: 1rem 0 !important;
-}
-
-/* Skills Management */
-.skill-tag {
-  background: rgba(255, 0, 128, 0.2);
-  color: #ff0080;
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  font-size: 0.9rem;
-  border: 1px solid rgba(255, 0, 128, 0.3);
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  position: relative;
-}
-
-.skill-remove {
-  background: transparent;
-  border: none;
-  color: #ff0080;
-  cursor: pointer;
-  font-size: 1.2rem;
-  font-weight: bold;
-  padding: 0;
-  width: 20px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  color: #ffffff;
+  font-size: 1rem;
   transition: all 0.3s ease;
 }
 
-.skill-remove:hover {
-  background: rgba(255, 0, 128, 0.1);
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #ff0080;
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 3px rgba(255, 0, 128, 0.1);
+}
+
+/* Form Grid Layout */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+@media (max-width: 768px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+/* Skills Section Styling */
+.skills-section {
+  margin-top: 1rem;
+}
+
+.skills-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.skill-tag {
+  background: linear-gradient(135deg, #ff0080, #b954b9);
+  color: #ffffff;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.skill-tag:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 0, 128, 0.3);
+}
+
+/* Survey Data Specific Styles */
+.survey-header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.survey-header-section h3 {
+  color: #ffffff;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+  border: none;
+  padding: 0;
+}
+
+.toggle-survey-btn {
+  background: rgba(255, 0, 128, 0.2);
   color: #ff0080;
+  border: 1px solid #ff0080;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-.add-skill-section {
-  margin-top: 1.5rem !important;
-  padding: 1rem !important;
-  background: rgba(255, 0, 128, 0.05) !important;
-  border-radius: 8px !important;
-  border: 1px solid rgba(255, 0, 128, 0.1) !important;
+.toggle-survey-btn:hover {
+  background: rgba(255, 0, 128, 0.3);
+  color: #ffffff;
 }
 
-.add-skill-input {
-  display: flex !important;
-  gap: 1rem !important;
-  align-items: flex-end !important;
-  flex-wrap: wrap !important;
+.survey-completed-info {
+  margin-bottom: 1rem;
 }
 
-.skill-input {
-  flex: 2 !important;
-  min-width: 200px !important;
-  padding: 0.8rem !important;
-  border: 1px solid rgba(255, 0, 128, 0.3) !important;
-  border-radius: 8px !important;
-  background: #1a1a1a !important;
-  color: #fff !important;
-  font-size: 1rem !important;
-  outline: none !important;
-  transition: all 0.3s ease !important;
+.survey-completed-date {
+  color: #a0a9ba;
+  font-size: 0.875rem;
+  font-style: italic;
+  margin: 0;
+  padding: 0;
 }
 
-.skill-input:focus {
-  border-color: #ff0080 !important;
-  box-shadow: 0 0 0 2px rgba(255, 0, 128, 0.1) !important;
+.survey-data-content {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  padding: 1.5rem;
+  margin-top: 1rem;
 }
 
-.skill-input::placeholder {
-  color: #888 !important;
-  font-style: italic !important;
+.survey-response {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  padding: 0.75rem 1rem;
+  color: #ffffff;
+  font-size: 1rem;
+  margin: 0;
 }
 
-.add-skill-input .btn-secondary {
-  flex-shrink: 0 !important;
-  min-width: 120px !important;
-  padding: 0.8rem 1.5rem !important;
-  margin-top: 0 !important;
+.interests-display {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
 }
 
-/* Experience Level Section Spacing */
-.profile-section:last-child .form-group:last-child {
-  margin-top: 2rem !important;
-  padding-top: 1.5rem !important;
-  border-top: 1px solid rgba(255, 0, 128, 0.1) !important;
+.interest-tag {
+  background: linear-gradient(135deg, #ff0080, #b954b9);
+  color: #ffffff;
+  padding: 0.4rem 0.8rem;
+  border-radius: 16px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
 }
 
-/* Edit Actions */
-.edit-actions {
-  display: flex !important;
-  flex-direction: row !important;
-  gap: 1.5rem !important;
-  justify-content: center !important;
+.interest-tag:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(255, 0, 128, 0.3);
 }
 
-/* Light Mode Profile Styles */
-.home-main.light .profile-card {
-  background: rgba(255, 255, 255, 0.9) !important;
-  border: 1px solid rgba(255, 0, 128, 0.2) !important;
+.survey-actions {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: flex-end;
 }
 
-.home-main.light .profile-header {
-  border-bottom: 1px solid #ddd !important;
+.retake-btn {
+  background: rgba(220, 53, 69, 0.2);
+  color: #dc3545;
+  border: 1px solid #dc3545;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-.home-main.light .profile-info p,
-.home-main.light .form-group label {
-  color: #555 !important;
+.retake-btn:hover {
+  background: rgba(220, 53, 69, 0.3);
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.2);
 }
 
-.home-main.light .form-group p {
-  color: #333 !important;
-  background: rgba(255, 255, 255, 0.8) !important;
-  border: 1px solid rgba(255, 0, 128, 0.2) !important;
+/* Button Styling Consistency */
+.btn-primary,
+.btn-secondary {
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  outline: none;
 }
 
-.home-main.light .form-group input,
-.home-main.light .form-group select {
-  background: rgba(255, 255, 255, 0.9) !important;
-  color: #333 !important;
-  border: 1px solid rgba(255, 0, 128, 0.2) !important;
+.btn-primary {
+  background: linear-gradient(135deg, #ff0080, #b954b9);
+  color: #ffffff;
 }
 
-.home-main.light .add-skill-section {
-  background: rgba(255, 0, 128, 0.03) !important;
-  border: 1px solid rgba(255, 0, 128, 0.15) !important;
+.btn-primary:hover {
+  background: linear-gradient(135deg, #b954b9, #9b59b6);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 0, 128, 0.3);
 }
 
-.home-main.light .skill-input {
-  background: rgba(255, 255, 255, 0.9) !important;
-  color: #333 !important;
-  border: 1px solid rgba(255, 0, 128, 0.3) !important;
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.home-main.light .skill-input::placeholder {
-  color: #666 !important;
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
 }
 
-.home-main.light .skill-input:focus {
-  border-color: #ff0080 !important;
-  box-shadow: 0 0 0 2px rgba(255, 0, 128, 0.1) !important;
+/* Page Container and Layout */
+.page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
 }
 
-.home-main.light .skills-section {
-  border-bottom: 1px solid rgba(255, 0, 128, 0.2) !important;
+.page-header {
+  text-align: center;
+  margin-bottom: 3rem;
 }
 
-.home-main.light .profile-section:last-child .form-group:last-child {
-  border-top: 1px solid rgba(255, 0, 128, 0.2) !important;
+.page-title {
+  color: #ffffff;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
 }
 
-/* Responsive Profile */
+.page-subtitle {
+  color: #a0a9ba;
+  font-size: 1.125rem;
+  margin: 0;
+}
+
+/* No Survey Data Section */
+.no-survey-data {
+  text-align: center;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  margin-top: 1rem;
+}
+
+.no-survey-data p {
+  color: #a0a9ba;
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.no-survey-data .cta-button {
+  background: linear-gradient(135deg, #ff0080, #b954b9);
+  color: #ffffff;
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.no-survey-data .cta-button:hover {
+  background: linear-gradient(135deg, #b954b9, #9b59b6);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 0, 128, 0.3);
+}
+
+/* Error Container Styling */
+.error-container {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: rgba(220, 53, 69, 0.1);
+  border: 1px solid rgba(220, 53, 69, 0.3);
+  border-radius: 12px;
+  margin: 2rem auto;
+  max-width: 600px;
+}
+
+.error-container h2 {
+  color: #dc3545;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.error-container p {
+  color: #ffffff;
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+.error-container .cta-button,
+.error-container .btn-secondary {
+  margin: 0.5rem;
+}
+
+/* Enhanced Survey Results Styling */
+.tech-tag {
+  background: linear-gradient(135deg, #ff0080, #b954b9);
+  color: #ffffff;
+  padding: 0.4rem 0.8rem;
+  border-radius: 16px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.soft-skill-tag {
+  background: linear-gradient(135deg, #51cf66, #40c057);
+  color: #ffffff;
+  padding: 0.4rem 0.8rem;
+  border-radius: 16px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.env-tag {
+  background: linear-gradient(135deg, #9b59b6, #8e44ad);
+  color: #ffffff;
+  padding: 0.4rem 0.8rem;
+  border-radius: 16px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.value-tag {
+  background: linear-gradient(135deg, #ff0080, #b954b9);
+  color: #ffffff;
+  padding: 0.4rem 0.8rem;
+  border-radius: 16px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.priority-tag {
+  background: linear-gradient(135deg, #ffd43b, #fab005);
+  color: #000000;
+  padding: 0.4rem 0.8rem;
+  border-radius: 16px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.learning-tag {
+  background: linear-gradient(135deg, #ff8cc8, #fd79a8);
+  color: #ffffff;
+  padding: 0.4rem 0.8rem;
+  border-radius: 16px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+/* Tag hover effects - Update hover colors */
+.tech-tag:hover,
+.value-tag:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(255, 0, 128, 0.3);
+}
+
+.soft-skill-tag:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(81, 207, 102, 0.3);
+}
+
+.env-tag:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(155, 89, 182, 0.3);
+}
+
+.priority-tag:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(255, 212, 59, 0.3);
+}
+
+.learning-tag:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(255, 140, 200, 0.3);
+}
+
+/* Survey data grid layout */
+.survey-data-content .form-group {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.survey-data-content .form-group:last-child {
+  border-bottom: none;
+}
+
+.survey-data-content label {
+  color: #ff0080;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
   .profile-header {
-    grid-template-columns: 1fr !important;
-    text-align: center !important;
-    gap: 1rem !important;
+    flex-direction: column;
+    text-align: center;
+    gap: 1.5rem;
   }
   
-  .form-grid {
-    grid-template-columns: 1fr !important;
+  .survey-header-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
   }
   
-  .profile-actions {
-    flex-direction: row !important;
+  .edit-actions {
+    flex-direction: column;
   }
   
-  .add-skill-input {
-    flex-direction: column !important;
-    gap: 0.8rem !important;
-    align-items: stretch !important;
-  }
-  
-  .skill-input {
-    min-width: 100% !important;
-  }
-  
-  .add-skill-input .btn-secondary {
-    min-width: 100% !important;
+  .page-container {
+    padding: 1rem;
   }
 }

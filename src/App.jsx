@@ -1,119 +1,189 @@
-import React, { useState } from "react";
-import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import ErrorBoundary from './Components/ErrorBoundary.jsx';
+import Welcome from './Components/Welcome.jsx';
+import Home from './Components/Home.jsx';
+import Profile from './Components/Profile.jsx';
+import EosCounselor from './Components/EosCounselor.jsx';
+import Contact from './Components/Contact.jsx';
+import Services from './Components/Services.jsx';
 
-// Import your existing components
-import Home from "./Components/Home";
-import Profile from "./Components/Profile";
-import ProjectsPage from "./Components/ProjectsPage";
-import About from "./Components/About";
-import Services from "./Components/Services";
-import Contact from "./Components/Contact";
-import Welcome from "./Components/Welcome";
-import EosCounselor from "./Components/EosCounselor";
+function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [currentPage, setCurrentPage] = useState('welcome');
+  const [isLoading, setIsLoading] = useState(true);
 
-// Import your context provider
-import { ProjectProvider } from "./context/ProjectContext";
-
-import "./App.css";
-
-// Wrapper component to handle navigation
-function AppContent() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false); // Start with false to show welcome
-  const navigate = useNavigate();
+  useEffect(() => {
+    try {
+      const authState = localStorage.getItem("isAuthenticated");
+      const userData = localStorage.getItem("userProfile");
+      
+      if (authState === "true" && userData) {
+        setIsAuthenticated(true);
+        setCurrentPage('home');
+      } else {
+        setIsAuthenticated(false);
+        setCurrentPage('welcome');
+      }
+    } catch (error) {
+      console.error('Error loading authentication state:', error);
+      setIsAuthenticated(false);
+      setCurrentPage('welcome');
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
 
   const handleLogin = () => {
-    setIsAuthenticated(true);
-    navigate('/home');
+    try {
+      setIsAuthenticated(true);
+      setCurrentPage('home');
+    } catch (error) {
+      console.error('Error during login:', error);
+    }
   };
 
   const handleLogout = () => {
-    setIsAuthenticated(false);
-    navigate('/');
+    try {
+      // Only clear authentication state, preserve user account data
+      localStorage.removeItem("isAuthenticated");
+      setIsAuthenticated(false);
+      setCurrentPage('welcome');
+    } catch (error) {
+      console.error('Error during logout:', error);
+    }
   };
 
   const handleNavigate = (page) => {
-    if (page === 'home') {
-      navigate('/home');
-    } else {
-      navigate(`/${page}`);
+    try {
+      setCurrentPage(page);
+    } catch (error) {
+      console.error('Error during navigation:', error);
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        height: '100vh',
+        background: 'linear-gradient(135deg, #1e1b3a 0%, #2d2654 50%, #3a2d6b 100%)',
+        color: '#ffffff',
+        fontSize: '1.2rem'
+      }}>
+        Loading NextStep...
+      </div>
+    );
+  }
+
+  const renderCurrentPage = () => {
+    try {
+      if (!isAuthenticated && currentPage !== 'welcome') {
+        return <Welcome onLogin={handleLogin} />;
+      }
+
+      switch (currentPage) {
+        case 'welcome':
+          return <Welcome onLogin={handleLogin} />;
+        case 'home':
+          return (
+            <ErrorBoundary onNavigate={handleNavigate}>
+              <Home onLogout={handleLogout} onNavigate={handleNavigate} />
+            </ErrorBoundary>
+          );
+        case 'profile':
+          return (
+            <ErrorBoundary onNavigate={handleNavigate}>
+              <Profile onNavigate={handleNavigate} />
+            </ErrorBoundary>
+          );
+        case 'ai-counselor':
+          return (
+            <ErrorBoundary onNavigate={handleNavigate}>
+              <EosCounselor onNavigate={handleNavigate} />
+            </ErrorBoundary>
+          );
+        case 'contact':
+          return (
+            <ErrorBoundary onNavigate={handleNavigate}>
+              <Contact onNavigate={handleNavigate} />
+            </ErrorBoundary>
+          );
+        case 'services':
+          return (
+            <ErrorBoundary onNavigate={handleNavigate}>
+              <Services onNavigate={handleNavigate} />
+            </ErrorBoundary>
+          );
+        case 'projects':
+          return (
+            <div style={{ 
+              padding: '2rem', 
+              textAlign: 'center',
+              background: 'linear-gradient(135deg, #1e1b3a 0%, #2d2654 50%, #3a2d6b 100%)',
+              minHeight: '100vh',
+              color: '#ffffff'
+            }}>
+              <h1>Projects Coming Soon</h1>
+              <button 
+                onClick={() => handleNavigate('home')}
+                style={{
+                  background: 'linear-gradient(135deg, #9b59b6, #8e44ad)',
+                  color: '#ffffff',
+                  border: 'none',
+                  padding: '0.75rem 1.5rem',
+                  borderRadius: '6px',
+                  cursor: 'pointer',
+                  marginTop: '1rem'
+                }}
+              >
+                Back to Home
+              </button>
+            </div>
+          );
+        default:
+          return (
+            <ErrorBoundary onNavigate={handleNavigate}>
+              <Home onLogout={handleLogout} onNavigate={handleNavigate} />
+            </ErrorBoundary>
+          );
+      }
+    } catch (error) {
+      console.error('Error rendering page:', error);
+      return (
+        <div style={{
+          padding: '2rem',
+          textAlign: 'center',
+          background: 'linear-gradient(135deg, #1e1b3a 0%, #2d2654 50%, #3a2d6b 100%)',
+          minHeight: '100vh',
+          color: '#ffffff'
+        }}>
+          <h1>Something went wrong</h1>
+          <button 
+            onClick={() => handleNavigate('welcome')}
+            style={{
+              background: 'linear-gradient(135deg, #9b59b6, #8e44ad)',
+              color: '#ffffff',
+              border: 'none',
+              padding: '0.75rem 1.5rem',
+              borderRadius: '6px',
+              cursor: 'pointer'
+            }}
+          >
+            Go to Welcome Page
+          </button>
+        </div>
+      );
     }
   };
 
   return (
-    <Routes>
-      <Route 
-        path="/" 
-        element={
-          isAuthenticated ? (
-            <Home onLogout={handleLogout} onNavigate={handleNavigate} />
-          ) : (
-            <Welcome onLogin={handleLogin} />
-          )
-        } 
-      />
-      <Route 
-        path="/home" 
-        element={
-          isAuthenticated ? (
-            <Home onLogout={handleLogout} onNavigate={handleNavigate} />
-          ) : (
-            <Welcome onLogin={handleLogin} />
-          )
-        } 
-      />
-      <Route 
-        path="/profile" 
-        element={
-          isAuthenticated ? (
-            <Profile onNavigate={handleNavigate} />
-          ) : (
-            <Welcome onLogin={handleLogin} />
-          )
-        }
-      />
-      <Route 
-        path="/projects" 
-        element={
-          isAuthenticated ? (
-            <ProjectsPage onNavigate={handleNavigate} />
-          ) : (
-            <Welcome onLogin={handleLogin} />
-          )
-        }
-      />
-      <Route 
-        path="/services" 
-        element={<Services />} 
-      />
-      <Route 
-        path="/about" 
-        element={<About onNavigate={handleNavigate} />} 
-      />
-      <Route 
-        path="/contact" 
-        element={<Contact onNavigate={handleNavigate} />} 
-      />
-      <Route 
-        path="/ai-counselor" 
-        element={
-          isAuthenticated ? (
-            <EosCounselor onNavigate={handleNavigate} />
-          ) : (
-            <Welcome onLogin={handleLogin} />
-          )
-        }
-      />
-    </Routes>
-  );
-}
-
-function App() {
-  return (
-    <ProjectProvider>
-      <Router>
-        <AppContent />
-      </Router>
-    </ProjectProvider>
+    <ErrorBoundary onNavigate={handleNavigate}>
+      <div className="App">
+        {renderCurrentPage()}
+      </div>
+    </ErrorBoundary>
   );
 }
 

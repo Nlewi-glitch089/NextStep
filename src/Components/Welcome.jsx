@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SkillFormPage from './SkillFormPage.jsx';
 import '../styles/components/auth.css';
 
@@ -6,6 +6,7 @@ export default function Welcome({ onLogin }) {
   const [activeTab, setActiveTab] = useState(0); // 0 for Sign In, 1 for Sign Up
   const [showSkillAssessment, setShowSkillAssessment] = useState(false);
   const [isNewUser, setIsNewUser] = useState(false);
+  const [isReturningUser, setIsReturningUser] = useState(false);
   const [signUpData, setSignUpData] = useState({
     fullname: "",
     email: "",
@@ -19,6 +20,18 @@ export default function Welcome({ onLogin }) {
   });
 
   const [passwordError, setPasswordError] = useState("");
+
+  // Check for existing user data on component mount
+  useEffect(() => {
+    const userData = localStorage.getItem("userProfile");
+    const authState = localStorage.getItem("isAuthenticated");
+    const surveyData = localStorage.getItem("surveyAnswers");
+    
+    if (userData && authState === "true") {
+      setIsReturningUser(true);
+      setActiveTab(0); // Default to sign in tab for returning users
+    }
+  }, []);
 
   const handleSignupChange = (e) => {
     const { name, value } = e.target;
@@ -40,33 +53,117 @@ export default function Welcome({ onLogin }) {
       return;
     }
     
+    // Check if user already has survey data
+    const existingSurveyData = localStorage.getItem("surveyAnswers");
+    
+    // Save new user data to localStorage
+    const newUserProfile = {
+      fullName: signUpData.fullname,
+      email: signUpData.email,
+      currentRole: '',
+      careerGoal: '',
+      skills: [],
+      experience: 'Entry Level',
+      createdAt: Date.now(),
+      isNewUser: true,
+      hasCompletedSurvey: !!existingSurveyData
+    };
+    
+    localStorage.setItem("userProfile", JSON.stringify(newUserProfile));
+    localStorage.setItem("isAuthenticated", "true");
+    
     console.log('Signup successful:', signUpData);
-    // After successful signup, show the skills assessment form
     setIsNewUser(true);
-    setShowSkillAssessment(true);
+    
+    // Skip survey if they already have survey data
+    if (existingSurveyData) {
+      console.log('Found existing survey data, skipping assessment');
+      if (onLogin) {
+        onLogin();
+      }
+    } else {
+      setShowSkillAssessment(true);
+    }
   };
 
   const handleSigninSubmit = (e) => {
     e.preventDefault();
     
-    console.log('Signin successful:', signInData);
-    // Existing users go directly to home
-    if (onLogin) {
-      onLogin();
+    // Check if user exists in localStorage
+    const userData = localStorage.getItem("userProfile");
+    
+    if (userData) {
+      const userProfile = JSON.parse(userData);
+      // Simple validation - in real app, you'd validate against backend
+      if (userProfile.email === signInData.email) {
+        localStorage.setItem("isAuthenticated", "true");
+        
+        // Update user profile to mark as returning user (but don't overwrite data)
+        const updatedProfile = {
+          ...userProfile,
+          lastLoginAt: Date.now(),
+          isNewUser: false
+        };
+        localStorage.setItem("userProfile", JSON.stringify(updatedProfile));
+        
+        console.log('Signin successful for returning user:', userProfile.fullName);
+        if (onLogin) {
+          onLogin();
+        }
+      } else {
+        alert("Email doesn't match your account. Please check your email or sign up for a new account.");
+      }
+    } else {
+      alert("No account found. Please sign up first.");
     }
   };
 
-  const handleSkillAssessmentComplete = () => {
-    // After completing the skills assessment, log them in
+  const handleSkillAssessmentComplete = (surveyAnswers) => {
+    // Save survey answers to localStorage
+    if (surveyAnswers) {
+      localStorage.setItem("surveyAnswers", JSON.stringify({
+        ...surveyAnswers,
+        completedAt: Date.now()
+      }));
+      
+      // Update user profile to mark survey as completed
+      const userData = localStorage.getItem("userProfile");
+      if (userData) {
+        const userProfile = JSON.parse(userData);
+        const updatedProfile = {
+          ...userProfile,
+          hasCompletedSurvey: true,
+          // Update profile with survey data if available
+          ...(surveyAnswers.skills && { skills: surveyAnswers.skills }),
+          ...(surveyAnswers.experience && { experience: surveyAnswers.experience }),
+          ...(surveyAnswers.careerGoal && { careerGoal: surveyAnswers.careerGoal }),
+          ...(surveyAnswers.currentRole && { currentRole: surveyAnswers.currentRole })
+        };
+        localStorage.setItem("userProfile", JSON.stringify(updatedProfile));
+      }
+    }
+    
     setShowSkillAssessment(false);
     if (onLogin) {
       onLogin();
     }
   };
 
+  const handleBackFromSurvey = () => {
+    setShowSkillAssessment(false);
+    setIsNewUser(false);
+  };
+
   // If showing skill assessment, render your actual SkillFormPage
   if (showSkillAssessment) {
-    return <SkillFormPage onComplete={handleSkillAssessmentComplete} />;
+    return (
+      <div className="skill-assessment-wrapper">
+        <SkillFormPage 
+          onComplete={handleSkillAssessmentComplete} 
+          onBack={handleBackFromSurvey}
+        />
+      </div>
+    );
   }
 
   // Default auth forms (unchanged)
@@ -89,7 +186,7 @@ export default function Welcome({ onLogin }) {
             NextStep
             <div className="logo-glow"></div>
           </h1>
-          <p className="hero-tagline">Your career journey begins here</p>
+          <p className="hero-tagline">Plan your path, explore your options, and take the next step</p>
         </div>
       </section>
 
@@ -119,8 +216,8 @@ export default function Welcome({ onLogin }) {
                   <div className="auth-form-wrapper">
                     <form className="auth-form" onSubmit={handleSigninSubmit}>
                       <div className="auth-form-header">
-                        <h2>Welcome Back</h2>
-                        <p>Sign in to continue your career journey</p>
+                        <h2>{isReturningUser ? "Welcome Back!" : "Welcome Back"}</h2>
+                        <p>{isReturningUser ? "Continue your career journey" : "Sign in to continue your career journey"}</p>
                       </div>
                       
                       <div className="form-group">
@@ -150,7 +247,7 @@ export default function Welcome({ onLogin }) {
                       </div>
 
                       <button type="submit" className="cta-button">
-                        Sign In
+                        {isReturningUser ? "Continue Journey" : "Sign In"}
                       </button>
                     </form>
                   </div>
@@ -160,7 +257,7 @@ export default function Welcome({ onLogin }) {
                     <form className="auth-form" onSubmit={handleSignupSubmit}>
                       <div className="auth-form-header">
                         <h2>Create Account</h2>
-                        <p>Start your career guidance journey today</p>
+                        <p>Let's Get Started</p>
                       </div>
                       
                       <div className="form-group">
@@ -222,7 +319,7 @@ export default function Welcome({ onLogin }) {
                       )}
 
                       <button type="submit" className="cta-button">
-                        Create Account
+                        Create Account & Continue
                       </button>
                     </form>
                   </div>
