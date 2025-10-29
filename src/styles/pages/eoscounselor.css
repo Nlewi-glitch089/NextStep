@@ -331,88 +331,137 @@
   box-shadow: 0 4px 12px rgba(255, 0, 128, 0.4);
 }
 
-/* Formatted AI Response Styling */
-.formatted-response {
-  width: 100%;
+/* Text-size controls in header */
+.text-size-controls {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin-left: 1rem;
 }
-
-.response-paragraph {
-  margin: 0 0 1rem 0;
-  line-height: 1.6;
-  color: #ffffff;
-}
-
-.response-paragraph:last-of-type {
-  margin-bottom: 0;
-}
-
-/* Resources Section */
-.resources-section {
-  margin-top: 1.5rem;
-  padding-top: 1rem;
-  border-top: 1px solid rgba(255, 0, 128, 0.3);
-}
-
-.resources-section h4 {
-  color: #ffd700;
-  font-size: 0.9rem;
-  margin: 0 0 0.75rem 0;
-  font-weight: 600;
-}
-
-.resource-link {
-  margin-bottom: 0.75rem;
-  padding: 0.5rem;
-  background: rgba(255, 255, 255, 0.05);
+.text-size-controls .txt-btn {
+  background: rgba(255,255,255,0.06);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 0.35rem 0.6rem;
   border-radius: 6px;
-  border-left: 3px solid #ff0080;
+  cursor: pointer;
+  font-weight: 700;
+  transition: all 0.18s ease;
+}
+.text-size-controls .txt-btn:hover {
+  background: rgba(255,0,128,0.08);
+  transform: translateY(-2px);
 }
 
-.resource-link:last-child {
-  margin-bottom: 0;
+/* --- Updated / added Eos-specific accents & readable response styles --- */
+
+/* Make sure response font-size variable is honored */
+.formatted-response {
+  --response-font-size: var(--response-font-size, 18px); /* use site-level override if present */
+  font-size: clamp(15px, var(--response-font-size), 22px);
+  line-height: 1.85;
+  color: #e8eef6;
+  max-width: 70ch;
+  margin: 0;
+  display: block;
+
+  /* soft card with pink left accent for fast scanning */
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
+  border: 1px solid rgba(255, 0, 128, 0.08);
+  border-left: 6px solid rgba(255, 0, 128, 0.18);
+  padding: 0.9rem 1rem;
+  border-radius: 10px;
 }
 
+/* Subtle heading style inside AI responses */
+.ai-heading {
+  font-size: 1.08em;
+  margin: 0 0 0.5rem 0;
+  color: #ffffff;
+  font-weight: 900;
+  letter-spacing: 0.4px;
+  padding: 0.25rem 0.45rem;
+  border-radius: 6px;
+  background: linear-gradient(90deg, rgba(255,0,128,0.05), transparent);
+  border-left: 4px solid rgba(255,0,128,0.14);
+}
+
+/* Marker-free list items - soft accent, high readability */
+.response-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 0.5rem 0 1rem 0;
+  padding-left: 0;
+}
+
+.response-list-item {
+  background: rgba(255, 0, 128, 0.03);
+  border-left: 4px solid rgba(255, 0, 128, 0.18);
+  padding: 0.6rem 0.9rem;
+  border-radius: 6px;
+  color: #e8eef6;
+  font-size: inherit;
+  line-height: 1.8;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.22);
+}
+
+/* AI bubble accents: ensure contrast and soft pink border/left-accent */
+.bubble.ai {
+  padding: 1.25rem 1.5rem;
+  background: rgba(30,30,30,0.95);
+  color: #fff;
+  border: 1px solid rgba(255,0,128,0.18);
+  border-left: 6px solid rgba(255,0,128,0.22);
+  border-radius: 14px 14px 14px 6px;
+  box-shadow: 0 6px 18px rgba(255, 0, 128, 0.04);
+}
+
+/* Keep user bubble visible but not harsh */
+.bubble.user {
+  font-size: 1rem;
+  background: linear-gradient(45deg, #ff0080, #b954b9);
+  color: #fff;
+  border-radius: 18px 18px 5px 18px;
+  box-shadow: 0 6px 18px rgba(255, 0, 128, 0.12);
+}
+
+/* Resource links use pink again (clear and consistent) */
 .resource-title {
   color: #ff0080;
   text-decoration: none;
-  font-weight: 500;
-  font-size: 0.85rem;
-  display: block;
+  font-weight: 700;
+  display: inline-block;
   margin-bottom: 0.25rem;
-  transition: all 0.3s ease;
 }
-
 .resource-title:hover {
-  color: #ffd700;
   text-decoration: underline;
+  color: #ffffff;
 }
 
+/* Resource description contrast */
 .resource-description {
-  color: #b0c4de;
-  font-size: 0.8rem;
+  color: #d6e6f5;
+  font-size: 0.98rem;
   margin: 0;
-  line-height: 1.4;
 }
 
-/* Custom Scrollbar */
-.custom-scrollbar::-webkit-scrollbar {
-  width: 8px;
+/* Hover subtle lift for readability (not flashy) */
+.formatted-response:hover,
+.response-list-item:hover,
+.bubble.ai:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(255, 0, 128, 0.06);
+  border-color: rgba(255, 0, 128, 0.16);
 }
 
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: transparent;
+/* Ensure small screens keep readability and spacing */
+@media (max-width: 768px) {
+  .formatted-response { max-width: 48ch; padding: 0.75rem; }
+  .response-list-item { padding: 0.5rem 0.75rem; }
+  .ai-heading { font-size: 1.02em; }
 }
 
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(255, 0, 128, 0.5);
-  border-radius: 4px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 0, 128, 0.7);
-}
-
-/* Responsive Design */
 @media (max-width: 768px) {
   .ai-counselor-main {
     padding: 1rem;

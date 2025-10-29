@@ -3,7 +3,7 @@
 /* Navigation */
 .navbar {
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-columns: auto 1fr auto; /* allow logo column to size to its content */
   align-items: center;
   padding: 1rem 2rem;
   background: rgba(255, 255, 255, 0.05);
@@ -17,17 +17,31 @@
   gap: 1rem;
 }
 
-/* Navigation Logo - Left aligned */
+/* Brand container: logo + controls inline (logo remains clickable, controls are separate) */
+.nav-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-self: start;
+  /* ensure it sizes to content and doesn't get clipped */
+  max-width: none;
+  overflow: visible;
+  z-index: 2;
+}
+
+/* Navigation Logo - Left aligned (allow controls to appear beside it) */
 .nav-logo {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 0.5rem;
   font-size: 1.75rem;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.3s ease;
   justify-self: start;
-  max-width: 150px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  max-width: none;        /* allow full width for logo + inline controls */
+  overflow: visible;      /* ensure controls are not clipped */
+  white-space: nowrap;    /* keep logo and controls on one line */
 }
 
 .nav-logo.interactive-logo {
@@ -137,6 +151,38 @@
   background: rgba(255, 255, 255, 0.15) !important;
   border-color: rgba(255, 255, 255, 0.3) !important;
   transform: translateY(-2px) !important;
+}
+
+/* Theme indicator button next to controls */
+.theme-toggle-indicator {
+  background: rgba(255,255,255,0.06) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+  padding: 0.22rem 0.5rem !important;
+  border-radius: 5px !important;
+  font-weight: 700 !important;
+  font-size: 0.9rem !important;
+  margin-left: 0.25rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.theme-toggle-indicator:hover {
+  background: rgba(255,255,255,0.14) !important;
+  transform: translateY(-2px);
+}
+
+/* Ensure the indicator isn't affected by the logo gradient */
+.nav-brand .theme-toggle-indicator,
+.nav-brand .theme-toggle-indicator * {
+  background-image: none !important;
+  -webkit-background-clip: border-box !important;
+  background-clip: border-box !important;
+  -webkit-text-fill-color: #ffffff !important;
+  color: #ffffff !important;
+  text-shadow: none !important;
+  mix-blend-mode: normal !important;
+  z-index: 3;
 }
 
 /* Hero Section - Fix cutoff and improve display */
@@ -295,7 +341,7 @@
 }
 
 .goals-title {
-  font-size: 1.8rem;
+  font-size: clamp(1.4rem, calc(var(--app-font-size) * 1.6), 2rem);
   color: #ff0080;
   margin-bottom: 2rem;
 }
@@ -1101,6 +1147,57 @@
   box-shadow: 0 6px 20px rgba(255, 0, 128, 0.4);
 }
 
+/* accessible typography variables and base rules */
+:root {
+  --app-font-size: 18px;
+  --app-line-height: 1.75;
+  --app-heading-scale: 1.75;
+}
+
+/* ensure main content uses larger, readable type */
+.features-section,
+.features-section p,
+.about-description,
+.highlight-description,
+.project-cta-description,
+.step-description,
+.stat-label,
+.footer-description,
+.demo-title,
+.demo-content h4 {
+  font-size: var(--app-font-size);
+  line-height: var(--app-line-height);
+}
+
+/* scale section and page titles so they stand out from body text */
+.section-title {
+  font-size: clamp(1.8rem, calc(var(--app-font-size) * 1.8), 2.6rem);
+  line-height: 1.15;
+}
+
+.goals-title {
+  font-size: clamp(1.4rem, calc(var(--app-font-size) * 1.6), 2rem);
+}
+
+/* Slightly larger card text for readability */
+.highlight-card,
+.step-card,
+.stat-card,
+.demo-results,
+.job-card,
+.skill-item {
+  font-size: calc(var(--app-font-size) * 0.98);
+  line-height: var(--app-line-height);
+}
+
+/* make footers and CTA copy clearer */
+.footer-description,
+.footer-tagline,
+.project-cta-description {
+  font-size: calc(var(--app-font-size) * 1);
+  line-height: var(--app-line-height);
+}
+
 /* Responsive */
 @media (max-width: 1200px) {
   .navbar {
@@ -1207,4 +1304,217 @@
     padding: 0.9rem 1.8rem;
     font-size: 1rem;
   }
+}
+
+/* Ensure logo and inline controls sit on one line */
+.nav-logo {
+  display: inline-flex;       /* was block, now inline-flex so children align horizontally */
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  justify-self: start;
+  max-width: none;        /* allow full width for logo + inline controls */
+  overflow: visible;      /* ensure controls are not clipped */
+  white-space: nowrap;    /* keep logo and controls on one line */
+}
+
+/* Inline controls container placed immediately after the logo text */
+.nav-text-controls-inline,
+.nav-logo .nav-text-controls-inline {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 0.5rem;
+  z-index: 2;              /* keep controls above adjacent elements */
+}
+
+/* Make the small inline buttons white text with subtle hover */
+.nav-text-controls-inline .text-size-controls-global button,
+.nav-logo .nav-text-controls-inline .text-size-controls-global button {
+  background: transparent !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+  padding: 0.18rem 0.42rem !important;
+  font-size: 0.9rem !important;
+  border-radius: 5px !important;
+  transition: all 0.15s ease !important;
+}
+
+/* Hover state: subtle white glow to show affordance */
+.nav-text-controls-inline .text-size-controls-global button:hover,
+.nav-logo .nav-text-controls-inline .text-size-controls-global button:hover {
+  background: rgba(255,255,255,0.06) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255,255,255,0.06);
+}
+
+/* Ensure inline text-size controls are never affected by the logo gradient/text-clip */
+.nav-logo.interactive-logo .nav-text-controls-inline,
+.nav-logo.interactive-logo .nav-text-controls-inline *,
+.nav-logo.interactive-logo .nav-text-controls-inline button {
+  background-image: none !important;
+  background-clip: border-box !important;
+  -webkit-background-clip: border-box !important;
+  -webkit-text-fill-color: #ffffff !important;
+  color: #ffffff !important;
+  mix-blend-mode: normal !important;
+  text-shadow: none !important;
+  filter: none !important;
+  /* ensure visible above any clipped backgrounds */
+  z-index: 3;
+}
+
+/* Make the control buttons clearly legible with a subtle white surface */
+.nav-logo .nav-text-controls-inline .text-size-controls-global button {
+  background: rgba(255,255,255,0.10) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255,255,255,0.16) !important;
+}
+
+/* Slight hover affordance without changing color clipping */
+.nav-logo .nav-text-controls-inline .text-size-controls-global button:hover {
+  background: rgba(255,255,255,0.16) !important;
+  transform: translateY(-2px);
+}
+
+/* Ensure controls are visually separate and not impacted by the logo gradient */
+.nav-brand .nav-text-controls-inline,
+.nav-brand .nav-text-controls-inline * {
+  background-image: none !important;
+  -webkit-background-clip: border-box !important;
+  background-clip: border-box !important;
+  -webkit-text-fill-color: #ffffff !important;
+  color: #ffffff !important;
+  text-shadow: none !important;
+  mix-blend-mode: normal !important;
+}
+
+/* keep the inline controls compact and aligned */
+.nav-text-controls-inline {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 0.25rem;
+}
+
+/* adjust button contrast so it's white and visible */
+.nav-text-controls-inline .text-size-controls-global button {
+  background: rgba(255,255,255,0.10) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255,255,255,0.16) !important;
+  padding: 0.18rem 0.42rem !important;
+  font-size: 0.9rem !important;
+  border-radius: 5px !important;
+}
+
+/* hover affordance */
+.nav-text-controls-inline .text-size-controls-global button:hover {
+  background: rgba(255,255,255,0.16) !important;
+  transform: translateY(-2px);
+}
+
+/* Theme toggle — animated pill with knob and sun/moon icons */
+.theme-toggle-indicator {
+  display: inline-flex;
+  align-items: center;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: transform 150ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.theme-toggle-indicator .theme-toggle-track {
+  position: relative;
+  width: 64px;
+  height: 30px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.10);
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+  box-sizing: border-box;
+  transition: background 180ms ease, border-color 180ms ease;
+}
+
+/* knob */
+.theme-toggle-indicator .theme-toggle-knob {
+  position: absolute;
+  left: 4px;
+  top: 4px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  transform: translateX(0);
+  transition: transform 220ms cubic-bezier(.2,.9,.24,1), background 180ms ease, box-shadow 180ms ease;
+}
+
+/* icons */
+.theme-toggle-indicator .theme-icon {
+  font-size: 13px;
+  color: rgba(255,255,255,0.9);
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* light state: move knob to right and adjust track */
+.theme-toggle-indicator.is-light .theme-toggle-track {
+  background: linear-gradient(90deg, rgba(255,47,168,0.12), rgba(197,108,204,0.08));
+  border-color: rgba(197,108,204,0.18);
+}
+.theme-toggle-indicator.is-light .theme-toggle-knob {
+  transform: translateX(34px);
+  background: white;
+  box-shadow: 0 6px 18px rgba(197,108,204,0.12);
+}
+.theme-toggle-indicator.is-light .theme-icon-sun {
+  opacity: 1;
+  color: #ff2fa8;
+}
+.theme-toggle-indicator.is-light .theme-icon-moon {
+  opacity: 0.25;
+}
+
+/* dark state: knob left, subtle track */
+.theme-toggle-indicator.is-dark .theme-toggle-track {
+  background: rgba(255,255,255,0.04);
+  border-color: rgba(255,255,255,0.08);
+}
+.theme-toggle-indicator.is-dark .theme-toggle-knob {
+  transform: translateX(0);
+  background: #ffffff;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.28);
+}
+.theme-toggle-indicator.is-dark .theme-icon-sun {
+  opacity: 0.25;
+}
+.theme-toggle-indicator.is-dark .theme-icon-moon {
+  opacity: 1;
+  color: #ffd700;
+}
+
+/* ensure the toggle is not affected by logo gradient clip */
+.nav-brand .theme-toggle-indicator,
+.nav-brand .theme-toggle-indicator * {
+  background-image: none !important;
+  -webkit-background-clip: border-box !important;
+  background-clip: border-box !important;
+  -webkit-text-fill-color: initial !important;
+  color: initial !important;
+  mix-blend-mode: normal !important;
+  text-shadow: none !important;
+  z-index: 3;
+}
+
+/* small-screen sizing */
+@media (max-width: 480px) {
+  .theme-toggle-indicator .theme-toggle-track { width: 56px; height: 28px; padding: 0 6px; }
+  .theme-toggle-indicator .theme-toggle-knob { width: 20px; height: 20px; top: 4px; left: 4px; }
 }

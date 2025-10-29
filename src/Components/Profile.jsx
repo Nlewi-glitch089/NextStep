@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import SkillFormPage from './SkillFormPage.jsx';
 import '../styles/pages/profile.css';
+import TextSizeControls from './TextSizeControls.jsx';
+import ThemeToggle from './ThemeToggle.jsx';
 
 export default function Profile({ onNavigate }) {
   const [userProfile, setUserProfile] = useState({
@@ -19,6 +21,7 @@ export default function Profile({ onNavigate }) {
   const [showSurveyData, setShowSurveyData] = useState(false);
   const [showSkillAssessment, setShowSkillAssessment] = useState(false);
   const [error, setError] = useState(null);
+  const [retakeMode, setRetakeMode] = useState(false); // new: track if user is retaking
 
   // Load user data from localStorage on component mount
   useEffect(() => {
@@ -127,62 +130,79 @@ export default function Profile({ onNavigate }) {
 
   const handleRetakeSurvey = () => {
     try {
-      // Clear existing survey data
-      localStorage.removeItem("surveyAnswers");
-      
-      const updatedProfile = {
-        ...userProfile,
-        hasCompletedSurvey: false
-      };
-      localStorage.setItem("userProfile", JSON.stringify(updatedProfile));
-      
-      // Clear local survey data state
-      setSurveyData(null);
-      setShowSurveyData(false);
-      
-      // Show the skill assessment form
+      // Do NOT remove existing surveyAnswers from localStorage here.
+      // Start retake mode and show the assessment form, while keeping saved data intact.
+      setRetakeMode(true);
       setShowSkillAssessment(true);
+      setShowSurveyData(false);
     } catch (error) {
-      console.error('Error retaking survey:', error);
+      console.error('Error starting survey retake:', error);
       setError('Failed to start survey retake. Please try again.');
     }
   };
 
   const handleSkillAssessmentComplete = (surveyAnswers) => {
     try {
-      // Save survey answers to localStorage
+      // Save survey answers to localStorage and update profile
       if (surveyAnswers) {
         const surveyDataWithTimestamp = {
           ...surveyAnswers,
           completedAt: Date.now()
         };
-        
         localStorage.setItem("surveyAnswers", JSON.stringify(surveyDataWithTimestamp));
         setSurveyData(surveyDataWithTimestamp);
-        
-        // Update user profile to mark survey as completed
+
+        // Update user profile to mark survey as completed and merge survey fields
         const updatedProfile = {
           ...userProfile,
           hasCompletedSurvey: true,
-          // Update profile with survey data if available
           ...(surveyAnswers.skills && Array.isArray(surveyAnswers.skills) && { skills: surveyAnswers.skills }),
           ...(surveyAnswers.experience && { experience: surveyAnswers.experience }),
           ...(surveyAnswers.careerGoal && { careerGoal: surveyAnswers.careerGoal }),
           ...(surveyAnswers.currentRole && { currentRole: surveyAnswers.currentRole })
         };
-        
         localStorage.setItem("userProfile", JSON.stringify(updatedProfile));
         setUserProfile(updatedProfile);
       }
-      
-      // Hide the skill assessment form
+
+      // End retake mode and hide the skill assessment form
+      setRetakeMode(false);
       setShowSkillAssessment(false);
+      setShowSurveyData(true);
     } catch (error) {
       console.error('Error completing skill assessment:', error);
       setError('Failed to save assessment results. Please try again.');
       setShowSkillAssessment(false);
+      setRetakeMode(false);
     }
   };
+
+  // Handler for when the user cancels/exits the retake and returns to profile
+  const handleBackFromSurvey = () => {
+    // Do not clear previously saved surveyAnswers — keep them as-is.
+    setShowSkillAssessment(false);
+    setRetakeMode(false);
+    // Keep surveyData in state if it exists, otherwise leave null
+    const savedSurvey = localStorage.getItem("surveyAnswers");
+    if (savedSurvey) {
+      try {
+        setSurveyData(JSON.parse(savedSurvey));
+      } catch (e) {
+        // ignore parse error
+      }
+    }
+  };
+
+  // If showing skill assessment, pass existing surveyData as initialData
+  if (showSkillAssessment) {
+    return (
+      <SkillFormPage
+        onComplete={handleSkillAssessmentComplete}
+        onBack={handleBackFromSurvey}
+        initialData={surveyData}
+      />
+    );
+  }
 
   // Error display
   if (error) {
@@ -214,28 +234,21 @@ export default function Profile({ onNavigate }) {
     );
   }
 
-  // Add the missing back handler
-  const handleBackFromSurvey = () => {
-    setShowSkillAssessment(false);
-  };
-
-  // If showing skill assessment, render the SkillFormPage
-  if (showSkillAssessment) {
-    return <SkillFormPage 
-      onComplete={handleSkillAssessmentComplete} 
-      onBack={handleBackFromSurvey}
-    />;
-  }
-
   return (
-    <main className="home-main dark">
+    <main className="profile-main">
       <nav className="navbar">
-        <h1 className="nav-logo" onClick={handleBackToHome}>
-          NextStep
-        </h1>
-        <section className="nav-auth-buttons">
-          {/* Removed the Back to Home button - keeping only the one at the bottom */}
-        </section>
+        <div className="nav-brand">
+          <h1 className="nav-logo interactive-logo" onClick={() => handleNavigate('home')}>
+            NextStep
+            <div className="logo-glow"></div>
+          </h1>
+          <div className="nav-text-controls-inline">
+            <TextSizeControls />
+            <ThemeToggle />
+          </div>
+        </div>
+
+        {/* ...existing nav links / auth buttons ... */}
       </nav>
 
       <div className="page-container">

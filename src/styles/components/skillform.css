@@ -169,25 +169,6 @@
   color: #6c757d !important;
 }
 
-/* Form Group Helper Text */
-.skill-form-main .form-group small {
-  display: block;
-  color: #a0a9ba;
-  font-size: 0.875rem;
-  margin-top: 0.5rem;
-  font-style: italic;
-  text-align: center;
-}
-
-/* Step Content Description */
-.skill-form-main .step-content p {
-  color: #b0c4de;
-  font-size: 1rem;
-  text-align: center;
-  margin-bottom: 2rem;
-  line-height: 1.5;
-}
-
 /* Choice Grid */
 .skill-form-main .choice-grid {
   display: grid !important;
@@ -197,21 +178,39 @@
   padding: 0 !important;
 }
 
-/* Choice Buttons - Better sizing for education options */
 .skill-form-main .choice-button {
-  padding: 1rem 1.5rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
-  color: #ffffff;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 0.9rem;
-  text-align: center;
-  line-height: 1.3;
-  min-height: 60px;
+  background: rgba(255, 255, 255, 0.03) !important;
+  color: #fff !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  padding: 0.6rem 0.9rem !important;
+  border-radius: 10px !important;
+  cursor: pointer !important;
+  transition: all 0.18s ease !important;
+  font-weight: 600 !important;
+  font-size: 0.95rem !important;
+  box-shadow: none !important;
+}
+
+.skill-form-main .choice-button:hover {
+  transform: translateY(-3px) !important;
+  background: rgba(255, 0, 128, 0.08) !important;
+  border-color: rgba(255, 0, 128, 0.18) !important;
+  box-shadow: 0 6px 18px rgba(255, 0, 128, 0.08) !important;
+}
+
+.skill-form-main .choice-button.selected {
+  background: linear-gradient(135deg, #ff0080, #b954b9) !important;
+  color: #fff !important;
+  border-color: rgba(255, 0, 128, 0.35) !important;
+  box-shadow: 0 8px 20px rgba(255, 0, 128, 0.15) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* Make sure choice-grid keeps buttons selectable on small screens */
+.choice-grid {
   display: flex;
-  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
   justify-content: center;
 }
 
@@ -414,4 +413,39 @@ body:has(.skill-assessment-wrapper) {
 
 .skill-form-main .form-navigation button:focus {
   box-shadow: 0 0 0 3px rgba(255, 0, 128, 0.3) !important;
+}
+
+:root {
+  --app-font-size: 18px;
+  --app-line-height: 1.75;
+}
+
+/* survey content uses larger type and relaxed leading */
+.skill-form-main,
+.skill-form-container,
+.step-content,
+.form-group label,
+.choice-button,
+.form-group input,
+.form-group select {
+  font-size: var(--app-font-size);
+  line-height: var(--app-line-height);
+}
+
+/* step headings scaled to be clearly different from body copy */
+.step-content h3 {
+  font-size: clamp(1.4rem, calc(var(--app-font-size) * 1.6), 2rem);
+  margin-bottom: 1rem;
+}
+
+/* make choice buttons slightly larger and keep selected clear */
+.choice-button {
+  font-size: calc(var(--app-font-size) * 0.95);
+  padding: 0.75rem 1rem;
+}
+
+/* form navigation buttons consistent with app font */
+.form-navigation button {
+  font-size: calc(var(--app-font-size) * 1);
+  padding: 0.9rem 1.6rem;
 }

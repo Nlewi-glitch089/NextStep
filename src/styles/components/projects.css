@@ -1,0 +1,202 @@
+.projects-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1.25rem;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+/* Form card */
+.project-form-card {
+  background: rgba(42,42,42,0.6);
+  border: 1px solid rgba(255,0,128,0.08);
+  padding: 1.25rem;
+  border-radius: 12px;
+}
+.project-form-card h3 { color: #ff0080; margin-bottom: 0.75rem; }
+
+.project-form label { display:block; color:#d6e6f5; margin:0.5rem 0 0.25rem; font-weight:600; }
+.project-form input,
+.project-form textarea {
+  width:100%;
+  padding:0.75rem;
+  border-radius:8px;
+  border:1px solid rgba(255,255,255,0.08);
+  background: rgba(0,0,0,0.35);
+  color:#fff;
+  box-sizing:border-box;
+}
+
+.form-actions { margin-top:1rem; display:flex; gap:0.75rem; }
+
+/* List card */
+.project-list-card {
+  background: rgba(42,42,42,0.6);
+  border: 1px solid rgba(255,0,128,0.08);
+  padding: 1.25rem;
+  border-radius: 12px;
+}
+.projects-list { display:flex; flex-direction:column; gap:0.8rem; max-height:60vh; overflow:auto; padding-right:0.5rem; }
+
+.project-card {
+  background: rgba(26,26,26,0.6);
+  border:1px solid rgba(255,0,128,0.06);
+  padding:0.9rem;
+  border-radius:10px;
+}
+.project-card-header { display:flex; justify-content:space-between; align-items:center; gap:1rem; }
+.project-card h4 { margin:0; color:#fff; }
+.project-actions button { margin-left:0.5rem; }
+
+/* tags */
+.tag {
+  display:inline-block;
+  background: rgba(255,0,128,0.06);
+  color:#ff0080;
+  padding:0.28rem 0.55rem;
+  border-radius:12px;
+  margin-right:0.4rem;
+  font-size: calc(var(--app-font-size) * 0.86);
+}
+
+/* buttons */
+.btn-secondary {
+  background: transparent;
+  border: 1px solid rgba(255, 0, 128, 0.25);
+  color: #ff0080;
+  padding: 0.45rem 0.65rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: all 0.18s ease;
+}
+.btn-secondary:hover {
+  background: linear-gradient(135deg, #ff0080, #b954b9);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 0, 128, 0.18);
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, #ff6b6b, #ff4c4c);
+  border: none;
+  color: #fff;
+  padding: 0.45rem 0.65rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+}
+.btn-danger:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 76, 76, 0.18);
+}
+
+/* Primary CTA stays pink gradient */
+.cta-button {
+  background: linear-gradient(135deg, #ff0080, #b954b9);
+  color: #ffffff;
+  padding: 0.8rem 1.4rem;
+  border: none;
+  border-radius: 8px;
+  font-size: calc(var(--app-font-size) * 0.98);
+  font-weight: 700;
+}
+
+/* Live link styling (pink, readable) */
+.project-live .live-link {
+  color: #ff0080;
+  font-weight: 700;
+  text-decoration: none;
+}
+.project-live .live-link:hover {
+  text-decoration: underline;
+  color: #fff;
+}
+
+/* Use site font variables if available */
+:root {
+  --app-font-size: var(--app-font-size, 18px);
+  --app-line-height: var(--app-line-height, 1.75);
+}
+
+/* Project cards and form typography */
+.project-form-card,
+.project-list-card,
+.project-card {
+  font-size: var(--app-font-size);
+  line-height: var(--app-line-height);
+}
+
+/* Card headers and body consistency */
+.project-card-header h4 {
+  color: #ffffff;
+  font-size: calc(var(--app-font-size) * 1.05);
+  margin: 0;
+}
+.project-desc {
+  color: #d6e6f5;
+  margin: 0.5rem 0 0.75rem;
+  font-size: calc(var(--app-font-size) * 0.98);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .projects-grid { grid-template-columns: 1fr; }
+  .projects-list { max-height: none; }
+}
+
+/* Make Edit and Delete buttons identical in size/weight */
+/* unify base sizing for action buttons inside project cards */
+.project-actions .btn-secondary,
+.project-actions .btn-danger {
+  padding: 0.45rem 0.75rem;        /* consistent horizontal padding */
+  min-width: 84px;                /* ensure equal visual width */
+  height: 36px;                   /* consistent button height */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: calc(var(--app-font-size, 18px) * 0.95);
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+/* keep individual color/appearance differences but same sizing */
+.project-actions .btn-secondary {
+  background: transparent;
+  border: 1px solid rgba(255, 0, 128, 0.25);
+  color: #ff0080;
+}
+.project-actions .btn-secondary:hover {
+  background: linear-gradient(135deg, #ff0080, #b954b9);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 0, 128, 0.18);
+}
+
+.project-actions .btn-danger {
+  background: linear-gradient(135deg, #ff6b6b, #ff4c4c);
+  border: none;
+  color: #fff;
+}
+.project-actions .btn-danger:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 76, 76, 0.18);
+}
+
+/* remove any extra margin on buttons inside project-actions */
+.project-actions button {
+  margin: 0;
+}
+
+.project-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}

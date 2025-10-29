@@ -1,6 +1,9 @@
 // Home.jsx
 import React, { useState, useEffect } from 'react';
 import '../styles/pages/home.css';
+import '../styles/pages/theme.css'; // Import the new theme CSS file
+import TextSizeControls from './TextSizeControls.jsx';
+import ThemeToggle from './ThemeToggle.jsx';
 
 export default function Home({ onLogout, onNavigate }) {
   const [isDarkMode, setIsDarkMode] = useState(true);
@@ -21,6 +24,22 @@ export default function Home({ onLogout, onNavigate }) {
       // Continue without user profile data
     }
   }, []);
+
+  // initialize theme from saved preference or default
+	useEffect(() => {
+		try {
+			const saved = localStorage.getItem('site_theme');
+			const dark = saved === 'dark' || saved === null; // default dark
+			setIsDarkMode(dark);
+			if (!dark) {
+				document.documentElement.classList.add('site-light');
+			} else {
+				document.documentElement.classList.remove('site-light');
+			}
+		} catch (e) {
+			// ignore
+		}
+	}, []);
 
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
@@ -69,18 +88,28 @@ export default function Home({ onLogout, onNavigate }) {
   };
 
   const handleThemeToggle = () => {
-    setIsTransitioning(true);
-    
-    // Add a small delay to ensure smooth transition
-    setTimeout(() => {
-      setIsDarkMode(!isDarkMode);
-      
-      // Remove transition flag after animation completes
-      setTimeout(() => {
-        setIsTransitioning(false);
-      }, 500);
-    }, 50);
-  };
+		setIsTransitioning(true);
+
+		setTimeout(() => {
+			setIsDarkMode(prev => {
+				const newDark = !prev;
+				// update global class so all pages respond
+				if (!newDark) {
+					document.documentElement.classList.add('site-light');
+					localStorage.setItem('site_theme', 'light');
+				} else {
+					document.documentElement.classList.remove('site-light');
+					localStorage.setItem('site_theme', 'dark');
+				}
+				return newDark;
+			});
+
+			// Remove transition flag after animation completes
+			setTimeout(() => {
+				setIsTransitioning(false);
+			}, 500);
+		}, 50);
+	};
 
   const handleAICounselorClick = () => {
     try {
@@ -126,11 +155,17 @@ export default function Home({ onLogout, onNavigate }) {
     <main className={`home-main ${isDarkMode ? 'dark' : 'light'} ${isTransitioning ? 'transitioning' : ''}`}>
       {/* Navigation Bar */}
       <nav className="navbar">
-        <h1 className="nav-logo interactive-logo" onClick={() => scrollToSection('home')}>
-          NextStep
-          <div className="logo-glow"></div>
-        </h1>
-        
+        <div className="nav-brand">
+          <h1 className="nav-logo interactive-logo" onClick={() => scrollToSection('home')}>
+            NextStep
+            <div className="logo-glow"></div>
+          </h1>
+          <div className="nav-text-controls-inline">
+            <TextSizeControls />
+            <ThemeToggle />
+          </div>
+        </div>
+
         <section className="nav-links">
           <span
             className={`nav-link ${activeSection === 'home' ? 'active' : ''}`}
@@ -170,12 +205,6 @@ export default function Home({ onLogout, onNavigate }) {
           </button>
           <button className="sign-in-button" onClick={handleLogout}>
             Sign Out
-          </button>
-          <button 
-            className="theme-toggle-button" 
-            onClick={handleThemeToggle}
-          >
-            {isDarkMode ? '☀️ Light Mode' : '🌙 Dark Mode'}
           </button>
         </section>
       </nav>

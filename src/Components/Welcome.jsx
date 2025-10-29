@@ -3,7 +3,7 @@ import SkillFormPage from './SkillFormPage.jsx';
 import '../styles/components/auth.css';
 
 export default function Welcome({ onLogin }) {
-  const [activeTab, setActiveTab] = useState(1); // Start with Sign Up tab
+  const [activeTab, setActiveTab] = useState(0); // 0 for Sign In, 1 for Sign Up
   const [showSkillAssessment, setShowSkillAssessment] = useState(false);
   const [isNewUser, setIsNewUser] = useState(false);
   const [isReturningUser, setIsReturningUser] = useState(false);
@@ -23,17 +23,13 @@ export default function Welcome({ onLogin }) {
 
   // Check for existing user data on component mount
   useEffect(() => {
-    console.log('Welcome component mounted'); // Debug log
     const userData = localStorage.getItem("userProfile");
+    const authState = localStorage.getItem("isAuthenticated");
+    const surveyData = localStorage.getItem("surveyAnswers");
     
-    if (userData) {
-      console.log('Found existing user data, showing sign in tab'); // Debug log
+    if (userData && authState === "true") {
       setIsReturningUser(true);
-      setActiveTab(0); // Show sign in tab
-    } else {
-      console.log('No user data found, showing sign up tab'); // Debug log
-      setIsReturningUser(false);
-      setActiveTab(1); // Show sign up tab
+      setActiveTab(0); // Default to sign in tab for returning users
     }
   }, []);
 
@@ -52,12 +48,13 @@ export default function Welcome({ onLogin }) {
 
   const handleSignupSubmit = (e) => {
     e.preventDefault();
-    console.log('Sign up submitted:', signUpData); // Debug log
-    
     if (signUpData.password !== signUpData.confirmPassword) {
       setPasswordError("Passwords do not match");
       return;
     }
+    
+    // Check if user already has survey data
+    const existingSurveyData = localStorage.getItem("surveyAnswers");
     
     // Save new user data to localStorage
     const newUserProfile = {
@@ -69,28 +66,39 @@ export default function Welcome({ onLogin }) {
       experience: 'Entry Level',
       createdAt: Date.now(),
       isNewUser: true,
-      hasCompletedSurvey: false
+      hasCompletedSurvey: !!existingSurveyData
     };
     
     localStorage.setItem("userProfile", JSON.stringify(newUserProfile));
     localStorage.setItem("isAuthenticated", "true");
     
-    console.log('User profile created, showing assessment'); // Debug log
+    console.log('Signup successful:', signUpData);
     setIsNewUser(true);
-    setShowSkillAssessment(true);
+    
+    // Skip survey if they already have survey data
+    if (existingSurveyData) {
+      console.log('Found existing survey data, skipping assessment');
+      if (onLogin) {
+        onLogin();
+      }
+    } else {
+      setShowSkillAssessment(true);
+    }
   };
 
   const handleSigninSubmit = (e) => {
     e.preventDefault();
-    console.log('Sign in submitted:', signInData); // Debug log
     
+    // Check if user exists in localStorage
     const userData = localStorage.getItem("userProfile");
     
     if (userData) {
       const userProfile = JSON.parse(userData);
+      // Simple validation - in real app, you'd validate against backend
       if (userProfile.email === signInData.email) {
         localStorage.setItem("isAuthenticated", "true");
         
+        // Update user profile to mark as returning user (but don't overwrite data)
         const updatedProfile = {
           ...userProfile,
           lastLoginAt: Date.now(),
@@ -98,7 +106,7 @@ export default function Welcome({ onLogin }) {
         };
         localStorage.setItem("userProfile", JSON.stringify(updatedProfile));
         
-        console.log('Sign in successful, going to home'); // Debug log
+        console.log('Signin successful for returning user:', userProfile.fullName);
         if (onLogin) {
           onLogin();
         }
@@ -111,20 +119,21 @@ export default function Welcome({ onLogin }) {
   };
 
   const handleSkillAssessmentComplete = (surveyAnswers) => {
-    console.log('Assessment completed:', surveyAnswers); // Debug log
-    
+    // Save survey answers to localStorage
     if (surveyAnswers) {
       localStorage.setItem("surveyAnswers", JSON.stringify({
         ...surveyAnswers,
         completedAt: Date.now()
       }));
       
+      // Update user profile to mark survey as completed
       const userData = localStorage.getItem("userProfile");
       if (userData) {
         const userProfile = JSON.parse(userData);
         const updatedProfile = {
           ...userProfile,
           hasCompletedSurvey: true,
+          // Update profile with survey data if available
           ...(surveyAnswers.skills && { skills: surveyAnswers.skills }),
           ...(surveyAnswers.experience && { experience: surveyAnswers.experience }),
           ...(surveyAnswers.careerGoal && { careerGoal: surveyAnswers.careerGoal }),
@@ -141,14 +150,12 @@ export default function Welcome({ onLogin }) {
   };
 
   const handleBackFromSurvey = () => {
-    console.log('Back from survey clicked'); // Debug log
     setShowSkillAssessment(false);
     setIsNewUser(false);
   };
 
-  // If showing skill assessment, render the SkillFormPage
+  // If showing skill assessment, render your actual SkillFormPage
   if (showSkillAssessment) {
-    console.log('Rendering skill assessment'); // Debug log
     return (
       <div className="skill-assessment-wrapper">
         <SkillFormPage 
@@ -159,9 +166,7 @@ export default function Welcome({ onLogin }) {
     );
   }
 
-  console.log('Rendering welcome forms, active tab:', activeTab); // Debug log
-
-  // Default auth forms
+  // Default auth forms (unchanged)
   return (
     <main className="home-main dark welcome-page">
       {/* Enhanced Hero Section with animated background */}
@@ -222,7 +227,7 @@ export default function Welcome({ onLogin }) {
                           id="signin-email"
                           name="email"
                           value={signInData.email}
-                          onChange={(e) => setSignInData(prev => ({...prev, email: e.target.value}))}
+                          onChange={handleSigninChange}
                           required
                           placeholder="Enter your email"
                         />
@@ -235,7 +240,7 @@ export default function Welcome({ onLogin }) {
                           id="signin-password"
                           name="password"
                           value={signInData.password}
-                          onChange={(e) => setSignInData(prev => ({...prev, password: e.target.value}))}
+                          onChange={handleSigninChange}
                           required
                           placeholder="Enter your password"
                         />
@@ -262,7 +267,7 @@ export default function Welcome({ onLogin }) {
                           id="signup-fullname"
                           name="fullname"
                           value={signUpData.fullname}
-                          onChange={(e) => setSignUpData(prev => ({...prev, fullname: e.target.value}))}
+                          onChange={handleSignupChange}
                           required
                           placeholder="Enter your full name"
                         />
@@ -275,7 +280,7 @@ export default function Welcome({ onLogin }) {
                           id="signup-email"
                           name="email"
                           value={signUpData.email}
-                          onChange={(e) => setSignUpData(prev => ({...prev, email: e.target.value}))}
+                          onChange={handleSignupChange}
                           required
                           placeholder="Enter your email"
                         />
@@ -288,7 +293,7 @@ export default function Welcome({ onLogin }) {
                           id="signup-password"
                           name="password"
                           value={signUpData.password}
-                          onChange={(e) => setSignUpData(prev => ({...prev, password: e.target.value}))}
+                          onChange={handleSignupChange}
                           required
                           placeholder="Create a password"
                         />
@@ -301,7 +306,7 @@ export default function Welcome({ onLogin }) {
                           id="signup-confirm-password"
                           name="confirmPassword"
                           value={signUpData.confirmPassword}
-                          onChange={(e) => setSignUpData(prev => ({...prev, confirmPassword: e.target.value}))}
+                          onChange={handleSignupChange}
                           required
                           placeholder="Confirm your password"
                         />

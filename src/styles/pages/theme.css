@@ -1,0 +1,137 @@
+/* Purpose: page-level theme only. Keep nav/cards boxed UI unchanged (force dark) */
+
+/* Brighter light-mode palette (page-level only) */
+:root {
+  /* dark default fallbacks (used before html.site-light is applied) */
+  --background-base-dark: #0b0b18;
+  --app-font-color-dark: #e8eef6;
+
+  /* brighter purple page background for light mode (bright, but soft) */
+  --background-base-light: linear-gradient(180deg, #f7e9ff 0%, #f0dbff 50%, #ebd3ff 100%);
+  --app-font-color-light: #111827;
+
+  /* brighter accent colors */
+  --accent-pink: #ff4db8;    /* brighter pink */
+  --accent-purple: #8e2fff;  /* vivid purple */
+}
+
+/* default: dark page background and text */
+html, body {
+  background-color: var(--background-base-dark);
+  color: var(--app-font-color-dark);
+  transition: background-color 280ms ease, color 220ms ease;
+}
+
+/* When html.site-light is present, only change the page background + base text color */
+html.site-light {
+  /* use the bright purple gradient for page surfaces */
+  --background-base: var(--background-base-light);
+  --app-font-color: var(--app-font-color-light);
+  --accent-color: var(--accent-pink);
+
+  /* apply immediate background to avoid flash */
+  background: var(--background-base) !important;
+  color: var(--app-font-color) !important;
+}
+
+/* Apply page-level background to the main app container so pages show the purple */
+html.site-light body,
+html.site-light main,
+html.site-light .home-main,
+html.site-light .profile-main,
+html.site-light .projects-main,
+html.site-light .ai-counselor-main {
+  background: var(--background-base) !important;
+  color: var(--app-font-color) !important;
+}
+
+/* EXCEPTIONS: force boxed UI (cards, navbar, footer, chat blocks) to keep dark styling
+   so the light/dark toggle only affects page surfaces (background + base text),
+   not the boxed components which should remain consistent */
+html.site-light .navbar,
+html.site-light .highlight-card,
+html.site-light .step-card,
+html.site-light .stat-card,
+html.site-light .project-card,
+html.site-light .project-form-card,
+html.site-light .project-list-card,
+html.site-light .contact-section,
+html.site-light .contact-form-container,
+html.site-light .suggestions,
+html.site-light .demo-results,
+html.site-light .analysis-card,
+html.site-light .chat-section,
+html.site-light .chat-box,
+html.site-light .footer-section {
+  /* reuse dark look so these components stay visually consistent */
+  background: #1a1a1a !important;
+  color: var(--app-font-color-dark) !important;
+  border-color: rgba(255,0,128,0.10) !important;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35) !important;
+}
+
+/* Inputs inside boxed UI keep current boxed styling (prevent stark white inputs inside dark cards) */
+html.site-light .navbar input,
+html.site-light .project-form input,
+html.site-light .contact-form input,
+html.site-light .chat-input,
+html.site-light .project-form textarea,
+html.site-light .contact-form textarea {
+  background: #121212 !important;
+  color: var(--app-font-color-dark) !important;
+  border: 1px solid rgba(255,255,255,0.04) !important;
+}
+
+/* Keep primary accent buttons readable on page background without changing boxed buttons */
+html.site-light .cta-button {
+  background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple)) !important;
+  color: #fff !important;
+}
+
+/* Keep transition smooth but subtle */
+* {
+  transition: background-color 220ms ease, color 200ms ease, border-color 200ms ease !important;
+}
+
+/* Footer */
+.site-light .footer-section {
+  background: #ffffff !important;
+  border-top: 1px solid var(--border) !important;
+  color: #333 !important;
+}
+
+/* Links and accents */
+.site-light .resource-title,
+.site-light .nav-link.active,
+.site-light .cta-button,
+.site-light .footer-link-button,
+.site-light .tag {
+  color: #ff0080 !important;
+}
+
+/* Buttons */
+.site-light .sign-in-button,
+.site-light .theme-toggle-button,
+.site-light .btn-secondary {
+  background: rgba(0,0,0,0.03) !important;
+  color: #222 !important;
+  border: 1px solid var(--border) !important;
+}
+.site-light .btn-secondary:hover {
+  background: rgba(255,0,128,0.06) !important;
+  color: #fff !important;
+}
+
+/* CTA remains highlighted for visibility */
+.site-light .cta-button {
+  background: linear-gradient(135deg, #ff0080, #b954b9) !important;
+  color: #fff !important;
+  box-shadow: 0 6px 20px rgba(255, 0, 128, 0.12) !important;
+}
+
+/* Small screens: keep readable contrast */
+@media (max-width: 768px) {
+  .site-light .chat-section,
+  .site-light .suggestions,
+  .site-light .projects-list { background: #fff !important; }
+}

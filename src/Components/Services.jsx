@@ -1,6 +1,8 @@
 // ServicesPage.jsx
 import React from 'react';
 import '../styles/components/services.css';
+import TextSizeControls from './TextSizeControls.jsx';
+import ThemeToggle from './ThemeToggle.jsx';
 
 export default function Services({ onNavigate }) {
   const handleBackToHome = () => {
@@ -12,17 +14,19 @@ export default function Services({ onNavigate }) {
   return (
     <main className="home-main dark">
       <nav className="navbar">
-        <h1 className="nav-logo interactive-logo" onClick={handleBackToHome}>
-          NextStep
-          <div className="logo-glow"></div>
-        </h1>
-        <section className="nav-links">
-          {/* Empty nav links section for consistent spacing */}
-        </section>
+        <div className="nav-brand">
+          <h1 className="nav-logo interactive-logo" onClick={handleBackToHome}>
+            NextStep
+            <div className="logo-glow"></div>
+          </h1>
+          <div className="nav-text-controls-inline">
+            <TextSizeControls />
+            <ThemeToggle />
+          </div>
+        </div>
+
         <section className="nav-auth-buttons">
-          <button className="cta-button back-home-btn" onClick={handleBackToHome}>
-            ← Back to Home
-          </button>
+          {/* intentionally empty */}
         </section>
       </nav>
 

@@ -348,10 +348,53 @@
   margin-bottom: 0.5rem;
 }
 
-.page-subtitle {
-  color: #a0a9ba;
-  font-size: 1.125rem;
-  margin: 0;
+/* Accessibility: use global font variable (fallback) */
+:root {
+  --app-font-size: var(--app-font-size, 18px);
+  --app-line-height: var(--app-line-height, 1.85);
+}
+
+/* Apply readable typography across profile page */
+.page-container,
+.profile-card,
+.profile-details,
+.profile-section,
+.profile-section p,
+.form-group p,
+.skills-list,
+.interests-display,
+.survey-data-content {
+  font-size: var(--app-font-size);
+  line-height: var(--app-line-height);
+}
+
+/* Page title scaled but consistent */
+.page-title {
+  font-size: calc(var(--app-font-size) * 2.0);
+  line-height: 1.12;
+}
+
+/* Form labels and inputs clearer */
+.form-group label {
+  font-size: calc(var(--app-font-size) * 0.98);
+  line-height: 1.4;
+  color: #eaeff6;
+}
+
+/* Skill / tag sizes improved for legibility */
+.skill-tag,
+.interest-tag,
+.tech-tag,
+.soft-skill-tag {
+  font-size: calc(var(--app-font-size) * 0.95);
+}
+
+/* Survey data blocks and lists */
+.survey-data-content,
+.survey-data-content .form-group,
+.survey-data-content .interests-display {
+  font-size: var(--app-font-size);
+  line-height: var(--app-line-height);
 }
 
 /* No Survey Data Section */

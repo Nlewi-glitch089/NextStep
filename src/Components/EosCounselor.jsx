@@ -4,12 +4,20 @@ import { sendMessageToEosWithOpenAI } from '../services/chatservice';
 
 export default function EosCounselor({ onNavigate }) {
   const [messages, setMessages] = useState([]);
+  const messagesRef = useRef(messages); // NEW: keep latest messages available in callbacks
+  useEffect(() => { messagesRef.current = messages; }, [messages]);
+
   const [userInput, setUserInput] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [hasAnalyzedAssessment, setHasAnalyzedAssessment] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [requestInProgress, setRequestInProgress] = useState(false);
   const chatEndRef = useRef(null);
+
+  // NEW: track seen API replies to avoid duplicates
+  const lastApiReplySetRef = useRef(new Set());
 
   const allSuggestions = [
     "How can I prepare for interviews?",
@@ -50,14 +58,22 @@ export default function EosCounselor({ onNavigate }) {
         const userData = localStorage.getItem("userProfile");
         const surveyData = localStorage.getItem("surveyAnswers");
         
+        // Skip if already analyzing or another request is in progress
+        if (requestInProgress || isAnalyzing) {
+          setIsInitialized(true);
+          return;
+        }
+
         if (userData && surveyData && !hasAnalyzedAssessment) {
+          setIsAnalyzing(true);
+          setRequestInProgress(true);
+
           const userProfile = JSON.parse(userData);
           const assessmentResults = JSON.parse(surveyData);
           
-          // Create initial greeting
+          // Only add greeting if messages are currently empty
           const initialGreeting = `Hello ${userProfile.fullName?.split(' ')[0] || 'there'}! I'm Eos, your AI Career Counselor. I've reviewed your career assessment results, and I'm excited to help you on your journey!`;
-          
-          setMessages([{ sender: 'ai', text: initialGreeting }]);
+          setMessages(prev => (prev && prev.length > 0) ? prev : [{ sender: 'ai', text: initialGreeting }]);
           setIsLoading(true);
           
           // Generate personalized recommendations based on assessment
@@ -75,15 +91,29 @@ export default function EosCounselor({ onNavigate }) {
               }
             ]);
 
-            setMessages(prev => [
-              ...prev,
-              { 
-                sender: 'ai', 
-                text: response.reply,
-                paragraphs: formatAIResponse(response.reply),
-                resources: getResourceLinks(response.reply + ' ' + assessmentSummary)
-              }
-            ]);
+            // create signature and skip if seen
+            const replySignature = JSON.stringify({ reply: response.reply, resources: response.resources || [] });
+            if (!lastApiReplySetRef.current.has(replySignature)) {
+              lastApiReplySetRef.current.add(replySignature);
+
+              // append message using functional update to avoid stale state
+              setMessages(prev => {
+                // final guard: avoid exact duplicate as last message
+                const last = prev && prev.length ? prev[prev.length - 1] : null;
+                if (last && last.sender === 'ai' && last.text === response.reply) {
+                  return prev;
+                }
+                return [
+                  ...prev,
+                  { 
+                    sender: 'ai', 
+                    text: response.reply,
+                    paragraphs: formatAIResponse(response.reply),
+                    resources: getResourceLinks(response.reply + ' ' + assessmentSummary)
+                  }
+                ];
+              });
+            } // else skip duplicate
             
             setHasAnalyzedAssessment(true);
           } catch (error) {
@@ -95,9 +125,11 @@ export default function EosCounselor({ onNavigate }) {
                 text: "I've reviewed your assessment! While I'm having some technical difficulties accessing my full analysis capabilities right now, I can still help you explore your career options. What specific aspect of your career journey would you like to discuss?"
               }
             ]);
+          } finally {
+            setIsLoading(false);
+            setIsAnalyzing(false);
+            setRequestInProgress(false);
           }
-          
-          setIsLoading(false);
         } else if (!surveyData) {
           // User hasn't completed assessment yet
           setMessages([
@@ -253,42 +285,59 @@ export default function EosCounselor({ onNavigate }) {
   };
 
   const handleSend = async () => {
-    if (!userInput.trim() || isLoading) return; // Prevent sending while loading
+    // stronger guard: block while requests are in progress
+    if (!userInput.trim() || isLoading || isAnalyzing || requestInProgress) return;
 
+    // Capture latest messages from ref to build context reliably
+    const currentMessages = messagesRef.current.slice();
     const newUserMessage = { sender: 'user', text: userInput };
+    // append user message immediately
     setMessages(prev => [...prev, newUserMessage]);
     setUserInput('');
     setIsLoading(true);
+    setRequestInProgress(true);
 
     try {
-      // Include user's assessment context in ongoing conversations
       const userData = localStorage.getItem("userProfile");
       const surveyData = localStorage.getItem("surveyAnswers");
-      let contextualMessages = [...messages, newUserMessage];
 
-      // Add assessment context for better responses (but only for context, not re-analysis)
+      let contextualMessages = [...currentMessages, newUserMessage];
+
       if (userData && surveyData && hasAnalyzedAssessment) {
         const userProfile = JSON.parse(userData);
         const assessmentResults = JSON.parse(surveyData);
         const assessmentContext = `User context: ${userProfile.fullName}, ${userProfile.currentRole || 'Student'}, interested in ${assessmentResults.interests?.slice(0,3).join(', ') || 'tech'}, experience level: ${userProfile.experience || 'Entry Level'}`;
-        
+        // keep last N messages and prepend context
         contextualMessages = [
           { sender: 'system', text: assessmentContext },
-          ...contextualMessages.slice(-6) // Keep last 6 messages for context
+          ...contextualMessages.slice(-6)
         ];
       }
 
       const response = await sendMessageToEosWithOpenAI(contextualMessages);
 
-      setMessages(prev => [
-        ...prev,
-        { 
-          sender: 'ai', 
-          text: response.reply,
-          paragraphs: formatAIResponse(response.reply),
-          resources: getResourceLinks(response.reply + ' ' + userInput)
-        }
-      ]);
+      const replySignature = JSON.stringify({ reply: response.reply, resources: response.resources || [] });
+
+      // skip if signature already seen
+      if (!lastApiReplySetRef.current.has(replySignature)) {
+        lastApiReplySetRef.current.add(replySignature);
+
+        setMessages(prev => {
+          const last = prev && prev.length ? prev[prev.length - 1] : null;
+          if (last && last.sender === 'ai' && last.text === response.reply) {
+            return prev;
+          }
+          return [
+            ...prev,
+            {
+              sender: 'ai',
+              text: response.reply,
+              paragraphs: formatAIResponse(response.reply),
+              resources: getResourceLinks(response.reply + ' ' + userInput)
+            }
+          ];
+        });
+      }
     } catch (error) {
       console.error('EosCounselor error:', error);
       setMessages(prev => [
@@ -302,6 +351,7 @@ export default function EosCounselor({ onNavigate }) {
       ]);
     } finally {
       setIsLoading(false);
+      setRequestInProgress(false);
     }
   };
 
@@ -387,6 +437,112 @@ export default function EosCounselor({ onNavigate }) {
     generatePersonalizedSuggestions();
   }, [isInitialized]);
 
+  // New font size handling code
+  const SITE_KEY = 'site_font_size';
+  const defaultFont = 18;
+  const initialFont = (() => {
+    const v = Number(localStorage.getItem(SITE_KEY));
+    return v && !isNaN(v) ? v : defaultFont;
+  })();
+
+  const [fontSize, setFontSize] = useState(initialFont);
+
+  useEffect(() => {
+    // apply initial value to CSS variables
+    document.documentElement.style.setProperty('--response-font-size', `${fontSize}px`);
+    document.documentElement.style.setProperty('--app-font-size', `${fontSize}px`);
+    localStorage.setItem(SITE_KEY, String(fontSize));
+  }, []); // run once on mount
+
+  const increaseFont = () => {
+    setFontSize(s => {
+      const next = Math.min(24, s + 1);
+      document.documentElement.style.setProperty('--response-font-size', `${next}px`);
+      document.documentElement.style.setProperty('--app-font-size', `${next}px`);
+      localStorage.setItem(SITE_KEY, String(next));
+      return next;
+    });
+  };
+  const decreaseFont = () => {
+    setFontSize(s => {
+      const next = Math.max(14, s - 1);
+      document.documentElement.style.setProperty('--response-font-size', `${next}px`);
+      document.documentElement.style.setProperty('--app-font-size', `${next}px`);
+      localStorage.setItem(SITE_KEY, String(next));
+      return next;
+    });
+  };
+  const resetFont = () => {
+    const next = defaultFont;
+    document.documentElement.style.setProperty('--response-font-size', `${next}px`);
+    document.documentElement.style.setProperty('--app-font-size', `${next}px`);
+    localStorage.setItem(SITE_KEY, String(next));
+    setFontSize(next);
+  };
+
+  // New paragraph renderer: groups leading-marker lines into a marker-free list,
+  // treats "Label:" lines as headings, otherwise renders normal paragraphs.
+  const renderParagraphs = (paragraphs) => {
+    const elements = [];
+    let listBuffer = [];
+
+    const flushListBuffer = (keyBase) => {
+      if (listBuffer.length === 0) return;
+      elements.push(
+        <div key={`${keyBase}-list`} className="response-list" role="list">
+          {listBuffer.map((item, idx) => (
+            <div key={`${keyBase}-item-${idx}`} className="response-list-item" role="listitem">
+              {item}
+            </div>
+          ))}
+        </div>
+      );
+      listBuffer = [];
+    };
+
+    paragraphs.forEach((raw, i) => {
+      const p = raw.trim();
+
+      // detect heading-style lines (ends with ':' or short all-caps label)
+      const isLabelLine = /:$/u.test(p) || (/^[A-Z0-9\s]{3,30}$/.test(p) && p === p.toUpperCase());
+
+      // detect list-like lines starting with '-', '*', '#' or numbered lists like "1."
+      const listMatch = p.match(/^(\s*(?:-|\*|#|\d+\.)\s+)(.*)$/);
+      if (listMatch) {
+        // collect the stripped list item text
+        const itemText = listMatch[2].trim();
+        listBuffer.push(itemText);
+        return;
+      }
+
+      // if current line is not a list item, flush any buffered list first
+      if (listBuffer.length > 0) {
+        flushListBuffer(`p-${i}`);
+      }
+
+      if (isLabelLine) {
+        // render as a clear heading (no trailing ':')
+        elements.push(
+          <h4 key={`h-${i}`} className="ai-heading">
+            {p.replace(/:$/u, '')}
+          </h4>
+        );
+      } else {
+        // normal paragraph
+        elements.push(
+          <p key={`p-${i}`} className="response-paragraph">
+            {p}
+          </p>
+        );
+      }
+    });
+
+    // flush at end
+    flushListBuffer('end');
+
+    return elements;
+  };
+
   return (
     <main className="ai-counselor-main">
       <section className="ai-counselor-container">
@@ -395,7 +551,15 @@ export default function EosCounselor({ onNavigate }) {
             <button className="back-btn" onClick={handleBackToHome}>
               <span className="icon">←</span>
             </button>
+
             <h1 className="title">✨ Eos</h1>
+
+            {/* text size controls */}
+            <div className="text-size-controls" aria-hidden="false" role="toolbar" title="Adjust response text size">
+              <button className="txt-btn" onClick={decreaseFont} aria-label="Decrease text size">A−</button>
+              <button className="txt-btn" onClick={resetFont} aria-label="Reset text size">A</button>
+              <button className="txt-btn" onClick={increaseFont} aria-label="Increase text size">A+</button>
+            </div>
           </div>
           <p className="subtitle">Your AI Career Counselor</p>
         </header>
@@ -407,14 +571,8 @@ export default function EosCounselor({ onNavigate }) {
                 {msg.sender === 'ai' && <div className="avatar">🤖</div>}
                 <div className={`bubble ${msg.sender}`}>
                   {msg.paragraphs ? (
-                    // Formatted AI response with paragraphs
-                    <div className="formatted-response">
-                      {msg.paragraphs.map((paragraph, index) => (
-                        <p key={index} className="response-paragraph">
-                          {paragraph}
-                        </p>
-                      ))}
-                      
+                    <div className="formatted-response" style={{ '--response-font-size': `${fontSize}px` }}>
+                      {renderParagraphs(msg.paragraphs)}
                       {msg.resources && msg.resources.length > 0 && (
                         <div className="resources-section">
                           <h4>📚 Helpful Resources:</h4>
@@ -435,7 +593,6 @@ export default function EosCounselor({ onNavigate }) {
                       )}
                     </div>
                   ) : (
-                    // Regular text for user messages
                     msg.text
                   )}
                 </div>

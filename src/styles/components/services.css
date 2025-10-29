@@ -183,3 +183,36 @@
     font-size: 1.5rem;
   }
 }
+
+:root {
+  --app-font-size: var(--app-font-size, 18px);
+  --app-line-height: var(--app-line-height, 1.85);
+}
+
+/* Ensure readable type on services page */
+.services-content,
+.service-card p,
+.services-cta p,
+.service-card ul,
+.service-card li {
+  font-size: var(--app-font-size);
+  line-height: var(--app-line-height);
+}
+
+/* Make service headings clearly distinct */
+.service-card h3 {
+  font-size: calc(var(--app-font-size) * 1.25);
+  line-height: 1.2;
+}
+
+/* Slightly larger list items for scanability */
+.service-card li {
+  font-size: calc(var(--app-font-size) * 1.02);
+  padding: 0.5rem 0;
+}
+
+/* CTA heading and spacing */
+.services-cta h2 {
+  font-size: calc(var(--app-font-size) * 1.4);
+  line-height: 1.2;
+}
