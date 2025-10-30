@@ -1,18 +1,25 @@
 /* Purpose: page-level theme only. Keep nav/cards boxed UI unchanged (force dark) */
 
-/* Brighter light-mode palette (page-level only) */
+/* Brighter pink-first palette and smooth transitions */
 :root {
   /* dark default fallbacks (used before html.site-light is applied) */
   --background-base-dark: #0b0b18;
+  --card-bg-dark: #0f1220;
   --app-font-color-dark: #e8eef6;
 
-  /* brighter purple page background for light mode (bright, but soft) */
-  --background-base-light: linear-gradient(180deg, #f7e9ff 0%, #f0dbff 50%, #ebd3ff 100%);
+  /* brighter light palette (kept for site-light) */
+  --background-base-light: #fff8fb;
+  --card-bg-light: #ffffff;
   --app-font-color-light: #111827;
 
-  /* brighter accent colors */
-  --accent-pink: #ff4db8;    /* brighter pink */
-  --accent-purple: #8e2fff;  /* vivid purple */
+  /* Accent colors — make pink the primary accent for dark mode */
+  --accent-pink: #ff0080;      /* strong, saturated pink */
+  --accent-pink-strong: #ff2fa8;
+  --accent-pink-rgb: 255, 0, 128;
+
+  /* keep a secondary purple for gradients where needed */
+  --accent-purple: #b954b9;    /* secondary purple for gradients */
+  --accent-purple-rgb: 185, 84, 185;
 }
 
 /* default: dark page background and text */
@@ -26,6 +33,7 @@ html, body {
 html.site-light {
   /* use the bright purple gradient for page surfaces */
   --background-base: var(--background-base-light);
+  --card-bg: var(--card-bg-light);
   --app-font-color: var(--app-font-color-light);
   --accent-color: var(--accent-pink);
 

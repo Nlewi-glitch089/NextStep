@@ -1,5 +1,14 @@
 /* Home Page Specific Styles */
 
+/* Page-level palette variables (use these everywhere for consistent accents) */
+:root {
+  --accent-pink: #ff0080;           /* primary pink */
+  --accent-pink-strong: #ff2fa8;    /* stronger pink for highlights */
+  --accent-purple: #b954b9;         /* supporting purple */
+  --accent-purple-dark: #6f2fb3;    /* darker purple for light-mode accents */
+  --logo-gradient: linear-gradient(45deg, var(--accent-pink), var(--accent-pink-strong), var(--accent-purple));
+}
+
 /* Navigation */
 .navbar {
   display: grid;
@@ -45,7 +54,7 @@
 }
 
 .nav-logo.interactive-logo {
-  background: linear-gradient(45deg, #ff0080, #b954b9, #9b59b6) !important;
+  background: var(--logo-gradient) !important;
   -webkit-background-clip: text !important;
   -webkit-text-fill-color: transparent !important;
   background-clip: text !important;
@@ -97,12 +106,12 @@
 
 .nav-link:hover {
   background: rgba(255, 255, 255, 0.1);
-  color: #ff0080;
+  color: var(--accent-pink);
 }
 
 .nav-link.active {
   background: rgba(255, 0, 128, 0.2);
-  color: #ff0080;
+  color: var(--accent-pink);
 }
 
 /* Navigation Auth Buttons - Restore proper styling */
@@ -214,13 +223,13 @@
 .hero-title {
   font-size: 3.5rem;
   font-weight: 800;
-  background: linear-gradient(45deg, #ff0080, #b954b9, #9b59b6);
+  background: var(--logo-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   margin-bottom: 1.5rem;
-  text-shadow: 0 0 30px rgba(255, 0, 128, 0.3);
-  line-height: 1.1; /* Improve text spacing */
+  text-shadow: 0 0 30px rgba(255, 0, 128, 0.18); /* subtle glow, use pink tint */
+  line-height: 1.1;
 }
 
 .hero-subtitle {
@@ -233,7 +242,7 @@
 }
 
 .cta-button {
-  background: linear-gradient(135deg, #ff0080, #b954b9);
+  background: linear-gradient(135deg, var(--accent-pink), var(--accent-pink-strong));
   color: #ffffff;
   padding: 1.2rem 2.5rem; /* Slightly larger for better prominence */
   border: none;
@@ -244,7 +253,7 @@
   transition: all 0.3s ease;
   text-transform: uppercase;
   letter-spacing: 1px;
-  box-shadow: 0 4px 15px rgba(255, 0, 128, 0.3);
+  box-shadow: 0 4px 15px rgba(255, 0, 128, 0.28);
 }
 
 .cta-button:hover {
@@ -278,7 +287,7 @@
   text-align: center;
   font-size: 2.5rem;
   margin-bottom: 3rem;
-  color: #ff0080;
+  color: var(--accent-pink);
 }
 
 /* About Section */
@@ -306,7 +315,7 @@
   border-radius: 15px;
   padding: 2rem;
   text-align: center;
-  border: 1px solid rgba(255, 0, 128, 0.1);
+  border: 1px solid rgba(255, 0, 128, 0.10); /* soft pink border */
   transition: all 0.3s ease;
 }
 
@@ -325,7 +334,7 @@
 .highlight-title {
   font-size: 1.3rem;
   margin-bottom: 1rem;
-  color: #ff0080;
+  color: var(--accent-pink);
 }
 
 .highlight-description {
@@ -342,7 +351,7 @@
 
 .goals-title {
   font-size: clamp(1.4rem, calc(var(--app-font-size) * 1.6), 2rem);
-  color: #ff0080;
+  color: var(--accent-pink);
   margin-bottom: 2rem;
 }
 
@@ -445,8 +454,8 @@
 
 .demo-button {
   background: #2a2a2a !important;
-  border: 2px solid #ff0080 !important;
-  color: #ff0080 !important;
+  border: 2px solid var(--accent-pink) !important;
+  color: var(--accent-pink) !important;
   padding: 1rem 2rem !important;
   border-radius: 25px !important;
   cursor: pointer !important;
@@ -457,10 +466,9 @@
 }
 
 .demo-button:hover {
-  background: #ff0080 !important;
+  background: linear-gradient(135deg, var(--accent-pink), var(--accent-pink-strong)) !important;
   color: #fff !important;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(255, 0, 128, 0.4);
+  box-shadow: 0 8px 24px rgba(255, 0, 128, 0.22);
 }
 
 /* Demo Results */
@@ -1126,27 +1134,6 @@
   }
 }
 
-/* CTA Button - Keep original pink color */
-.cta-button {
-  background: linear-gradient(135deg, #ff0080, #b954b9);
-  color: #ffffff;
-  padding: 1rem 2rem;
-  border: none;
-  border-radius: 8px;
-  font-size: 1.125rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.cta-button:hover {
-  background: linear-gradient(135deg, #b954b9, #9b59b6);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(255, 0, 128, 0.4);
-}
-
 /* accessible typography variables and base rules */
 :root {
   --app-font-size: 18px;
@@ -1517,4 +1504,34 @@
 @media (max-width: 480px) {
   .theme-toggle-indicator .theme-toggle-track { width: 56px; height: 28px; padding: 0 6px; }
   .theme-toggle-indicator .theme-toggle-knob { width: 20px; height: 20px; top: 4px; left: 4px; }
+}
+
+/* Home-specific light mode adjustments:
+   keep boxed UI dark but make the page surface use a brighter purple background
+   and use a darker purple accent to highlight lighter purple/pink elements */
+.home-main.light {
+  --accent-pink: #ff2fa8;           /* slightly brighter pink in light mode */
+  --accent-pink-strong: #ff47bf;
+  --accent-purple: #d69ef0;         /* lighter purple for gradients */
+  --accent-purple-dark: #6b2fd0;    /* darker purple to offset lighter purple */
+  background: linear-gradient(180deg, #fbf4ff 0%, #f8effb 100%); /* gentle purple-tinged page */
+  color: #222;
+}
+
+/* keep boxed UI darker in light mode so they stand out against the page surface,
+   but use darker purple accents for outlines so pink doesn't 'bleed' into them */
+.home-main.light .highlight-card,
+.home-main.light .step-card,
+.home-main.light .stat-card,
+.home-main.light .project-card,
+.home-main.light .demo-results {
+  background: #ffffff;
+  border: 1px solid rgba(107,47,179,0.06); /* subtle purple border */
+  box-shadow: 0 6px 18px rgba(16,24,32,0.04);
+}
+
+/* Ensure nav text still reads pink on dark background and remains pink on hover */
+.nav-link:hover,
+.nav-link.active {
+  color: var(--accent-pink);
 }

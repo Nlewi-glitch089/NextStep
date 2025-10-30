@@ -114,175 +114,258 @@
   font-weight: 500 !important;
 }
 
-/* Form Groups */
-.skill-form-main .form-group {
-  margin-bottom: 2.5rem !important;
-  background: rgba(255, 255, 255, 0.05) !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  border-radius: 8px !important;
-  padding: 1.5rem !important;
+/* Step content card - provides a consistent boxed layout for each step */
+.step-content {
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+  border: 1px solid rgba(255,0,128,0.06);
+  border-radius: 12px;
+  padding: 1.25rem;
+  margin-bottom: 1.25rem;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
 }
 
-.skill-form-main .form-group label {
-  display: block !important;
-  color: #ff0080 !important;
-  font-size: 1.25rem !important;
-  font-weight: 600 !important;
-  margin-bottom: 0.75rem !important;
-  text-align: center !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.5px !important;
+/* Form group spacing inside the card */
+.form-group {
+  margin-bottom: 1rem;
+  display: block;
 }
 
-.skill-form-main .form-group p {
-  color: #b0c4de !important;
-  font-size: 1.1rem !important;
-  text-align: center !important;
-  margin-bottom: 1.5rem !important;
-  margin-top: 0.5rem !important;
-  line-height: 1.5 !important;
-  padding: 0 1rem !important;
-  font-weight: 500 !important;
+/* Label spacing & weight */
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+  color: #ff0080;
 }
 
-.skill-form-main .form-group input {
-  width: 100% !important;
-  padding: 1rem 1.25rem !important;
-  background: rgba(255, 255, 255, 0.05) !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  border-radius: 6px !important;
-  color: #ffffff !important;
-  font-size: 1rem !important;
-  transition: all 0.3s ease !important;
-  box-sizing: border-box !important;
-  margin-top: 1rem !important;
+/* Helper text below labels */
+.form-group p {
+  margin: 0 0 0.6rem 0;
+  color: #d6e6f5;
+  font-size: 0.95rem;
 }
 
-.skill-form-main .form-group input:focus {
-  outline: none !important;
-  border-color: #ff0080 !important;
-  background: rgba(255, 255, 255, 0.08) !important;
-  box-shadow: 0 0 0 3px rgba(255, 0, 128, 0.2) !important;
-}
-
-.skill-form-main .form-group input::placeholder {
-  color: #6c757d !important;
-}
-
-/* Choice Grid */
-.skill-form-main .choice-grid {
-  display: grid !important;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) !important;
-  gap: 1rem !important;
-  margin-top: 1rem !important;
-  padding: 0 !important;
-}
-
-.skill-form-main .choice-button {
-  background: rgba(255, 255, 255, 0.03) !important;
-  color: #fff !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
-  padding: 0.6rem 0.9rem !important;
-  border-radius: 10px !important;
-  cursor: pointer !important;
-  transition: all 0.18s ease !important;
-  font-weight: 600 !important;
-  font-size: 0.95rem !important;
-  box-shadow: none !important;
-}
-
-.skill-form-main .choice-button:hover {
-  transform: translateY(-3px) !important;
-  background: rgba(255, 0, 128, 0.08) !important;
-  border-color: rgba(255, 0, 128, 0.18) !important;
-  box-shadow: 0 6px 18px rgba(255, 0, 128, 0.08) !important;
-}
-
-.skill-form-main .choice-button.selected {
-  background: linear-gradient(135deg, #ff0080, #b954b9) !important;
-  color: #fff !important;
-  border-color: rgba(255, 0, 128, 0.35) !important;
-  box-shadow: 0 8px 20px rgba(255, 0, 128, 0.15) !important;
-  transform: translateY(-2px) !important;
-}
-
-/* Make sure choice-grid keeps buttons selectable on small screens */
+/* Choice grid: consistent gaps and alignment */
 .choice-grid {
   display: flex;
   flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  margin-top: 0.35rem;
+}
+
+/* Choice buttons: ensure compact and consistent within cards */
+.choice-button {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto !important;
+  padding: 0.36rem 0.72rem;
+  font-size: calc(var(--app-font-size, 18px) * 0.92);
+  min-height: 34px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: rgba(255,255,255,0.03);
+  color: #fff;
+  font-weight: 700;
+  box-sizing: border-box;
+}
+
+/* Keep long labels wrapping nicely */
+.choice-button { white-space: normal; text-align: center; }
+
+/* Add-skill area (input + button) — inline, aligned and matching button styles */
+.skill-add-form {
+  display: flex;
   gap: 0.6rem;
+  align-items: center;
+  margin-top: 0.6rem;
+}
+
+.skill-add-form input[type="text"] {
+  flex: 1 1 auto;
+  padding: 0.6rem 0.8rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: rgba(0,0,0,0.25);
+  color: #fff;
+  font-size: calc(var(--app-font-size, 18px) * 0.95);
+  box-sizing: border-box;
+}
+
+/* Add Skill button matches primary/choice sizing */
+.skill-add-form .add-skill-btn {
+  padding: 0.38rem 0.9rem;
+  min-height: 36px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: calc(var(--app-font-size, 18px) * 0.95);
+  background: linear-gradient(135deg, #ff0080, #b954b9);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+/* Make action buttons consistent across the form (Next, Previous, Add) */
+.form-navigation .btn-primary,
+.form-navigation .btn-secondary,
+.skill-add-form .add-skill-btn {
+  display: inline-flex;
+  align-items: center;
   justify-content: center;
 }
 
-/* Form Navigation - Simplified layout */
-.skill-form-main .form-navigation {
-  display: flex !important;
-  justify-content: space-between !important;
-  align-items: center !important;
-  margin-top: 3rem !important;
-  padding-top: 2rem !important;
-  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
-  background: transparent !important;
+/* Reduce heavy shadows on small screens and keep spacing comfortable */
+@media (max-width: 768px) {
+  .step-content { padding: 1rem; margin-bottom: 1rem; box-shadow: 0 6px 14px rgba(0,0,0,0.28); }
+  .skill-add-form { flex-direction: column; align-items: stretch; }
+  .skill-add-form .add-skill-btn { width: 100%; }
 }
 
-.nav-left {
-  display: flex !important;
-  align-items: center !important;
+/* Ensure review tags inside the card match the compact look */
+.review-tags .review-tag,
+.review-tag {
+  padding: 0.34rem 0.72rem;
+  font-size: calc(var(--app-font-size, 18px) * 0.92);
+  border-radius: 10px;
+  background: rgba(255,0,128,0.06);
+  border: 1px solid rgba(255,0,128,0.10);
+  color: #ff0080;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  white-space: nowrap;
 }
 
-.nav-right {
-  display: flex !important;
-  gap: 1rem !important;
-  align-items: center !important;
+/* Base sizing variables (use existing site font size) */
+:root {
+  --app-font-size: var(--app-font-size, 18px);
+  --button-font-size: calc(var(--app-font-size) * 0.95);
+  --button-padding-vertical: 0.38rem;
+  --button-padding-horizontal: 0.72rem;
+  --button-min-height: 36px;
+  --button-radius: 10px;
 }
 
-/* Form Navigation Buttons - Make Previous button prominent */
-.skill-form-main .form-navigation button {
-  padding: 0.875rem 2rem !important;
-  border-radius: 8px !important;
-  font-size: 1rem !important;
-  font-weight: 600 !important;
-  cursor: pointer !important;
-  transition: all 0.3s ease !important;
-  border: none !important;
-  outline: none !important;
+/* Choice grid: keep items inline and prevent them from stretching */
+.choice-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  align-items: center;
+  justify-content: flex-start;
 }
 
-.skill-form-main .btn-primary {
-  background: linear-gradient(45deg, #ff0080, #b954b9) !important;
-  color: #ffffff !important;
+/* Compact, consistent choice button for skills, interests, etc. */
+.choice-button {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto !important;        /* prevent grow */
+  white-space: nowrap;
+  padding: var(--button-padding-vertical) var(--button-padding-horizontal);
+  font-size: var(--button-font-size);
+  line-height: 1.15;
+  border-radius: var(--button-radius);
+  border: 1px solid rgba(255,255,255,0.06);
+  background: rgba(255,255,255,0.03);
+  color: #fff;
+  cursor: pointer;
+  font-weight: 700;
+  transition: all 0.14s ease;
+  min-width: 0 !important;           /* allow natural width */
+  min-height: var(--button-min-height);
+  box-sizing: border-box;
 }
 
-.skill-form-main .btn-primary:hover {
-  background: linear-gradient(45deg, #b954b9, #9b59b6) !important;
-  transform: translateY(-2px) !important;
-  box-shadow: 0 4px 12px rgba(255, 0, 128, 0.3) !important;
+/* Hover/focus state */
+.choice-button:hover,
+.choice-button:focus {
+  transform: translateY(-2px);
+  background: rgba(255,0,128,0.06);
+  border-color: rgba(255,0,128,0.18);
+  outline: none;
 }
 
-.skill-form-main .btn-secondary {
-  background: linear-gradient(135deg, #9b59b6, #8e44ad) !important;
-  color: #ffffff !important;
-  border: none !important;
+/* Selected state: keep compact but visually prominent */
+.choice-button.selected {
+  background: linear-gradient(135deg, #ff0080, #b954b9);
+  color: #ffffff;
+  border-color: rgba(255,0,128,0.28);
+  box-shadow: 0 8px 20px rgba(255,0,128,0.10);
+  transform: translateY(-1px);
 }
 
-.skill-form-main .btn-secondary:hover {
-  background: linear-gradient(135deg, #8e44ad, #7d3c98) !important;
-  transform: translateY(-2px) !important;
-  box-shadow: 0 4px 12px rgba(155, 89, 182, 0.3) !important;
+/* Ensure action buttons (primary/secondary) match choice sizing and alignment */
+.btn-primary,
+.btn-secondary,
+.cta-button,
+.back-profile-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--button-padding-vertical) var(--button-padding-horizontal);
+  min-height: var(--button-min-height);
+  font-size: var(--button-font-size);
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  box-sizing: border-box;
 }
 
-.skill-form-main .cta-button {
-  background: linear-gradient(45deg, #ff0080, #b954b9) !important;
-  color: #ffffff !important;
-  padding: 1rem 2.5rem !important;
-  font-size: 1.125rem !important;
-  font-weight: 600 !important;
+/* Visual styles for primary / secondary preserved but sizing unified */
+.btn-primary {
+  background: linear-gradient(135deg, #ff0080, #b954b9);
+  color: #fff;
+  border: none;
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255,0,128,0.12); }
+
+.btn-secondary {
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.12);
+}
+.btn-secondary:hover {
+  background: rgba(255,255,255,0.04);
+  transform: translateY(-2px);
 }
 
-.skill-form-main .cta-button:hover {
-  background: linear-gradient(45deg, #b954b9, #9b59b6) !important;
-  transform: translateY(-2px) !important;
-  box-shadow: 0 6px 20px rgba(255, 0, 128, 0.4) !important;
+/* Make sure review tags match choice button compact sizing */
+.review-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--button-padding-vertical) var(--button-padding-horizontal);
+  font-size: var(--button-font-size);
+  line-height: 1.15;
+  border-radius: var(--button-radius);
+  background: rgba(255,0,128,0.06);
+  color: #ff0080;
+  border: 1px solid rgba(255,0,128,0.10);
+  font-weight: 700;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+/* Small screens: slightly reduce padding and font-size to avoid wrapping */
+@media (max-width: 480px) {
+  :root {
+    --button-padding-vertical: 0.32rem;
+    --button-padding-horizontal: 0.6rem;
+    --button-min-height: 32px;
+  }
+  .choice-button,
+  .btn-primary,
+  .btn-secondary,
+  .review-tag {
+    font-size: calc(var(--app-font-size) * 0.88);
+    padding: var(--button-padding-vertical) var(--button-padding-horizontal);
+    min-height: var(--button-min-height);
+  }
 }
 
 /* Responsive Design - Update for new layout */
@@ -415,37 +498,115 @@ body:has(.skill-assessment-wrapper) {
   box-shadow: 0 0 0 3px rgba(255, 0, 128, 0.3) !important;
 }
 
+/* Use site font-size variable with sensible fallback */
 :root {
-  --app-font-size: 18px;
-  --app-line-height: 1.75;
+  --app-font-size: var(--app-font-size, 18px);
+  --app-line-height: var(--app-line-height, 1.75);
 }
 
-/* survey content uses larger type and relaxed leading */
-.skill-form-main,
-.skill-form-container,
-.step-content,
-.form-group label,
-.choice-button,
-.form-group input,
-.form-group select {
-  font-size: var(--app-font-size);
-  line-height: var(--app-line-height);
+/* Choice grid: keep items inline and prevent them from expanding to fill row */
+.choice-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 0.5rem;
+  align-items: center;
 }
 
-/* step headings scaled to be clearly different from body copy */
-.step-content h3 {
-  font-size: clamp(1.4rem, calc(var(--app-font-size) * 1.6), 2rem);
-  margin-bottom: 1rem;
+/* Ensure choice grid items never stretch and buttons remain compact */
+.choice-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  align-items: center;
+  justify-content: flex-start;
 }
 
-/* make choice buttons slightly larger and keep selected clear */
+/* Compact, consistent choice button */
 .choice-button {
-  font-size: calc(var(--app-font-size) * 0.95);
-  padding: 0.75rem 1rem;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto !important;    /* prevent growing */
+  white-space: nowrap;
+  padding: 0.38rem 0.72rem;     /* slightly tighter */
+  font-size: calc(var(--app-font-size,18px) * 0.92);
+  line-height: 1.15;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: rgba(255,255,255,0.03);
+  color: #fff;
+  cursor: pointer;
+  font-weight: 700;
+  transition: all 0.15s ease;
+  min-width: 0 !important;      /* allow natural width for short labels */
+  min-height: 34px;
+  box-sizing: border-box;
 }
 
-/* form navigation buttons consistent with app font */
-.form-navigation button {
-  font-size: calc(var(--app-font-size) * 1);
-  padding: 0.9rem 1.6rem;
+/* Selected state remains visible but compact */
+.choice-button.selected {
+  background: linear-gradient(135deg, #ff0080, #b954b9);
+  color: #ffffff;
+  border-color: rgba(255,0,128,0.28);
+  box-shadow: 0 8px 20px rgba(255,0,128,0.10);
+  transform: translateY(-1px);
+}
+
+/* Ensure multi-word items wrap sensibly on very small screens */
+@media (max-width: 420px) {
+  .choice-button {
+    padding: 0.34rem 0.6rem;
+    font-size: calc(var(--app-font-size,18px) * 0.88);
+    min-height: 32px;
+  }
+}
+
+/* Step headings & helper text */
+.step-content h3 {
+  font-size: calc(var(--app-font-size) * 1.15);
+  line-height: 1.25;
+  margin-bottom: 0.75rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.step-content p {
+  font-size: calc(var(--app-font-size) * 0.98);
+  line-height: 1.6;
+  margin-bottom: 0.5rem;
+  color: #d6e6f5;
+}
+
+/* Review tags */
+.review-tag {
+  display: inline-block;
+  background: rgba(255,0,128,0.06);
+  color: #ff0080;
+  padding: 0.25rem 0.6rem;
+  border-radius: 12px;
+  margin: 0 0.4rem 0.5rem 0;
+  font-size: calc(var(--app-font-size) * 0.92);
+  line-height: 1.3;
+  font-weight: 700;
+}
+
+/* Review headings */
+.review-group h4 {
+  font-size: calc(var(--app-font-size) * 1.02);
+  font-weight: 800;
+  color: #ff0080;
+  margin-bottom: 0.5rem;
+}
+
+/* Responsive tweaks */
+@media (max-width: 480px) {
+  .choice-button {
+    padding: 0.4rem 0.7rem;
+    font-size: calc(var(--app-font-size) * 0.9);
+    min-height: 34px;
+  }
+
+  .review-tag { font-size: calc(var(--app-font-size) * 0.86); padding: 0.22rem 0.5rem; }
 }

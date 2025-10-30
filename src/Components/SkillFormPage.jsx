@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/components/skillform.css';
 
-export default function SkillFormPage({ onComplete, onBack, initialData }) {
+export default function SkillFormPage({ onComplete, onBack, initialData, retakeMode = false }) {
   // initialize formData using initialData when available
   const [formData, setFormData] = useState(() => ({
     skills: [],
@@ -22,18 +22,20 @@ export default function SkillFormPage({ onComplete, onBack, initialData }) {
   // on mount, merge initialData into formData safely
   useEffect(() => {
     if (initialData && typeof initialData === 'object') {
+      // exclude any legacy `currentRole` so review shows Current Status only
+      const { currentRole, ...safeData } = initialData;
       setFormData(prev => ({
         ...prev,
-        ...initialData,
+        ...safeData,
         // ensure arrays are arrays
-        skills: Array.isArray(initialData.skills) ? initialData.skills : prev.skills,
-        interests: Array.isArray(initialData.interests) ? initialData.interests : prev.interests,
-        techInterests: Array.isArray(initialData.techInterests) ? initialData.techInterests : prev.techInterests,
-        softSkills: Array.isArray(initialData.softSkills) ? initialData.softSkills : prev.softSkills,
-        preferredWorkEnvironment: Array.isArray(initialData.preferredWorkEnvironment) ? initialData.preferredWorkEnvironment : prev.preferredWorkEnvironment,
-        workValues: Array.isArray(initialData.workValues) ? initialData.workValues : prev.workValues,
-        careerPriorities: Array.isArray(initialData.careerPriorities) ? initialData.careerPriorities : prev.careerPriorities,
-        learningStyle: Array.isArray(initialData.learningStyle) ? initialData.learningStyle : prev.learningStyle
+        skills: Array.isArray(safeData.skills) ? safeData.skills : prev.skills,
+        interests: Array.isArray(safeData.interests) ? safeData.interests : prev.interests,
+        techInterests: Array.isArray(safeData.techInterests) ? safeData.techInterests : prev.techInterests,
+        softSkills: Array.isArray(safeData.softSkills) ? safeData.softSkills : prev.softSkills,
+        preferredWorkEnvironment: Array.isArray(safeData.preferredWorkEnvironment) ? safeData.preferredWorkEnvironment : prev.preferredWorkEnvironment,
+        workValues: Array.isArray(safeData.workValues) ? safeData.workValues : prev.workValues,
+        careerPriorities: Array.isArray(safeData.careerPriorities) ? safeData.careerPriorities : prev.careerPriorities,
+        learningStyle: Array.isArray(safeData.learningStyle) ? safeData.learningStyle : prev.learningStyle
       }));
     }
   }, [initialData]);
@@ -107,9 +109,16 @@ export default function SkillFormPage({ onComplete, onBack, initialData }) {
   ];
 
   const experienceOptions = [
-    'No Experience', 'Less than 1 year', '1-2 years', '2-3 years',
-    '3-5 years', '5-8 years', '8+ years', 'Student/Learning',
-    'Career Changer', 'Recent Bootcamp Graduate'
+    // Narrowed, student-friendly experience levels
+    'Exploring career options',
+    'High school student',
+    'Recent graduate',
+    'College student / in training',
+    'Intern / apprentice',
+    'Entry level / beginner',
+    'Early experience (1–2 years)',
+    'Intermediate (3–5 years)',
+    'Advanced (5+ years)'
   ];
 
   const handleMultipleChoice = (field, value) => {
@@ -164,7 +173,6 @@ export default function SkillFormPage({ onComplete, onBack, initialData }) {
   };
 
   const handleBackToProfile = () => {
-    // Call onBack to return to Profile; Profile will ensure previous survey data remains.
     if (onBack) onBack();
   };
 
@@ -194,7 +202,7 @@ export default function SkillFormPage({ onComplete, onBack, initialData }) {
             <div className="form-group">
               <label>Intended Next Step</label>
               <div className="choice-grid">
-                {['College','Apprenticeship / Trade','Workforce / Internship','Gap Year','Undecided'].map(opt => (
+                {['College (2 years)', 'College (3 years)', 'College (4 years)', 'Apprenticeship / Trade', 'Workforce / Internship', 'Gap Year', 'Undecided'].map(opt => (
                   <button
                     key={opt}
                     type="button"
@@ -214,7 +222,7 @@ export default function SkillFormPage({ onComplete, onBack, initialData }) {
                 name="intendedField"
                 value={formData.intendedField}
                 onChange={handleInputChange}
-                placeholder={formData.intendedNextStep === 'College' ? 'e.g., Computer Science' : 'e.g., UX Design, Healthcare, Web Development'}
+                placeholder={formData.intendedNextStep && formData.intendedNextStep.startsWith('College') ? 'e.g., Computer Science' : 'e.g., UX Design, Healthcare, Web Development'}
               />
             </div>
 
@@ -230,7 +238,7 @@ export default function SkillFormPage({ onComplete, onBack, initialData }) {
             </div>
 
             <div className="form-group">
-              <label>Experience Level</label>
+              <label>Experience Level — Select one</label>
               <div className="choice-grid">
                 {experienceOptions.map(option => (
                   <button
@@ -407,7 +415,8 @@ export default function SkillFormPage({ onComplete, onBack, initialData }) {
             <div className="review-section">
               <div className="review-group">
                 <h4>Basic Information</h4>
-                <p><strong>Current Role:</strong> {formData.currentRole || 'Not specified'}</p>
+                {/* Show Current Status (studentStatus or intendedNextStep) */}
+                <p><strong>Current Status:</strong> {formData.studentStatus || formData.intendedNextStep || 'No status specified'}</p>
                 <p><strong>Career Goal:</strong> {formData.careerGoal || 'Not specified'}</p>
                 <p><strong>Experience:</strong> {formData.experience || 'Not specified'}</p>
               </div>
@@ -462,18 +471,6 @@ export default function SkillFormPage({ onComplete, onBack, initialData }) {
         <div className="form-header">
           <h1>Career Assessment</h1>
 
-          {/* Back to Profile button — allows exiting retake without losing previous data */}
-          <div style={{ position: 'absolute', top: '1rem', right: '1rem' }}>
-            <button
-              type="button"
-              className="btn-secondary"
-              onClick={handleBackToProfile}
-              aria-label="Back to Profile"
-            >
-              ← Back to Profile
-            </button>
-          </div>
-
           <div className="progress-bar">
             <div 
               className="progress-fill"
@@ -488,8 +485,22 @@ export default function SkillFormPage({ onComplete, onBack, initialData }) {
 
           <div className="form-navigation">
             <div className="nav-left">
-              {currentStep > 0 && (
-                <button type="button" className="btn-secondary" onClick={prevStep}>
+              {/* Single Previous button:
+                - If retakeMode && at first step, act as Back to Profile (exit retake)
+                - Otherwise act as normal Previous (prevStep)
+                - When retakeMode is active, use primary styling for visual consistency with Next */}
+              {(currentStep > 0 || (retakeMode && currentStep === 0)) && (
+                <button
+                  type="button"
+                  className={retakeMode ? 'btn-primary' : 'btn-secondary'}
+                  onClick={() => {
+                    if (retakeMode && currentStep === 0) {
+                      handleBackToProfile();
+                    } else {
+                      prevStep();
+                    }
+                  }}
+                >
                   ← Previous
                 </button>
               )}

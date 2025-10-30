@@ -166,7 +166,7 @@ export default function Welcome({ onLogin }) {
     );
   }
 
-  // Default auth forms (unchanged)
+  // Default auth forms (removed redundant helper paragraphs)
   return (
     <main className="home-main dark welcome-page">
       {/* Enhanced Hero Section with animated background */}
@@ -186,7 +186,7 @@ export default function Welcome({ onLogin }) {
             NextStep
             <div className="logo-glow"></div>
           </h1>
-          <p className="hero-tagline">Plan your path, explore your options, and take the next step</p>
+          <p className="hero-tagline">Your next step starts here. Explore careers, build skills, and plan for what’s ahead.</p>
         </div>
       </section>
 
@@ -217,7 +217,6 @@ export default function Welcome({ onLogin }) {
                     <form className="auth-form" onSubmit={handleSigninSubmit}>
                       <div className="auth-form-header">
                         <h2 className="hero-title">{isReturningUser ? "Welcome Back!" : "Welcome Back"}</h2>
-                        <p>{isReturningUser ? "Continue your career journey" : "Sign in to continue your career journey"}</p>
                       </div>
                       
                       <div className="form-group">
@@ -257,7 +256,6 @@ export default function Welcome({ onLogin }) {
                     <form className="auth-form" onSubmit={handleSignupSubmit}>
                       <div className="auth-form-header">
                         <h2 className="hero-title">Create Account</h2>
-                        <p>Let's Get Started</p>
                       </div>
                       
                       <div className="form-group">

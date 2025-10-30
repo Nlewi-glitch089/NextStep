@@ -200,6 +200,7 @@ export default function Profile({ onNavigate }) {
         onComplete={handleSkillAssessmentComplete}
         onBack={handleBackFromSurvey}
         initialData={surveyData}
+        retakeMode={retakeMode}
       />
     );
   }
@@ -408,32 +409,17 @@ export default function Profile({ onNavigate }) {
                   {isEditing ? (
                     <select
                       name="experience"
-                      value={userProfile?.experience || 'Entry Level'}
+                      value={userProfile?.experience || ''}
                       onChange={handleInputChange}
                     >
-                      <option value="Entry Level">Entry Level (0 years)</option>
-                      <option value="Entry Level - Recent Graduate">Recent Graduate (0-6 months)</option>
-                      <option value="Entry Level - Intern">Intern</option>
-                      <option value="1 year">1 year experience</option>
-                      <option value="2 years">2 years experience</option>
-                      <option value="3 years">3 years experience</option>
-                      <option value="4 years">4 years experience</option>
-                      <option value="5 years">5 years experience</option>
-                      <option value="Mid-Level (3-5 years)">Mid-Level (3-5 years)</option>
-                      <option value="Junior Professional (1-3 years)">Junior Professional (1-3 years)</option>
-                      <option value="Associate (2-4 years)">Associate (2-4 years)</option>
-                      <option value="Senior Level (5-8 years)">Senior Level (5-8 years)</option>
-                      <option value="Senior Professional (6-10 years)">Senior Professional (6-10 years)</option>
-                      <option value="Lead (7-12 years)">Lead (7-12 years)</option>
-                      <option value="Principal (8-15 years)">Principal (8-15 years)</option>
-                      <option value="Manager (5-10 years)">Manager (5-10 years)</option>
-                      <option value="Senior Manager (8-15 years)">Senior Manager (8-15 years)</option>
-                      <option value="Director (10-20 years)">Director (10-20 years)</option>
-                      <option value="VP/Executive (15+ years)">VP/Executive (15+ years)</option>
-                      <option value="Consultant">Consultant</option>
-                      <option value="Freelancer">Freelancer</option>
-                      <option value="Contractor">Contractor</option>
-                      <option value="Entrepreneur">Entrepreneur</option>
+                      <option value="" disabled>▾ Select one</option>
+                      <option value="I'm exploring options">I’m exploring options</option>
+                      <option value="High school student">High school student</option>
+                      <option value="Graduating soon / senior year">Graduating soon / senior year</option>
+                      <option value="Recent graduate">Recent graduate</option>
+                      <option value="Early learner (just getting started)">Early learner (just getting started)</option>
+                      <option value="Gaining experience (internships, part-time work, or projects)">Gaining experience (internships, part-time work, or projects)</option>
+                      <option value="Developing skills (building my portfolio or joining programs)">Developing skills (building my portfolio or joining programs)</option>
                     </select>
                   ) : (
                     <p>{userProfile?.experience || 'Not specified'}</p>

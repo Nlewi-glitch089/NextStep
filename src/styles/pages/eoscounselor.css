@@ -44,6 +44,36 @@
   position: relative;
 }
 
+/* Header controls layout (single group next to title) */
+.ai-header .ai-header-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  position: relative;
+}
+
+/* container for the inline controls to the right of the title */
+.header-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: 0.5rem;
+  z-index: 3;
+}
+
+/* Ensure controls are not affected by the logo text gradient/clip */
+.header-controls,
+.header-controls * {
+  background-image: none !important;
+  -webkit-background-clip: border-box !important;
+  background-clip: border-box !important;
+  -webkit-text-fill-color: initial !important;
+  color: #ffffff !important;
+  mix-blend-mode: normal !important;
+  text-shadow: none !important;
+}
+
 .back-btn {
   background: linear-gradient(45deg, #ff0080, #b954b9);
   color: #ffffff;
@@ -169,9 +199,13 @@
 }
 
 .bubble.ai {
-  background: rgba(255, 255, 255, 0.15);
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-bottom-left-radius: 4px;
+  padding: 1.25rem 1.5rem;
+  background: linear-gradient(135deg, rgba(var(--accent-pink-rgb), 0.10), rgba(var(--accent-pink-rgb), 0.03));
+  color: #ffffff;
+  border: 1px solid rgba(var(--accent-pink-rgb), 0.18);
+  border-left: 6px solid rgba(var(--accent-pink-rgb), 0.28);
+  border-radius: 14px 14px 14px 6px;
+  box-shadow: 0 8px 22px rgba(var(--accent-pink-rgb), 0.03);
   max-width: 85%;
 }
 
@@ -360,15 +394,15 @@
   --response-font-size: var(--response-font-size, 18px); /* use site-level override if present */
   font-size: clamp(15px, var(--response-font-size), 22px);
   line-height: 1.85;
-  color: #e8eef6;
+  color: #ffffff;
   max-width: 70ch;
   margin: 0;
   display: block;
 
   /* soft card with pink left accent for fast scanning */
-  background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
-  border: 1px solid rgba(255, 0, 128, 0.08);
-  border-left: 6px solid rgba(255, 0, 128, 0.18);
+  background: linear-gradient(180deg, rgba(var(--accent-pink-rgb), 0.06), rgba(var(--accent-pink-rgb), 0.02));
+  border: 1px solid rgba(var(--accent-pink-rgb), 0.12);
+  border-left: 6px solid rgba(var(--accent-pink-rgb), 0.22);
   padding: 0.9rem 1rem;
   border-radius: 10px;
 }
@@ -382,8 +416,8 @@
   letter-spacing: 0.4px;
   padding: 0.25rem 0.45rem;
   border-radius: 6px;
-  background: linear-gradient(90deg, rgba(255,0,128,0.05), transparent);
-  border-left: 4px solid rgba(255,0,128,0.14);
+  background: linear-gradient(90deg, rgba(var(--accent-pink-rgb), 0.06), transparent);
+  border-left: 4px solid rgba(var(--accent-pink-rgb), 0.14);
 }
 
 /* Marker-free list items - soft accent, high readability */
@@ -396,25 +430,25 @@
 }
 
 .response-list-item {
-  background: rgba(255, 0, 128, 0.03);
-  border-left: 4px solid rgba(255, 0, 128, 0.18);
+  background: linear-gradient(180deg, rgba(var(--accent-pink-rgb), 0.06), rgba(var(--accent-pink-rgb), 0.02));
+  border-left: 4px solid rgba(var(--accent-pink-rgb), 0.14);
   padding: 0.6rem 0.9rem;
-  border-radius: 6px;
-  color: #e8eef6;
+  border-radius: 8px;
+  color: #ffffff;
   font-size: inherit;
   line-height: 1.8;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.22);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.18);
 }
 
 /* AI bubble accents: ensure contrast and soft pink border/left-accent */
 .bubble.ai {
   padding: 1.25rem 1.5rem;
-  background: rgba(30,30,30,0.95);
-  color: #fff;
-  border: 1px solid rgba(255,0,128,0.18);
-  border-left: 6px solid rgba(255,0,128,0.22);
+  background: linear-gradient(135deg, rgba(var(--accent-pink-rgb), 0.10), rgba(var(--accent-pink-rgb), 0.03));
+  color: #ffffff;
+  border: 1px solid rgba(var(--accent-pink-rgb), 0.18);
+  border-left: 6px solid rgba(var(--accent-pink-rgb), 0.28);
   border-radius: 14px 14px 14px 6px;
-  box-shadow: 0 6px 18px rgba(255, 0, 128, 0.04);
+  box-shadow: 0 8px 22px rgba(var(--accent-pink-rgb), 0.03);
 }
 
 /* Keep user bubble visible but not harsh */
@@ -428,9 +462,9 @@
 
 /* Resource links use pink again (clear and consistent) */
 .resource-title {
-  color: #ff0080;
+  color: #ffffff;
   text-decoration: none;
-  font-weight: 700;
+  font-weight: 800;
   display: inline-block;
   margin-bottom: 0.25rem;
 }
@@ -451,8 +485,8 @@
 .response-list-item:hover,
 .bubble.ai:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 28px rgba(255, 0, 128, 0.06);
-  border-color: rgba(255, 0, 128, 0.16);
+  box-shadow: 0 12px 30px rgba(var(--accent-pink-rgb), 0.06);
+  border-color: rgba(var(--accent-pink-rgb), 0.18);
 }
 
 /* Ensure small screens keep readability and spacing */
@@ -505,4 +539,221 @@
     font-size: 0.8rem;
     padding: 0.75rem;
   }
+}
+
+/* Make response paragraphs easier to scan */
+.response-paragraph {
+  margin: 0 0 1.25rem 0; /* increased spacing between paragraphs */
+  font-size: inherit;
+  line-height: 1.9;
+  color: inherit;
+  text-align: left;
+}
+
+/* Heading row that includes a small badge and optional heading text */
+.ai-heading-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0 0 1rem 0;
+}
+
+/* Small purple mini-badge inside the card (not the whole card) */
+.ai-mini-badge {
+  display: inline-block;
+  padding: 0.22rem 0.5rem;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(var(--accent-pink-rgb),0.95), rgba(var(--accent-pink-rgb),0.75));
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 0.9rem;
+  letter-spacing: 0.2px;
+  box-shadow: 0 6px 18px rgba(var(--accent-pink-rgb),0.06);
+}
+
+/* Heading text placed inline next to the badge */
+.ai-heading-inline {
+  font-weight: 900;
+  color: #ffffff;
+  font-size: 1.02rem;
+}
+
+/* Ensure mini-badge and heading are readable on small screens */
+@media (max-width: 480px) {
+  .ai-mini-badge {
+    padding: 0.18rem 0.42rem;
+    font-size: 0.85rem;
+  }
+  .ai-heading-inline { font-size: 0.98rem; }
+}
+
+/* Chat save/discard controls beside header */
+.chat-save-actions {
+  display: inline-flex;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+/* Compact Save / Discard button styles */
+.chat-save-actions .btn-secondary,
+.chat-save-actions .btn-danger {
+  padding: 0.28rem 0.6rem;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+/* Secondary (Save) */
+.chat-save-actions .btn-secondary {
+  background: rgba(255,255,255,0.06);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.chat-save-actions .btn-secondary:hover {
+  background: rgba(255,255,255,0.12);
+}
+
+/* Danger (Discard) */
+.chat-save-actions .btn-danger {
+  background: linear-gradient(135deg, #ff6b6b, #ff4c4c);
+  color: #fff;
+  border: none;
+}
+.chat-save-actions .btn-danger:hover {
+  filter: brightness(0.98);
+}
+
+/* Small screens: keep controls compact */
+@media (max-width: 600px) {
+  .header-controls { gap: 0.35rem; }
+  .chat-save-actions .btn-secondary,
+  .chat-save-actions .btn-danger {
+    padding: 0.22rem 0.5rem;
+    font-size: 0.85rem;
+  }
+}
+
+/* Icon button base (used for Save / Discard in header) */
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border-radius: 8px;
+  border: none;
+  background: rgba(255,255,255,0.04);
+  color: #ffffff;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.14s ease;
+  line-height: 1;
+}
+
+/* save (secondary-looking) */
+.icon-btn.save {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.icon-btn.save:hover { background: rgba(255,255,255,0.12); transform: translateY(-2px); }
+
+/* discard (danger) */
+.icon-btn.discard {
+  background: linear-gradient(135deg, #ff6b6b, #ff4c4c);
+  color: #fff;
+  border: none;
+}
+.icon-btn.discard:hover { filter: brightness(0.96); transform: translateY(-2px); }
+
+/* focus outlines for accessibility */
+.icon-btn:focus {
+  outline: 3px solid rgba(255,255,255,0.14);
+  outline-offset: 2px;
+}
+
+/* ensure header controls ignore logo gradient / clipping */
+.header-controls,
+.header-controls * {
+  background-image: none !important;
+  -webkit-background-clip: border-box !important;
+  background-clip: border-box !important;
+  -webkit-text-fill-color: initial !important;
+  color: initial !important;
+  mix-blend-mode: normal !important;
+  text-shadow: none !important;
+}
+
+/* small screen adjustments */
+@media (max-width: 600px) {
+  .icon-btn { width: 34px; height: 34px; font-size: 16px; }
+  .header-controls { gap: 0.3rem; }
+}
+
+/* Ensure links inside AI responses / resource cards are pink and stand out */
+.formatted-response a,
+.bubble.ai a,
+.resource-link a,
+.resource-title {
+  color: var(--accent-pink, #ff0080) !important;
+  text-decoration: none !important;
+  font-weight: 700 !important;
+}
+
+/* underline on hover for discoverability */
+.formatted-response a:hover,
+.bubble.ai a:hover,
+.resource-link a:hover,
+.resource-title:hover {
+  text-decoration: underline !important;
+  color: var(--accent-pink-strong, #ff2fa8) !important;
+}
+
+/* Slightly increase spacing between paragraphs and list items for readability */
+.formatted-response .response-paragraph,
+.response-paragraph {
+  margin-bottom: 1.25rem; /* ensure breathing room */
+}
+
+.response-list-item {
+  margin-bottom: 0.5rem;
+}
+
+/* Keep mini-badge and heading spacing comfortable */
+.ai-heading-row { margin-bottom: 1rem; }
+
+.analyze-prompt {
+  display: flex;
+  gap: 0.6rem;
+  justify-content: center;
+  align-items: center;
+  margin: 0.75rem 0 1rem 0;
+}
+
+.prompt-btn {
+  padding: 0.5rem 0.9rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.04);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.prompt-btn:hover { transform: translateY(-2px); background: rgba(255,255,255,0.08); }
+
+.prompt-btn.primary {
+  background: linear-gradient(135deg, var(--accent-pink, #ff0080), var(--accent-pink-strong, #ff2fa8));
+  border: none;
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(255,0,128,0.12);
+}
+
+/* small screen stacking */
+@media (max-width: 480px) {
+  .analyze-prompt { flex-direction: column; gap: 0.5rem; }
+  .prompt-btn { width: 100%; }
 }

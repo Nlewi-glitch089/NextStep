@@ -89,8 +89,10 @@ export default function Projects({ onNavigate }) {
 
       <div className="page-container projects-container">
         <div className="page-header">
-          <h1 className="page-title">Projects</h1>
-          <p className="page-subtitle">Create and showcase projects that highlight your skills</p>
+          <h1 className="page-title">Start Building Your Story</h1>
+          <p className="page-subtitle">
+            Every project is a step toward your future. Use this space to share what you’ve built, explored, or imagined — and show how you’re developing your unique path forward.
+          </p>
         </div>
 
         <div className="projects-grid">

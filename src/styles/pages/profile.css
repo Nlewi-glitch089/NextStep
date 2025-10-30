@@ -349,9 +349,101 @@
 }
 
 /* Accessibility: use global font variable (fallback) */
+/* Use same base sizing as survey */
 :root {
   --app-font-size: var(--app-font-size, 18px);
-  --app-line-height: var(--app-line-height, 1.85);
+  --app-line-height: var(--app-line-height, 1.75);
+}
+
+/* Review group title and counts */
+.review-group h4 {
+  font-size: calc(var(--app-font-size) * 1.02) !important;
+  font-weight: 800 !important;
+  color: #ff0080;
+  margin: 0 0 0.5rem 0 !important;
+}
+
+/* Review values / tags */
+.review-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.review-tag,
+.review-tags span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.34rem 0.7rem; /* match choice-button compact padding */
+  font-size: calc(var(--app-font-size,18px) * 0.92);
+  line-height: 1.15;
+  border-radius: 10px;
+  background: rgba(255,0,128,0.06);
+  color: #ff0080;
+  border: 1px solid rgba(255,0,128,0.10);
+  font-weight: 700;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+/* normalize review and tag sizing to match the assessment choice buttons */
+:root {
+  --app-font-size: var(--app-font-size, 18px);
+}
+
+/* review tag container */
+.review-tags,
+.project-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+/* compact tag style matching .choice-button */
+.review-tag,
+.tag,
+.project-skills .tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.38rem 0.72rem;
+  font-size: calc(var(--app-font-size) * 0.92);
+  line-height: 1.15;
+  border-radius: 10px;
+  background: rgba(255,0,128,0.06);
+  color: #ff0080;
+  border: 1px solid rgba(255,0,128,0.10);
+  font-weight: 700;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+/* ensure single-item tags don't expand */
+.review-tag,
+.tag { white-space: nowrap; }
+
+/* keep counts and labels consistent */
+.review-group h4 {
+  font-size: calc(var(--app-font-size) * 1.02);
+  font-weight: 800;
+  color: #ff0080;
+  margin-bottom: 0.5rem;
+}
+
+.review-group p,
+.review-group .field-value {
+  font-size: calc(var(--app-font-size) * 0.98);
+  color: #eaeff6;
+  margin: 0 0 0.5rem 0;
+}
+
+/* Small screens */
+@media (max-width: 480px) {
+  .review-group h4 { font-size: calc(var(--app-font-size) * 0.98); }
+  .review-tag { font-size: calc(var(--app-font-size) * 0.86); padding: 0.22rem 0.5rem; }
 }
 
 /* Apply readable typography across profile page */
@@ -395,6 +487,45 @@
 .survey-data-content .interests-display {
   font-size: var(--app-font-size);
   line-height: var(--app-line-height);
+}
+
+/* Review group headings (counts) */
+.review-group h4 {
+  font-size: calc(var(--app-font-size) * 1.05);
+  font-weight: 800;
+  color: #ff0080;
+  margin: 0 0 0.5rem 0;
+  line-height: 1.2;
+}
+
+/* Review tag items (skills / interests) */
+.review-tags .review-tag,
+.review-tags span {
+  display: inline-block;
+  background: rgba(255,0,128,0.06);
+  color: #ff0080;
+  padding: 0.25rem 0.6rem;
+  border-radius: 12px;
+  margin: 0 0.4rem 0.5rem 0;
+  font-size: calc(var(--app-font-size) * 0.92);
+  line-height: 1.3;
+  font-weight: 700;
+}
+
+/* Make the small count text consistent */
+.review-group p,
+.review-group .count {
+  font-size: calc(var(--app-font-size) * 0.98);
+  color: #eaeff6;
+  margin: 0 0 0.5rem 0;
+}
+
+/* Align Review layout for single-line entries (like express.js) */
+.review-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
 }
 
 /* No Survey Data Section */
@@ -567,6 +698,41 @@
   display: block;
 }
 
+/* Make survey/result headings and field labels consistent */
+.survey-data-content h3,
+.survey-data-content h4,
+.survey-data-content .survey-section-title,
+.survey-data-content .field-title,
+.survey-data-content label,
+.survey-data-content .survey-item-title {
+  font-size: calc(var(--app-font-size, 18px) * 1.05) !important;
+  line-height: 1.25 !important;
+  font-weight: 700 !important;
+  margin: 0 0 0.5rem 0 !important;
+  color: #ff0080; /* keep existing accent color for labels */
+}
+
+/* Ensure values / descriptions use the base readable size */
+.survey-data-content p,
+.survey-data-content .field-value,
+.survey-data-content .survey-value {
+  font-size: var(--app-font-size, 18px) !important;
+  line-height: var(--app-line-height, 1.75) !important;
+  color: #eaeff6;
+  margin: 0 0 1rem 0;
+}
+
+/* Small screens: scale headings down slightly to avoid wrapping */
+@media (max-width: 480px) {
+  .survey-data-content h3,
+  .survey-data-content h4,
+  .survey-data-content .survey-section-title,
+  .survey-data-content .field-title,
+  .survey-data-content label {
+    font-size: calc(var(--app-font-size, 18px) * 0.98) !important;
+  }
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .profile-header {
@@ -588,4 +754,125 @@
   .page-container {
     padding: 1rem;
   }
+}
+
+/* Make the add-skill input and button visually consistent */
+.add-skill-section {
+  margin-top: 0.6rem;
+}
+
+.add-skill-input {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+/* Skill input styling to match site inputs */
+.skill-input {
+  flex: 1 1 auto;
+  padding: 0.6rem 0.9rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.02);
+  color: #fff;
+  font-size: calc(var(--app-font-size, 18px) * 0.95);
+  box-sizing: border-box;
+}
+
+/* Add Skill button (matches other primary/secondary sizing) */
+.add-skill-section .btn-secondary {
+  padding: 0.38rem 0.9rem;
+  min-height: 36px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: calc(var(--app-font-size, 18px) * 0.95);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Skill tags display - compact and consistent with choice buttons */
+.skill-tag,
+.interest-tag,
+.tech-tag,
+.soft-skill-tag,
+.env-tag,
+.value-tag,
+.priority-tag,
+.learning-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.34rem 0.72rem;
+  font-size: calc(var(--app-font-size,18px) * 0.92);
+  line-height: 1.15;
+  border-radius: 10px;
+  background: rgba(255,0,128,0.06);
+  color: #ff0080;
+  border: 1px solid rgba(255,0,128,0.10);
+  font-weight: 700;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+/* Remove '×' button inside tag */
+.skill-remove {
+  background: transparent;
+  border: none;
+  color: rgba(255,0,128,0.9);
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0 0.25rem;
+  line-height: 1;
+  border-radius: 6px;
+  transition: background 0.12s ease, transform 0.12s ease;
+}
+
+.skill-remove:hover {
+  background: rgba(255,0,128,0.08);
+  transform: translateY(-1px);
+}
+
+/* Experience select styling to match inputs/buttons */
+.profile-section select,
+.profile-section select:focus {
+  padding: 0.6rem 0.85rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.02);
+  color: #fff;
+  font-size: calc(var(--app-font-size, 18px) * 0.95);
+  outline: none;
+  box-sizing: border-box;
+}
+
+/* Placeholder (disabled) option styling supported cross-browser */
+.profile-section select option[disabled] {
+  color: rgba(255,255,255,0.6);
+}
+
+/* Ensure skills list layout remains tidy */
+.skills-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+/* When editing, align add section visually with skills list */
+.add-skill-section .skill-input {
+  min-width: 220px;
+}
+
+/* Small screens: stack add-skill controls */
+@media (max-width: 480px) {
+  .add-skill-input {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .add-skill-input .skill-input { width: 100%; }
+  .add-skill-section .btn-secondary { width: 100%; }
 }
