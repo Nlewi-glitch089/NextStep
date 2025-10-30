@@ -16,16 +16,8 @@ export default function EosCounselor({ onNavigate }) {
 	const CHAT_STORAGE_KEY = 'eos_chat_messages_v1';
 	const SEEN_SIG_KEY = 'eos_seen_signatures_v1';
 
-	// Create a consistent greeting generator used across init, fallbacks, and discard.
-	// If a userProfile is provided, include a short welcome-back line.
-	const generateGreeting = (userProfile = null) => {
-		const base = "Welcome back and sit tight — I’m loading your assessment results now.";
-		if (userProfile && userProfile.fullName) {
-			const name = userProfile.fullName.split(' ')[0];
-			return `${base} Hey ${name}, welcome back!`;
-		}
-		return base;
-	};
+	// Neutral greeting used across the UI (no personalized welcome-back text)
+	const generateGreeting = () => "Sit tight — I’m loading your assessment results now and it may take a moment.";
 
 	// Load saved chat & survey, but DO NOT auto-run analysis or insert "Would you like me to analyze..." prompts.
 	useEffect(() => {
@@ -156,10 +148,6 @@ export default function EosCounselor({ onNavigate }) {
 	useEffect(() => {
 		scrollToBottom();
 	}, [messages, isLoading]);
-
-	// Create a friendly, contextual welcome-back message
-	// moved here so it can be used by the analyzeEffect below
-	// Removed duplicate declaration of generateWelcomeBackGreeting
 
 	// Analyze user's assessment results on component mount - ONLY ONCE
 	useEffect(() => {
@@ -694,7 +682,7 @@ export default function EosCounselor({ onNavigate }) {
 		return `Hey ${name}, welcome back!`;
 	};
 
-	// Initialization: restore chat + decide greeting/analysis behavior
+	// Initialization: restore chat + call maybeTriggerAutoAnalyze
 	useEffect(() => {
 		try {
 			// Restore saved chat if present
@@ -717,87 +705,16 @@ export default function EosCounselor({ onNavigate }) {
 				}
 			}
 
-			// Check auth & survey presence
-			const isAuth = localStorage.getItem('isAuthenticated') === 'true';
-			const userRaw = localStorage.getItem('userProfile');
-			const surveyRaw = localStorage.getItem('surveyAnswers');
-
-			const hasSurvey = !!surveyRaw;
-			const userProfile = userRaw ? JSON.parse(userRaw) : null;
-
-			// If signed-in and survey exists: welcome back + auto-analyze (once, using request lock)
-			if (isAuth && hasSurvey && userProfile) {
-				const assessmentResults = surveyRaw ? JSON.parse(surveyRaw) : null;
-				const welcome = generateWelcomeBackGreeting(userProfile, assessmentResults);
-
-				// Only append greeting if chat is empty (avoid duplicates)
-				if (!messagesRef.current || messagesRef.current.length === 0) {
-					appendAiMessage(welcome, []);
-				}
-				// Kick off analysis automatically but guard against duplicates/parallel calls
-				(async () => {
-					if (requestInProgressRef.current) return;
-					requestInProgressRef.current = true;
-					setIsLoading(true);
-					try {
-						// reuse the existing analysis flow but pass userProfile & surveyRaw
-						const assessmentResults = JSON.parse(surveyRaw);
-						const assessmentSummary = createAssessmentSummary(userProfile, assessmentResults);
-						const response = await sendMessageToEosWithOpenAI([
-							{ sender: 'system', text: `You are Eos, an AI Career Counselor. Analyze this user's career assessment and provide actionable recommendations. Data: ${assessmentSummary}` },
-							{ sender: 'user', text: 'Please analyze these assessment results and recommend next steps.' }
-						]);
-						appendAiMessage(response.reply, response.resources || []);
-						setHasAnalyzedAssessment(true);
-					} catch (err) {
-						appendAiMessage("I attempted to analyze your assessment but ran into a technical issue. You can ask me a question or try the analysis again.");
-						console.error('Auto-analysis error:', err);
-					} finally {
-						setIsLoading(false);
-						requestInProgressRef.current = false;
-					}
-				})();
-				setIsInitialized(true);
-				return;
-			}
-
-			// If not signed in but survey exists: show neutral greeting and keep prompt option (user triggers analysis)
-			if (!isAuth && hasSurvey && userProfile) {
-				const neutral = `Hello! I'm Eos, your AI Career Counselor. I see you have an assessment saved — I can analyze it if you'd like, or you can ask a question or update your assessment.`;
-				if (!messagesRef.current || messagesRef.current.length === 0) {
-					appendAiMessage(neutral, []);
-				}
-				// showAnalyzePrompt remains true elsewhere if you render it; do not auto-analyze
-				setIsInitialized(true);
-				return;
-			}
-
-			// No survey: neutral greeting
+			// No auto-analysis or personalized welcome. Show neutral greeting only if no messages exist.
 			if (!messagesRef.current || messagesRef.current.length === 0) {
-				appendAiMessage("Hi there! I’m Eos, your AI Career Counselor. Sit tight — I’m loading your assessment results now.");
+				appendAiMessage(generateGreeting());
 			}
-			setIsInitialized(true);
 		} catch (err) {
 			console.error('Eos init error:', err);
-			if (!messagesRef.current || messagesRef.current.length === 0) {
-				appendAiMessage("Hi there! I’m Eos, your AI Career Counselor. Sit tight — I’m loading your assessment results now.");
-			}
+			appendAiMessage(generateGreeting());
 			setIsInitialized(true);
 		}
 	}, []); // run once on mount
-
-	// Load persisted signature set if present (in case no saved chat)
-	useEffect(() => {
-		try {
-			const raw = localStorage.getItem(SEEN_SIG_KEY);
-			if (raw) {
-				const arr = JSON.parse(raw);
-				if (Array.isArray(arr)) {
-					arr.forEach(s => seenReplySignaturesRef.current.add(s));
-				}
-			}
-		} catch (e) { /* ignore */ }
-	}, []);
 
 	return (
 		<main className="ai-counselor-main">

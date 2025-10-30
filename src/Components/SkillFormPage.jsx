@@ -42,13 +42,13 @@ export default function SkillFormPage({ onComplete, onBack, initialData, retakeM
 
   const [currentStep, setCurrentStep] = useState(0);
 
+  // Use 5 visible steps; the final step includes Learning & Development + Review
   const steps = [
     'Basic Information',
-    'Career Interests', 
+    'Career Interests',
     'Skills & Experience',
     'Work Preferences',
-    'Learning & Development',
-    'Review & Submit'
+    'Learning & Development'
   ];
 
   // Multiple choice options
@@ -386,7 +386,7 @@ export default function SkillFormPage({ onComplete, onBack, initialData, retakeM
           </div>
         );
 
-      case 4: // Learning & Development
+      case 4: // Learning & Development (final step) — now also shows Review & Submit summary
         return (
           <div className="step-content">
             <h3>How do you prefer to learn?</h3>
@@ -404,18 +404,12 @@ export default function SkillFormPage({ onComplete, onBack, initialData, retakeM
                 </button>
               ))}
             </div>
-          </div>
-        );
 
-      case 5: // Review & Submit
-        return (
-          <div className="step-content">
-            <h3>Review Your Responses</h3>
-            
-            <div className="review-section">
+            {/* Review section moved into final step so total steps = steps.length (5) */}
+            <div className="review-section" style={{ marginTop: '1.25rem' }}>
+              <h3 style={{ marginTop: '1rem' }}>Review Your Responses</h3>
               <div className="review-group">
                 <h4>Basic Information</h4>
-                {/* Show Current Status (studentStatus or intendedNextStep) */}
                 <p><strong>Current Status:</strong> {formData.studentStatus || formData.intendedNextStep || 'No status specified'}</p>
                 <p><strong>Career Goal:</strong> {formData.careerGoal || 'Not specified'}</p>
                 <p><strong>Experience:</strong> {formData.experience || 'Not specified'}</p>
@@ -479,7 +473,7 @@ export default function SkillFormPage({ onComplete, onBack, initialData, retakeM
           </div>
           <p>Step {currentStep + 1} of {steps.length}: {steps[currentStep]}</p>
         </div>
-
+        
         <form onSubmit={handleSubmit}>
           {renderStepContent()}
 

@@ -124,10 +124,24 @@
   box-shadow: 0 6px 18px rgba(0,0,0,0.35);
 }
 
-/* Form group spacing inside the card */
+/* Step content: add breathing room between sections */
+.step-content {
+  padding: 1.1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* space between groups inside a step */
+}
+
+/* Make section headings clearer and separated */
+.step-content h3 {
+  margin: 0 0 0.6rem 0;
+  font-size: 1.15rem;
+  line-height: 1.25;
+}
+
+/* Form groups get larger vertical spacing */
 .form-group {
-  margin-bottom: 1rem;
-  display: block;
+  margin-bottom: 1.1rem;
 }
 
 /* Label spacing & weight */
@@ -140,79 +154,136 @@
 
 /* Helper text below labels */
 .form-group p {
-  margin: 0 0 0.6rem 0;
-  color: #d6e6f5;
+  margin-top: 0.4rem;
+  margin-bottom: 0;
+  color: rgba(255,255,255,0.85);
   font-size: 0.95rem;
 }
 
-/* Choice grid: consistent gaps and alignment */
+/* Choice grid: allow wrapping and consistent gaps so buttons don't crowd */
 .choice-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
-  align-items: center;
-  margin-top: 0.35rem;
+  gap: 0.75rem; /* spacing between options */
+  align-items: flex-start;
+  margin-top: 0.5rem;
 }
 
-/* Choice buttons: ensure compact and consistent within cards */
+/* Choice buttons: larger hit target and consistent sizing */
 .choice-button {
-  display: inline-flex !important;
-  align-items: center;
-  justify-content: center;
-  flex: 0 0 auto !important;
-  padding: 0.36rem 0.72rem;
-  font-size: calc(var(--app-font-size, 18px) * 0.92);
-  min-height: 34px;
+  padding: 0.6rem 0.9rem;
   border-radius: 10px;
   border: 1px solid rgba(255,255,255,0.06);
-  background: rgba(255,255,255,0.03);
-  color: #fff;
+  background: rgba(255,255,255,0.02);
+  color: inherit;
   font-weight: 700;
+  min-width: 140px; /* help even layout */
+  text-align: center;
+  transition: transform 0.12s ease, background 0.12s ease;
   box-sizing: border-box;
 }
 
-/* Keep long labels wrapping nicely */
-.choice-button { white-space: normal; text-align: center; }
+/* Selected state should still look prominent */
+.choice-button.selected {
+  background: linear-gradient(135deg, rgba(255,0,128,0.10), rgba(255,0,128,0.06));
+  border-color: rgba(255,0,128,0.18);
+}
 
-/* Add-skill area (input + button) — inline, aligned and matching button styles */
-.skill-add-form {
+/* Review tags: give breathing room and wrap nicely */
+.review-tags,
+.skills-list,
+.interests-display {
   display: flex;
-  gap: 0.6rem;
-  align-items: center;
-  margin-top: 0.6rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
 }
 
-.skill-add-form input[type="text"] {
-  flex: 1 1 auto;
-  padding: 0.6rem 0.8rem;
-  border-radius: 8px;
-  border: 1px solid rgba(255,255,255,0.06);
-  background: rgba(0,0,0,0.25);
-  color: #fff;
-  font-size: calc(var(--app-font-size, 18px) * 0.95);
+/* Review tag styling (keeps consistent look) */
+.review-tag,
+.skill-tag,
+.interest-tag,
+.tech-tag,
+.soft-skill-tag {
+  padding: 0.36rem 0.7rem;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.04);
+  font-weight: 700;
+  font-size: 0.92rem;
+}
+
+/* Navigation/layout: ensure previous/next buttons don't overlap (safety) */
+.form-navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.25rem;
+  width: 100%;
   box-sizing: border-box;
 }
 
-/* Add Skill button matches primary/choice sizing */
-.skill-add-form .add-skill-btn {
-  padding: 0.38rem 0.9rem;
-  min-height: 36px;
-  border-radius: 8px;
-  font-weight: 700;
-  font-size: calc(var(--app-font-size, 18px) * 0.95);
-  background: linear-gradient(135deg, #ff0080, #b954b9);
-  color: #fff;
-  border: none;
-  cursor: pointer;
+/* Form navigation: ensure buttons sit apart and don't overlap */
+.form-navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* left / right alignment */
+  gap: 1rem;
+  margin-top: 1.25rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-/* Make action buttons consistent across the form (Next, Previous, Add) */
+/* left and right containers keep buttons grouped and aligned */
+.form-navigation .nav-left,
+.form-navigation .nav-right {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+/* Ensure buttons have consistent sizing to avoid layout shifts */
+.form-navigation button,
 .form-navigation .btn-primary,
 .form-navigation .btn-secondary,
-.skill-add-form .add-skill-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+.form-navigation .cta-button {
+  min-width: 110px;
+  padding: 0.5rem 0.9rem;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+/* When only a single small button is present, keep it visually balanced */
+.form-navigation .nav-left .btn-secondary {
+  min-width: 90px;
+}
+
+/* Prevent button groups from wrapping over each other on narrow screens */
+@media (max-width: 520px) {
+  .form-navigation {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.6rem;
+  }
+  .form-navigation .nav-left,
+  .form-navigation .nav-right {
+    justify-content: space-between;
+  }
+  .form-navigation button,
+  .form-navigation .btn-primary,
+  .form-navigation .btn-secondary,
+  .form-navigation .cta-button {
+    width: 100%;
+    min-width: auto;
+  }
+}
+
+/* Small visual tweak so navigation sits clearly below the step card */
+.skill-form-container {
+  padding-bottom: 1.25rem; /* ensure space beneath navigation */
 }
 
 /* Reduce heavy shadows on small screens and keep spacing comfortable */
@@ -249,229 +320,202 @@
   --button-radius: 10px;
 }
 
-/* Choice grid: keep items inline and prevent them from stretching */
-.choice-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: 0.5rem;
-  align-items: center;
-  justify-content: flex-start;
+/* Theme variables (accent pink) */
+:root {
+  --accent-pink: #ff2fa8;
+  --accent-pink-strong: #ff0080;
+  --muted-bg: rgba(255,255,255,0.03);
+  --muted-border: rgba(255,255,255,0.08);
+  --gap: 0.75rem;
 }
 
-/* Compact, consistent choice button for skills, interests, etc. */
-.choice-button {
-  display: inline-flex !important;
-  align-items: center;
-  justify-content: center;
-  flex: 0 0 auto !important;        /* prevent grow */
-  white-space: nowrap;
-  padding: var(--button-padding-vertical) var(--button-padding-horizontal);
-  font-size: var(--button-font-size);
-  line-height: 1.15;
-  border-radius: var(--button-radius);
-  border: 1px solid rgba(255,255,255,0.06);
-  background: rgba(255,255,255,0.03);
-  color: #fff;
-  cursor: pointer;
-  font-weight: 700;
-  transition: all 0.14s ease;
-  min-width: 0 !important;           /* allow natural width */
-  min-height: var(--button-min-height);
+/* Container spacing */
+.skill-form-container {
+  padding: 1.25rem;
+  max-width: 880px;
+  margin: 0 auto;
   box-sizing: border-box;
 }
 
-/* Hover/focus state */
+/* Form header */
+.form-header h1 {
+  margin: 0 0 0.4rem 0;
+  font-size: 1.6rem;
+  color: #fff;
+}
+.form-header p {
+  margin: 0.15rem 0 0.8rem 0;
+  color: rgba(255,255,255,0.7);
+}
+
+/* Ensure each form group has breathing room */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+/* Labels */
+.form-group label {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 0.45rem;
+  color: rgba(255,255,255,0.95);
+}
+
+/* Helper text below labels */
+.form-group p {
+  margin-top: 0.4rem;
+  margin-bottom: 0;
+  color: rgba(255,255,255,0.85);
+  font-size: 0.95rem;
+}
+
+/* Choice grid: responsive, evenly spaced tiles */
+.choice-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--gap);
+  align-items: start;
+  margin-top: 0.3rem;
+}
+
+/* Choice buttons (tiles) styling */
+.choice-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem 0.8rem;
+  border-radius: 10px;
+  border: 1px solid var(--muted-border);
+  background: var(--muted-bg);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: center;
+  min-height: 44px;
+  transition: transform 0.12s ease, background 0.12s ease, box-shadow 0.12s ease;
+  box-sizing: border-box;
+}
+
+/* Hover / focus states */
 .choice-button:hover,
 .choice-button:focus {
-  transform: translateY(-2px);
-  background: rgba(255,0,128,0.06);
-  border-color: rgba(255,0,128,0.18);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  background: rgba(255,255,255,0.04);
   outline: none;
 }
 
-/* Selected state: keep compact but visually prominent */
+/* Selected state: pink fill + white text */
 .choice-button.selected {
-  background: linear-gradient(135deg, #ff0080, #b954b9);
-  color: #ffffff;
-  border-color: rgba(255,0,128,0.28);
-  box-shadow: 0 8px 20px rgba(255,0,128,0.10);
-  transform: translateY(-1px);
-}
-
-/* Ensure action buttons (primary/secondary) match choice sizing and alignment */
-.btn-primary,
-.btn-secondary,
-.cta-button,
-.back-profile-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--button-padding-vertical) var(--button-padding-horizontal);
-  min-height: var(--button-min-height);
-  font-size: var(--button-font-size);
-  border-radius: 8px;
-  font-weight: 700;
-  cursor: pointer;
-  box-sizing: border-box;
-}
-
-/* Visual styles for primary / secondary preserved but sizing unified */
-.btn-primary {
-  background: linear-gradient(135deg, #ff0080, #b954b9);
+  background: linear-gradient(135deg, var(--accent-pink), var(--accent-pink-strong));
+  border: 1px solid transparent;
   color: #fff;
-  border: none;
+  box-shadow: 0 8px 20px rgba(255,45,140,0.12);
 }
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255,0,128,0.12); }
 
-.btn-secondary {
-  background: transparent;
-  color: #fff;
-  border: 1px solid rgba(255,255,255,0.12);
-}
-.btn-secondary:hover {
+/* Make choice buttons wrap nicely and avoid text overflow */
+.choice-button { word-break: break-word; white-space: normal; }
+
+/* Progress bar styling */
+.progress-bar {
+  height: 10px;
   background: rgba(255,255,255,0.04);
-  transform: translateY(-2px);
+  border-radius: 999px;
+  overflow: hidden;
+  margin: 0.5rem 0 0.65rem 0;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-pink) 0%, var(--accent-pink-strong) 100%);
+  transition: width 220ms ease;
 }
 
-/* Make sure review tags match choice button compact sizing */
+/* Step content spacing */
+.step-content h3 { margin-top: 0; margin-bottom: 0.6rem; color: #fff; }
+.step-content p { color: rgba(255,255,255,0.78); margin-bottom: 0.6rem; }
+
+/* Review tags styling using accent */
 .review-tag {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  padding: var(--button-padding-vertical) var(--button-padding-horizontal);
-  font-size: var(--button-font-size);
-  line-height: 1.15;
-  border-radius: var(--button-radius);
-  background: rgba(255,0,128,0.06);
-  color: #ff0080;
-  border: 1px solid rgba(255,0,128,0.10);
+  padding: 0.32rem 0.6rem;
+  border-radius: 9px;
+  background: rgba(255,47,140,0.06);
+  color: var(--accent-pink);
+  border: 1px solid rgba(255,47,140,0.10);
   font-weight: 700;
-  min-width: 0;
+  margin: 0 0.5rem 0.5rem 0;
+  font-size: 0.93rem;
+}
+
+/* Navigation buttons spacing & min-width to avoid overlap */
+.form-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+.form-navigation .nav-left,
+.form-navigation .nav-right {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+}
+.form-navigation button {
+  min-width: 110px;
+  padding: 0.52rem 0.9rem;
+  border-radius: 8px;
+}
+
+/* Primary / secondary button visuals */
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent-pink), var(--accent-pink-strong));
+  color: #fff;
+  border: none;
+  font-weight: 800;
+  box-shadow: 0 10px 24px rgba(255,47,140,0.12);
+}
+.btn-secondary {
+  background: rgba(255,255,255,0.03);
+  color: #fff;
+  border: 1px solid var(--muted-border);
+  font-weight: 700;
+}
+
+/* CTA button */
+.cta-button {
+  background: linear-gradient(135deg, var(--accent-pink), var(--accent-pink-strong));
+  color: #fff;
+  padding: 0.62rem 1rem;
+  border-radius: 10px;
+  border: none;
+  font-weight: 800;
+}
+
+/* Small screens: stack nav buttons and make choice tiles full width */
+@media (max-width: 520px) {
+  .choice-grid { grid-template-columns: repeat(2, minmax(120px, 1fr)); gap: 0.5rem; }
+  .form-navigation { flex-direction: column; align-items: stretch; gap: 0.6rem; }
+  .form-navigation button { width: 100%; min-width: 0; }
+}
+
+/* Ensure input fields match site styling */
+.skill-form-container input[type="text"],
+.skill-form-container select,
+.skill-form-container textarea {
+  width: 100%;
+  padding: 0.6rem 0.85rem;
+  border-radius: 8px;
+  border: 1px solid var(--muted-border);
+  background: rgba(255,255,255,0.02);
+  color: #fff;
   box-sizing: border-box;
 }
 
-/* Small screens: slightly reduce padding and font-size to avoid wrapping */
-@media (max-width: 480px) {
-  :root {
-    --button-padding-vertical: 0.32rem;
-    --button-padding-horizontal: 0.6rem;
-    --button-min-height: 32px;
-  }
-  .choice-button,
-  .btn-primary,
-  .btn-secondary,
-  .review-tag {
-    font-size: calc(var(--app-font-size) * 0.88);
-    padding: var(--button-padding-vertical) var(--button-padding-horizontal);
-    min-height: var(--button-min-height);
-  }
-}
-
-/* Responsive Design - Update for new layout */
-@media (max-width: 768px) {
-  .skill-form-main {
-    padding: 1rem !important;
-    align-items: flex-start !important;
-  }
-  
-  .skill-form-main .skill-form-container {
-    padding: 2rem 1.5rem !important;
-    margin: 1rem auto !important;
-  }
-  
-  .skill-form-main .form-group {
-    padding: 1rem !important;
-    margin-bottom: 2rem !important;
-  }
-  
-  .skill-form-main .form-group label {
-    font-size: 1.15rem !important;
-  }
-  
-  .skill-form-main .form-group p {
-    padding: 0 0.5rem !important;
-    font-size: 1rem !important;
-  }
-  
-  .skill-form-main .step-content h3 {
-    font-size: 1.6rem !important;
-  }
-  
-  .skill-form-main .step-content > p {
-    padding: 0 1rem !important;
-    font-size: 1.05rem !important;
-  }
-  
-  .skill-form-main .choice-grid {
-    grid-template-columns: 1fr !important;
-    gap: 0.75rem !important;
-  }
-  
-  .skill-form-main .choice-button {
-    padding: 0.875rem 1rem !important;
-    font-size: 0.9rem !important;
-    min-height: 50px !important;
-  }
-  
-  .skill-form-main .form-navigation {
-    flex-direction: column !important;
-    gap: 1rem !important;
-    align-items: stretch !important;
-  }
-  
-  .nav-left,
-  .nav-right {
-    justify-content: center !important;
-  }
-  
-  .nav-right {
-    flex-direction: column !important;
-    gap: 0.75rem !important;
-  }
-  
-  .skill-form-main .form-navigation button {
-    width: 100% !important;
-    padding: 1rem 1.5rem !important;
-  }
-}
-
-@media (max-width: 480px) {
-  .skill-form-main {
-    padding: 0.5rem !important;
-  }
-  
-  .skill-form-main .skill-form-container {
-    padding: 1.5rem 1rem !important;
-    margin: 0.5rem auto !important;
-  }
-  
-  .skill-form-main .form-group {
-    padding: 0.75rem !important;
-  }
-  
-  .skill-form-main .form-group label {
-    font-size: 1.1rem !important;
-  }
-  
-  .skill-form-main .form-group p {
-    font-size: 0.95rem !important;
-  }
-  
-  .skill-form-main .step-content h3 {
-    font-size: 1.5rem !important;
-  }
-  
-  .skill-form-main .step-content > p {
-    font-size: 1rem !important;
-  }
-}
-
-/* Override body styles when skill form is active */
-body:has(.skill-assessment-wrapper) {
-  overflow: hidden !important;
-  background: linear-gradient(135deg, #1e1b3a 0%, #2d2654 50%, #3a2d6b 100%) !important;
-}
+/* small utility spacing */
+.choice-grid + .form-group,
+.form-group + .form-group { margin-top: 0.6rem; }
 
 /* Animation for smooth transitions */
 .skill-form-main .step-content {
@@ -610,3 +654,224 @@ body:has(.skill-assessment-wrapper) {
 
   .review-tag { font-size: calc(var(--app-font-size) * 0.86); padding: 0.22rem 0.5rem; }
 }
+
+/* Responsive Design - Update for new layout */
+@media (max-width: 768px) {
+  .skill-form-main {
+    padding: 1rem !important;
+    align-items: flex-start !important;
+  }
+  
+  .skill-form-main .skill-form-container {
+    padding: 2rem 1.5rem !important;
+    margin: 1rem auto !important;
+  }
+  
+  .skill-form-main .form-group {
+    padding: 1rem !important;
+    margin-bottom: 2rem !important;
+  }
+  
+  .skill-form-main .form-group label {
+    font-size: 1.15rem !important;
+  }
+  
+  .skill-form-main .form-group p {
+    padding: 0 0.5rem !important;
+    font-size: 1rem !important;
+  }
+  
+  .skill-form-main .step-content h3 {
+    font-size: 1.6rem !important;
+  }
+  
+  .skill-form-main .step-content > p {
+    padding: 0 1rem !important;
+    font-size: 1.05rem !important;
+  }
+  
+  .skill-form-main .choice-grid {
+    grid-template-columns: 1fr !important;
+    gap: 0.75rem !important;
+  }
+  
+  .skill-form-main .choice-button {
+    padding: 0.875rem 1rem !important;
+    font-size: 0.9rem !important;
+    min-height: 50px !important;
+  }
+  
+  .skill-form-main .form-navigation {
+    flex-direction: column !important;
+    gap: 1rem !important;
+    align-items: stretch !important;
+  }
+  
+  .nav-left,
+  .nav-right {
+    justify-content: center !important;
+  }
+  
+  .nav-right {
+    flex-direction: column !important;
+    gap: 0.75rem !important;
+  }
+  
+  .skill-form-main .form-navigation button {
+    width: 100% !important;
+    padding: 1rem 1.5rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .skill-form-main {
+    padding: 0.5rem !important;
+  }
+  
+  .skill-form-main .skill-form-container {
+    padding: 1.5rem 1rem !important;
+    margin: 0.5rem auto !important;
+  }
+  
+  .skill-form-main .form-group {
+    padding: 0.75rem !important;
+  }
+  
+  .skill-form-main .form-group label {
+    font-size: 1.1rem !important;
+  }
+  
+  .skill-form-main .form-group p {
+    font-size: 0.95rem !important;
+  }
+  
+  .skill-form-main .step-content h3 {
+    font-size: 1.5rem !important;
+  }
+  
+  .skill-form-main .step-content > p {
+    font-size: 1rem !important;
+  }
+}
+
+/* 1) Ensure action buttons are always visible (not hover-only) inside assessment wrapper */
+.skill-assessment-wrapper .btn-primary,
+.skill-assessment-wrapper .cta-button {
+  background: linear-gradient(135deg, var(--accent-pink), var(--accent-pink-strong)) !important;
+  color: #fff !important;
+  border: none !important;
+  box-shadow: 0 8px 20px rgba(255,47,140,0.12) !important;
+  opacity: 1 !important;
+  transition: transform 0.12s ease, box-shadow 0.12s ease !important;
+}
+
+.skill-assessment-wrapper .btn-secondary,
+.skill-assessment-wrapper .retake-btn,
+.skill-assessment-wrapper .complete-assessment-btn,
+.skill-assessment-wrapper .prompt-btn,
+.skill-assessment-wrapper .update-button {
+  background: rgba(255,255,255,0.06) !important;
+  color: #fff !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+  opacity: 1 !important;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.18) !important;
+}
+
+/* make any prompt action clearly tappable */
+.skill-assessment-wrapper .prompt-btn,
+.skill-assessment-wrapper .retake-btn,
+.skill-assessment-wrapper .complete-assessment-btn {
+  padding: 0.6rem 1rem !important;
+  border-radius: 10px !important;
+  font-weight: 800 !important;
+  min-width: 140px !important;
+  text-align: center;
+}
+
+/* Ensure prompt text buttons (if previously transparent) are readable */
+.skill-assessment-wrapper button,
+.skill-assessment-wrapper .prompt-btn,
+.skill-assessment-wrapper .btn-secondary {
+  background-clip: padding-box !important;
+}
+
+/* 2) Make sure previously aggressive "transparent everything" rules don't hide these buttons
+   (explicit stronger override) */
+.skill-assessment-wrapper *:not(.choice-button.selected):not(.btn-primary):not(.btn-secondary):not(.cta-button):not(.progress-fill):not(.retake-btn):not(.prompt-btn) {
+  /* keep prior "transparent everything" intent but avoid empty rulesets */
+  background-color: transparent !important;
+  background-image: none !important;
+  color: inherit !important;
+  border-color: rgba(255, 255, 255, 0.06) !important;
+  box-shadow: none !important;
+  opacity: 1 !important;
+  fill: currentColor !important;
+  outline: none !important;
+}
+
+/* 3) Increase and normalize spacing for all step-like containers (so every step matches the first) */
+.step-content,
+.step-card,
+.step-panel,
+.form-step,
+.form-step .step-content {
+  padding: 1.25rem !important;
+  margin-bottom: 1.25rem !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 1rem !important;
+  box-sizing: border-box !important;
+}
+
+/* Improve heading spacing inside any step variant */
+.step-content h3,
+.step-card h3,
+.step-panel h3,
+.form-step h3 {
+  margin: 0 0 0.9rem 0 !important;
+  padding-bottom: 0.5rem !important;
+}
+
+/* Ensure each form group has consistent breathing room across all steps */
+.skill-form-container .form-group,
+.step-content .form-group,
+.form-step .form-group {
+  margin-bottom: 1.1rem !important;
+  padding-bottom: 0 !important;
+}
+
+/* Put a little extra vertical spacing between the label/description and the choices */
+.form-group .choice-grid,
+.form-group .choice-grid + * {
+  margin-top: 0.8rem !important;
+}
+
+/* 4) Responsive safety: keep action buttons stacked on narrow screens and full-width where appropriate */
+@media (max-width: 520px) {
+  .skill-assessment-wrapper .prompt-btn,
+  .skill-assessment-wrapper .retake-btn,
+  .skill-assessment-wrapper .complete-assessment-btn,
+  .skill-assessment-wrapper .btn-primary,
+  .skill-assessment-wrapper .btn-secondary {
+    width: 100% !important;
+    min-width: auto !important;
+    padding: 0.9rem 1rem !important;
+  }
+
+  .step-content,
+  .step-card,
+  .form-step {
+    padding: 1rem !important;
+    gap: 0.9rem !important;
+  }
+}
+
+/* 5) Micro-adjust: ensure review / tag groups keep breathing room if previously compacted */
+.review-tags,
+.skills-list,
+.interests-display {
+  gap: 0.6rem !important;
+  margin-top: 0.75rem !important;
+}
+
+/* ...existing code... */
