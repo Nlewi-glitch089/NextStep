@@ -169,116 +169,77 @@
   margin-top: 0.5rem;
 }
 
-/* Choice buttons: larger hit target and consistent sizing */
-.choice-button {
-  padding: 0.6rem 0.9rem;
-  border-radius: 10px;
-  border: 1px solid rgba(255,255,255,0.06);
-  background: rgba(255,255,255,0.02);
-  color: inherit;
-  font-weight: 700;
-  min-width: 140px; /* help even layout */
-  text-align: center;
-  transition: transform 0.12s ease, background 0.12s ease;
-  box-sizing: border-box;
+/* CONSISTENT CHOICE GRID & BUTTON SPACING
+   Use a single authoritative grid/layout and button sizing to avoid clumping.
+*/
+.skill-assessment-wrapper .choice-grid,
+.skill-form-container .choice-grid,
+.step-content .choice-grid,
+.form-step .choice-grid,
+.survey-page .choice-grid,
+.question-page .choice-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)) !important;
+  gap: 1rem !important;          /* larger, consistent gap between options */
+  align-items: stretch !important;
+  margin-top: 1rem !important;   /* breathing room above the grid */
 }
 
-/* Selected state should still look prominent */
-.choice-button.selected {
-  background: linear-gradient(135deg, rgba(255,0,128,0.10), rgba(255,0,128,0.06));
-  border-color: rgba(255,0,128,0.18);
+/* Make sure smaller sections using flex are also overridden */
+.skill-assessment-wrapper .choice-grid[style],
+.skill-assessment-wrapper .choice-grid {
+  align-content: start !important;
 }
 
-/* Review tags: give breathing room and wrap nicely */
-.review-tags,
-.skills-list,
-.interests-display {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: 0.5rem;
+/* BUTTON HIT TARGETS & VISUAL STABILITY */
+.skill-assessment-wrapper .choice-button,
+.skill-form-container .choice-button,
+.step-content .choice-button {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0.8rem 1rem !important;   /* larger, consistent padding */
+  min-width: 160px !important;       /* prevents very skinny items */
+  height: auto !important;
+  min-height: 48px !important;       /* consistent vertical size */
+  white-space: normal !important;    /* allow wrapping for long labels */
+  text-align: center !important;
+  box-sizing: border-box !important;
+  transition: transform 0.12s ease, box-shadow 0.12s ease !important;
 }
 
-/* Review tag styling (keeps consistent look) */
-.review-tag,
-.skill-tag,
-.interest-tag,
-.tech-tag,
-.soft-skill-tag {
-  padding: 0.36rem 0.7rem;
-  border-radius: 10px;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.04);
-  font-weight: 700;
-  font-size: 0.92rem;
+/* Selected state remains prominent but does not change layout */
+.skill-assessment-wrapper .choice-button.selected,
+.skill-form-container .choice-button.selected {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.18) !important;
 }
 
-/* Navigation/layout: ensure previous/next buttons don't overlap (safety) */
-.form-navigation {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-top: 1.25rem;
-  width: 100%;
-  box-sizing: border-box;
+/* Ensure form-group spacing above/below choice grids is consistent */
+.skill-form-container .form-group,
+.step-content .form-group {
+  margin-bottom: 1.25rem !important;
 }
 
-/* Form navigation: ensure buttons sit apart and don't overlap */
-.form-navigation {
-  display: flex;
-  align-items: center;
-  justify-content: space-between; /* left / right alignment */
-  gap: 1rem;
-  margin-top: 1.25rem;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-/* left and right containers keep buttons grouped and aligned */
-.form-navigation .nav-left,
-.form-navigation .nav-right {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-}
-
-/* Ensure buttons have consistent sizing to avoid layout shifts */
-.form-navigation button,
-.form-navigation .btn-primary,
-.form-navigation .btn-secondary,
-.form-navigation .cta-button {
-  min-width: 110px;
-  padding: 0.5rem 0.9rem;
-  border-radius: 8px;
-  font-weight: 700;
-  cursor: pointer;
-  box-sizing: border-box;
-}
-
-/* When only a single small button is present, keep it visually balanced */
-.form-navigation .nav-left .btn-secondary {
-  min-width: 90px;
-}
-
-/* Prevent button groups from wrapping over each other on narrow screens */
+/* Mobile: stack smaller screens into 1 column for readability / tap targets */
 @media (max-width: 520px) {
-  .form-navigation {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0.6rem;
+  .skill-assessment-wrapper .choice-grid,
+  .skill-form-container .choice-grid {
+    grid-template-columns: 1fr !important;
+    gap: 0.75rem !important;
   }
-  .form-navigation .nav-left,
-  .form-navigation .nav-right {
-    justify-content: space-between;
+  .skill-assessment-wrapper .choice-button,
+  .skill-form-container .choice-button {
+    width: 100% !important;
+    min-width: 0 !important;
+    padding: 0.9rem 1rem !important;
   }
-  .form-navigation button,
-  .form-navigation .btn-primary,
-  .form-navigation .btn-secondary,
-  .form-navigation .cta-button {
-    width: 100%;
-    min-width: auto;
-  }
+}
+
+/* Small tweak: avoid collapsing gaps when many items; ensure scrollable area looks good */
+.skill-form-container {
+  gap: 1rem;
+  /* ...existing code... */
 }
 
 /* Small visual tweak so navigation sits clearly below the step card */
@@ -874,4 +835,44 @@
   margin-top: 0.75rem !important;
 }
 
-/* ...existing code... */
+/* Make assessment headers pink for better contrast and visual hierarchy */
+.skill-form-main .form-header h1,
+.step-content h3,
+.step-card h3,
+.step-panel h3,
+.form-step h3,
+.review-group h4 {
+  color: var(--accent-pink-strong, #ff0080) !important;
+  font-weight: 800 !important;
+}
+
+/* Ensure smaller labels (e.g., "Student Status") also use pink and stand out */
+.form-group label,
+.skill-form-container label,
+.step-content .form-group label {
+  color: var(--accent-pink-strong, #ff0080) !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.2px;
+}
+
+/* Helper/descriptive text — muted off-white so it's distinct from pink labels */
+.form-group p,
+.step-content > p,
+.skill-form-main .form-header p,
+.step-content p {
+  color: rgba(255,255,255,0.82) !important;
+  font-weight: 600 !important;
+}
+
+/* Ensure smaller inline question copy (if using .question-text) follows the same muted style */
+.question-text,
+.form-group .helper-text {
+  color: rgba(255,255,255,0.82) !important;
+  font-weight: 600 !important;
+}
+
+/* Small tweak: make choice button label text unaffected, keep body text readable */
+.choice-button,
+.choice-button.selected {
+  /* ...existing choice-button styling remains ... */
+}
