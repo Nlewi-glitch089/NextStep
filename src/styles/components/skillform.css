@@ -58,11 +58,11 @@
 }
 
 .skill-form-main .form-header h1 {
-  color: #ff0080 !important;
+  color: #ffffff !important;
   font-size: 2.5rem !important;
-  font-weight: 700 !important;
+  font-weight: 900 !important;
   margin-bottom: 1rem !important;
-  text-shadow: 0 0 20px rgba(255, 0, 128, 0.3) !important;
+  text-shadow: 0 0 20px rgba(255, 0, 128, 0.15) !important;
 }
 
 .skill-form-main .form-header p {
@@ -835,6 +835,25 @@
   margin-top: 0.75rem !important;
 }
 
+/* Main form title — keep WHITE for contrast */
+.skill-form-main .form-header h1 {
+  color: #ffffff !important;
+  font-size: 2.5rem !important;
+  font-weight: 900 !important;
+  margin-bottom: 1rem !important;
+  text-shadow: 0 0 20px rgba(255, 0, 128, 0.15) !important;
+}
+
+/* All OTHER headings (step titles, section labels) remain PINK */
+.step-content h3,
+.step-card h3,
+.step-panel h3,
+.form-step h3,
+.review-group h4 {
+  color: var(--accent-pink-strong, #ff0080) !important;
+  font-weight: 800 !important;
+}
+
 /* Make assessment headers pink for better contrast and visual hierarchy */
 .skill-form-main .form-header h1,
 .step-content h3,
@@ -855,24 +874,18 @@
   letter-spacing: 0.2px;
 }
 
-/* Helper/descriptive text — muted off-white so it's distinct from pink labels */
+/* Helper/descriptive text: slightly muted pink for readability */
 .form-group p,
 .step-content > p,
-.skill-form-main .form-header p,
-.step-content p {
-  color: rgba(255,255,255,0.82) !important;
-  font-weight: 600 !important;
-}
-
-/* Ensure smaller inline question copy (if using .question-text) follows the same muted style */
-.question-text,
-.form-group .helper-text {
-  color: rgba(255,255,255,0.82) !important;
+.skill-form-main .form-header p {
+  color: rgba(255, 0, 128, 0.92) !important;
   font-weight: 600 !important;
 }
 
 /* Small tweak: make choice button label text unaffected, keep body text readable */
 .choice-button,
 .choice-button.selected {
-  /* ...existing choice-button styling remains ... */
+  /* ensure labels inherit the page color and preserve background clipping */
+  color: inherit;
+  background-clip: padding-box;
 }
