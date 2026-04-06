@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import ErrorBoundary from './Components/ErrorBoundary.jsx';
 import Welcome from './Components/Welcome.jsx';
 import Home from './Components/Home.jsx';
@@ -187,6 +188,7 @@ function App() {
     <ErrorBoundary onNavigate={handleNavigate}>
       <div className="App">
         {renderCurrentPage()}
+        <SpeedInsights />
       </div>
     </ErrorBoundary>
   );
