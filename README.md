@@ -1,225 +1,85 @@
-🚀 NextStep — AI-Powered Career Guidance Platform
-Empowering students and professionals to take their Next Step toward meaningful careers with personalized, data-driven insights.
-🎯 Why This Exists
+# NextStep — Career Guidance Platform
 
-Many students and job seekers possess valuable skills but lack the guidance and market awareness needed to secure opportunities.
+NextStep is a career-guidance front-end prototype built to help users explore career options, organize projects, and get support with career-related questions. Its central assistant is called Eos.
 
-NextStep bridges that gap — combining AI technology, career tools, and real-time labor market data to deliver smart, adaptive support that grows with the user.
+## Current features
 
-Our mission: Turn potential into progress.
+- Career guidance and Eos chat interface.
+- Project portfolio management with create, edit, and display flows.
+- Profile and skills-related screens.
+- Dark and light theme styling.
+- Responsive React interface.
 
-✨ Core Features
-🤖 AI Career Counselor (Eos)
+The resume builder, interview practice hub, and labor-market dashboard described in earlier planning material are future ideas, not features to assume are complete.
 
-Your personal AI mentor for all things career growth.
+## Technology
 
-Smart conversational guidance tailored to user goals
+- React
+- Vite
+- React Router
+- JavaScript
+- CSS
+- Context API for shared application state
 
-Advice on resumes, skills, and job readiness
+## Requirements
 
-Real-time suggestions based on industry trends
+- Node.js
+- npm
 
-🧭 Personalized Career Pathing
+## Run locally
 
-AI-driven recommendations based on skills, interests, and goals
+1. Clone the repository:
 
-Dynamic insights reflecting job market shifts
+   ```bash
+   git clone https://github.com/Nlewi-glitch089/NextStep.git
+   cd NextStep
+   ```
 
-Industry-specific learning guidance
+2. Install dependencies:
 
-📄 Smart Resume Builder (Future Update)
+   ```bash
+   npm install
+   ```
 
-Professional templates for different industries
+3. Start the Vite development server:
 
-AI-assisted bullet points and skill matching
+   ```bash
+   npm run dev
+   ```
 
-ATS-friendly formatting for recruiter systems
+4. Open the local URL printed by Vite (usually [http://localhost:5173](http://localhost:5173)).
 
-🎤 Interview Practice Hub (Future Update)
+## Available commands
 
-AI-powered mock interviews with instant feedback
+| Command | Purpose |
+| --- | --- |
+| `npm run dev` | Start the Vite development server |
+| `npm run build` | Build the static site into `dist/` |
+| `npm run preview` | Preview the production build locally |
+| `npm run lint` | Run ESLint |
 
-Question banks by field or job type
+## Eos chat integration
 
-Performance tracking for continuous improvement
+The current chat service sends requests to an API endpoint at `/api/chat/eos`. Its base URL is read from `VITE_API_URL`, with a local default of `http://localhost:3001`.
 
-💼 Project Portfolio Management
+- To connect a separate backend, set `VITE_API_URL` to that backend's base URL before starting or building the frontend.
+- If the request fails or the backend is unavailable, the interface returns a demo fallback response.
+- This repository is the frontend; it does not include the backend route that handles `/api/chat/eos`.
 
-Add, edit, and showcase personal projects
+Do not put an OpenAI secret in a `VITE_` variable. Vite exposes those values in the browser bundle. Keep provider credentials on a server you control.
 
-Display skills, technologies, and achievements
+## Deployment
 
-Track project milestones and progress
+GitHub currently lists this Vercel homepage:
 
-🧠 Getting Started (Local Development)
-Prerequisites
+[Open NextStep](https://next-step-sandy.vercel.app)
 
-Node.js (v19 or higher)
+To deploy the frontend:
 
-npm or yarn
+1. Import this repository into [Vercel](https://vercel.com/new).
+2. Select the Vite preset.
+3. Set the build command to `npm run build` and the output directory to `dist`.
+4. If the separate chat backend is deployed, set `VITE_API_URL` to its public base URL in Vercel's environment settings.
+5. Deploy and test the main screens. Test Eos separately to confirm the backend is reachable; without it, only the demo fallback is expected.
 
-Git
-
-Setup Instructions
-# Clone the repository
-git clone [repository-url]
-cd NextStep-Career-Guidance-Platform/my-app
-
-# Install dependencies
-npm install
-# or
-yarn install
-
-# Start the development server
-npm run dev
-# or
-yarn dev
-
-
-Then open http://localhost:5173
- in your browser.
-Hot Reloading ensures changes appear instantly as you code.
-
-🛠️ Technology Stack
-Current Implementation
-
-Frontend: React.js 18+ (with Vite)
-
-Styling: CSS3 with modular structure and variables
-
-State Management: React Context API
-
-Routing: Conditional rendering logic
-
-AI Integration: OpenAI-based chat system (via /services/chatservice.js)
-
-Planned Additions
-
-Backend: Node.js with Express
-
-Database: PostgreSQL or MongoDB
-
-Authentication: JWT-based user sessions
-
-API: RESTful API design
-
-📁 Updated Project Structure
-my-app/
-├── public/
-│   └── index.html
-├── src/
-│   ├── assets/
-│   ├── Components/
-│   │   ├── hooks/
-│   │   ├── About.jsx
-│   │   ├── Contact.jsx
-│   │   ├── EosCounselor.jsx
-│   │   ├── Home.jsx
-│   │   ├── Profile.jsx
-│   │   ├── Project.jsx
-│   │   ├── ProjectForm.jsx
-│   │   ├── ProjectList.jsx
-│   │   ├── ProjectsPage.jsx
-│   │   ├── Services.jsx
-│   │   ├── SkillFormPage.jsx
-│   │   └── Welcome.jsx
-│   ├── context/
-│   │   └── ProjectContext.jsx
-│   ├── pages/
-│   │   ├── ContactPage.jsx
-│   │   ├── HomePage.jsx
-│   │   ├── ProfilePage.jsx
-│   │   ├── ProjectsPage.jsx
-│   │   ├── ServicesPage.jsx
-│   │   └── SkillFormPage.jsx
-│   ├── services/
-│   │   └── chatservice.js     ← Handles AI communication logic
-│   ├── styles/
-│   │   ├── components/
-│   │   │   ├── auth.css
-│   │   │   ├── skillform.css
-│   │   ├── pages/
-│   │   │   ├── authpage.css
-│   │   │   ├── contact.css
-│   │   │   ├── eoscounselor.css
-│   │   │   ├── home.css
-│   │   │   ├── homepage.css
-│   │   │   ├── profile.css
-│   │   │   ├── profilepage.css
-│   │   │   ├── projects.css
-│   │   │   ├── projectspage.css
-│   │   │   ├── services.css
-│   │   │   └── global.css
-│   ├── utils/
-│   ├── App.css
-│   ├── App.jsx
-│   ├── index.css
-│   ├── main.jsx
-│   └── ...
-├── .env.example
-├── .gitignore
-├── code.md
-├── eslint.config.js
-├── index.html
-├── LICENSE
-├── package.json
-├── vite.config.js
-└── README.md
-
-🎨 Design System
-Color Scheme
-Mode	Background	Accent	Text
-Dark	#000000	#ff0080	#ffffff
-Light	#f0e6ff	#ff0080	#1a1a1a
-Design Highlights
-
-Mobile-first responsive design
-
-Smooth dark/light mode transitions
-
-Neon-inspired glow effects and hover animations
-
-Accessible color contrast for readability
-
-✅ Current Status
-
-Completed
-
-Authentication UI + validation
-
-Homepage sections and navigation
-
-AI Counselor (Eos) chat integration
-
-Theme switching (Dark/Light mode)
-
-Context-based state management
-
-CRUD project management system
-
-Fully modular CSS and JSX structure
-
-In Progress
-
-Footer navigation
-
-Profile enhancements
-
-Skill management system
-
-Planned
-
-Resume Builder
-
-AI Career Assessment Tools
-
-Real-time Labor Market Dashboard
-
-Database-backed authentication
-
-💡 Vision
-
-NextStep is more than a platform — it’s a career accelerator.
-By merging AI guidance, project-based learning, and labor insights, it empowers users to confidently define and achieve their career goals.
-
-“Your future isn’t waiting — it’s being built. One Next Step at a time.”
+The URL above is the repository's configured homepage; confirm the current Vercel Production deployment before sharing it as a working demo.
